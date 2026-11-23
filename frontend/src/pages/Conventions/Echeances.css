@@ -1,0 +1,133 @@
+/* Onglet « Échéances et paiements » : synthèse en cartes, bandeaux, état vide.
+   Le verre transparent du panneau (ConventionsVerre.css) n'est pas modifié.
+   À importer APRÈS ConventionsVerre.css. */
+
+/* ---------- Synthèse : 4 cartes translucides ---------- */
+
+.ech-synthese {
+    display: grid;
+    gap: 12px;
+    margin: 0 0 20px;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+  }
+  
+  .ech-synthese-chiffres {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  
+  .ech-synthese-chiffres > div {
+    display: grid;
+    gap: 4px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-top: 3px solid rgba(27, 122, 61, 0.25);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+  }
+  .ech-synthese-chiffres > div:nth-child(2) { border-top-color: #1b7a3d; }
+  .ech-synthese-chiffres > div:nth-child(3) { border-top-color: #e8a317; }
+  .ech-synthese-chiffres > div:nth-child(4) { border-top-color: #c62828; }
+  
+  .ech-synthese-chiffres span {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--conv-doux, #5d6b63);
+  }
+  .ech-synthese-chiffres strong {
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--conv-texte, #1d2b24);
+  }
+  .ech-synthese-chiffres strong.vert { color: var(--conv-vert, #1b7a3d); }
+  .ech-synthese-chiffres strong.du { color: var(--conv-rouge, #c62828); }
+  
+  .ech-progression {
+    height: 10px;
+    overflow: hidden;
+    background: rgba(27, 122, 61, 0.12);
+    border-radius: 999px;
+  }
+  .ech-progression span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #1b7a3d, #34a96a);
+    border-radius: inherit;
+    transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .ech-synthese > small {
+    font-size: 0.78rem;
+    color: var(--conv-doux, #5d6b63);
+  }
+  
+  /* ---------- Bandeaux d'information ---------- */
+  
+  .ech-info,
+  .conv-succes,
+  .conv-erreur {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    padding: 10px 14px;
+    font-size: 0.86rem;
+    border-radius: 12px;
+  }
+  .ech-info::before,
+  .conv-succes::before,
+  .conv-erreur::before {
+    content: "";
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .ech-info {
+    color: #9a5b00;
+    background: rgba(255, 246, 224, 0.85);
+    border: 1px solid rgba(232, 163, 23, 0.35);
+  }
+  
+  /* ---------- En-tête « Échéances » ---------- */
+  
+  .ech-barre {
+    margin: 6px 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(27, 122, 61, 0.14);
+  }
+  .ech-barre h3 { font-size: 1.1rem; }
+  
+  /* ---------- État vide ---------- */
+  
+  .ech-barre ~ .conv-vide {
+    display: grid;
+    place-items: center;
+    margin: 8px 0 0;
+    padding: 32px 20px;
+    text-align: center;
+    line-height: 1.5;
+    color: var(--conv-doux, #5d6b63);
+    background: rgba(255, 255, 255, 0.4);
+    border: 1.5px dashed rgba(27, 122, 61, 0.3);
+    border-radius: 16px;
+  }
+  
+  /* ---------- Mobile ---------- */
+  
+  @media (max-width: 760px) {
+    .ech-synthese-chiffres { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ech-progression span { transition: none; }
+  }

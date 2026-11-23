@@ -1,0 +1,210 @@
+/* Maki – styles isolés par le préfixe « maki- ». Utilise les variables de .cnx-page. */
+
+.maki-colonne {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+  }
+  
+  .maki-zone {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  
+  .maki-mascotte {
+    flex-shrink: 0;
+    width: 132px;
+  }
+  .maki-mascotte svg,
+  .maki-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .maki-dialogue {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  /* ---------- Bulle ---------- */
+  .maki-bulle {
+    position: relative;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--cnx-texte, #343434);
+    background: var(--cnx-vert-pale, #eaf6ef);
+    border: 1px solid rgba(0, 122, 61, 0.25);
+    border-radius: 12px;
+  }
+  .maki-bulle::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: -7px;
+    width: 12px;
+    height: 12px;
+    background: var(--cnx-vert-pale, #eaf6ef);
+    border-left: 1px solid rgba(0, 122, 61, 0.25);
+    border-bottom: 1px solid rgba(0, 122, 61, 0.25);
+    transform: rotate(45deg);
+  }
+  
+  /* ---------- Contrôles ---------- */
+  .maki-controles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .maki-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--cnx-texte-doux, #5b6168);
+    background: #ffffff;
+    border: 1px solid var(--cnx-bordure-champ, #d1d5db);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .maki-btn:hover {
+    color: var(--cnx-vert, #007a3d);
+    border-color: var(--cnx-vert, #007a3d);
+  }
+  .maki-btn--actif {
+    color: var(--cnx-vert, #007a3d);
+    background: var(--cnx-vert-pale, #eaf6ef);
+    border-color: var(--cnx-vert, #007a3d);
+  }
+  .maki-btn:focus-visible {
+    outline: 2px solid var(--cnx-vert, #007a3d);
+    outline-offset: 2px;
+  }
+  .maki-note {
+    margin: 8px 0 0;
+    font-size: 0.78rem;
+    color: var(--cnx-texte-doux, #5b6168);
+  }
+  
+  /* Indicateur « Maki parle » */
+  .maki-onde {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 18px;
+  }
+  .maki-onde i {
+    width: 3px;
+    height: 6px;
+    background: var(--cnx-vert, #007a3d);
+    border-radius: 2px;
+    animation: maki-onde 0.9s ease-in-out infinite;
+  }
+  .maki-onde i:nth-child(2) { animation-delay: 0.15s; }
+  .maki-onde i:nth-child(3) { animation-delay: 0.3s; }
+  
+  /* ---------- Animations du personnage ---------- */
+  .maki-corps {
+    animation: maki-respire 4s ease-in-out infinite;
+  }
+  .maki-oeil {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: maki-clin 5s infinite;
+  }
+  .maki-tete {
+    transform-origin: 80px 92px;
+    transition: transform 0.4s ease;
+  }
+  .maki--attentif .maki-tete {
+    transform: rotate(-5deg);
+  }
+  .maki-bras {
+    transform-origin: 108px 120px;
+  }
+  .maki-bras--salut {
+    animation: maki-salut 1.6s ease-in-out 1;
+  }
+  
+  /* Bouche : alternance fermée / ouverte pendant la lecture */
+  .maki-bouche-ouverte { opacity: 0; }
+  .maki--parle .maki-bouche-ouverte {
+    animation: maki-bouche 0.34s steps(1) infinite;
+  }
+  .maki--parle .maki-bouche-fermee {
+    animation: maki-bouche-inverse 0.34s steps(1) infinite;
+  }
+  /* Si une illustration fixe est fournie : léger rebond pendant la parole */
+  .maki--parle .maki-image {
+    animation: maki-rebond 0.34s ease-in-out infinite;
+  }
+  
+  @keyframes maki-respire {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(2px); }
+  }
+  @keyframes maki-clin {
+    0%, 93%, 100% { transform: scaleY(1); }
+    96% { transform: scaleY(0.1); }
+  }
+  @keyframes maki-salut {
+    0%, 100% { transform: rotate(0); }
+    20% { transform: rotate(-120deg); }
+    40% { transform: rotate(-80deg); }
+    60% { transform: rotate(-120deg); }
+    80% { transform: rotate(-80deg); }
+  }
+  @keyframes maki-bouche {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+  @keyframes maki-bouche-inverse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  @keyframes maki-rebond {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+  @keyframes maki-onde {
+    0%, 100% { height: 5px; }
+    50% { height: 16px; }
+  }
+  
+  /* ---------- Préférences de mouvement ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .maki-corps,
+    .maki-oeil,
+    .maki-bras--salut,
+    .maki--parle .maki-image,
+    .maki-onde i {
+      animation: none;
+    }
+    .maki-tete,
+    .maki-btn {
+      transition: none;
+    }
+    /* La bouche reste utile comme indicateur : on la fixe ouverte pendant la parole */
+    .maki--parle .maki-bouche-ouverte { animation: none; opacity: 1; }
+    .maki--parle .maki-bouche-fermee { animation: none; opacity: 0; }
+  }
+  
+  @media (max-width: 520px) {
+    .maki-mascotte { width: 92px; }
+  }
+  
+  /* Variante pour la page d'inscription (carte plus large) */
+  .maki-colonne--large {
+    max-width: 540px;
+  }

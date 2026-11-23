@@ -1,0 +1,166 @@
+/* Liste des non-conformités : préfixe « ncl- »
+   Une carte par site, lignes compactes. */
+
+   .ncl { display: grid; gap: 16px; }
+
+   .ncl-vide {
+     margin: 0;
+     padding: 22px 16px;
+     text-align: center;
+     font-weight: 600;
+     color: var(--texte-doux);
+     background: rgba(255, 255, 255, 0.6);
+     border: 1px dashed var(--bordure);
+     border-radius: 16px;
+   }
+   
+   /* ---------- Une carte par site ---------- */
+   
+   .ncl-site {
+     overflow: hidden;
+     background: rgba(255, 255, 255, 0.7);
+     backdrop-filter: blur(14px) saturate(140%);
+     -webkit-backdrop-filter: blur(14px) saturate(140%);
+     border: 1px solid var(--bordure);
+     border-radius: 18px;
+     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+     animation: ncl-entree 0.35s ease both;
+   }
+   
+   .ncl-site-tete {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     gap: 16px;
+     padding: 14px 16px;
+     border-bottom: 1px solid var(--bordure);
+   }
+   .ncl-site-nom { display: grid; min-width: 0; }
+   .ncl-site-nom strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--texte); }
+   .ncl-site-nom span { font-size: 0.82rem; color: var(--texte-doux); }
+   
+   /* Barre de progression : vérifiées en vert plein, corrigées en vert clair */
+   .ncl-progres { display: grid; gap: 5px; flex: 0 0 auto; width: 150px; }
+   .ncl-barre { display: flex; height: 6px; overflow: hidden; background: #e5e7eb; border-radius: 999px; }
+   .ncl-barre-ok { background: var(--vert); transition: width 0.5s ease; }
+   .ncl-barre-corr { background: rgba(0, 122, 61, 0.35); transition: width 0.5s ease; }
+   .ncl-progres-texte { font-size: 0.74rem; font-weight: 600; text-align: right; color: var(--texte-doux); }
+   
+   /* ---------- Lignes compactes ---------- */
+   
+   .ncl-lignes { margin: 0; padding: 0; list-style: none; }
+   
+   .ncl-ligne {
+     display: grid;
+     grid-template-columns: auto minmax(0, 1fr) auto;
+     align-items: center;
+     gap: 14px;
+     min-height: 62px;
+     padding: 10px 16px;
+     cursor: pointer;
+     border-top: 1px solid var(--bordure);
+     transition: background 0.2s ease;
+   }
+   .ncl-ligne:first-child { border-top: none; }
+   .ncl-ligne:hover { background: rgba(0, 122, 61, 0.05); }
+   .ncl-ligne:focus-visible { outline: 2px solid var(--vert); outline-offset: -2px; }
+   
+   /* Une ligne en retard se repère au liseré rouge, sans autre bruit */
+   .ncl-ligne.retard { box-shadow: inset 3px 0 0 var(--rouge); }
+   
+   .ncl-texte { display: grid; gap: 3px; min-width: 0; }
+   .ncl-constat {
+     display: -webkit-box;
+     overflow: hidden;
+     font-size: 0.92rem;
+     line-height: 1.4;
+     color: var(--texte);
+     -webkit-line-clamp: 2;
+     line-clamp: 2;
+     -webkit-box-orient: vertical;
+   }
+   .ncl-meta {
+     display: flex;
+     flex-wrap: wrap;
+     align-items: center;
+     gap: 8px;
+     font-size: 0.8rem;
+     color: var(--texte-doux);
+   }
+   
+   .ncl-droite { display: flex; align-items: center; gap: 12px; }
+   
+   .ncl-ligne .bouton {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     min-height: 38px;
+     padding: 0 14px;
+     font-family: inherit;
+     font-size: 0.84rem;
+     font-weight: 700;
+     color: #ffffff;
+     background: var(--vert);
+     border: none;
+     border-radius: 10px;
+     cursor: pointer;
+     white-space: nowrap;
+     transition: filter 0.15s ease, transform 0.15s ease;
+   }
+   .ncl-ligne .bouton:hover:not(:disabled) { filter: brightness(1.07); }
+   .ncl-ligne .bouton:active:not(:disabled) { transform: scale(0.97); }
+   .ncl-ligne .bouton:disabled { opacity: 0.6; cursor: wait; }
+   .ncl-ligne .bouton:focus-visible { outline: 3px solid var(--vert); outline-offset: 2px; }
+   
+   .ncl-chevron {
+     flex: 0 0 auto;
+     width: 8px;
+     height: 8px;
+     border-top: 2px solid var(--texte-doux);
+     border-right: 2px solid var(--texte-doux);
+     opacity: 0.6;
+     transform: rotate(45deg);
+   }
+   
+   /* ---------- Voir les autres ---------- */
+   
+   .ncl-plus {
+     display: block;
+     width: 100%;
+     min-height: 44px;
+     font-family: inherit;
+     font-size: 0.86rem;
+     font-weight: 700;
+     color: var(--vert);
+     background: transparent;
+     border: none;
+     border-top: 1px solid var(--bordure);
+     cursor: pointer;
+     transition: background 0.2s ease;
+   }
+   .ncl-plus:hover { background: rgba(0, 122, 61, 0.06); }
+   .ncl-plus:focus-visible { outline: 2px solid var(--vert); outline-offset: -2px; }
+   
+   @keyframes ncl-entree { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+   
+   /* ---------- Téléphone ---------- */
+   
+   @media (max-width: 640px) {
+     .ncl-site-tete { flex-direction: column; align-items: stretch; gap: 10px; }
+     .ncl-progres { width: 100%; }
+     .ncl-progres-texte { text-align: left; }
+   
+     .ncl-ligne { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; }
+     .ncl-ligne > .nc-gravite { grid-column: 1; justify-self: start; }
+     .ncl-ligne > .ncl-texte { grid-column: 1 / -1; grid-row: 2; }
+     .ncl-ligne > .ncl-droite { grid-column: 2; grid-row: 1; }
+   }
+   
+   @media (prefers-reduced-motion: reduce) {
+     .ncl-site { animation: none; }
+     .ncl-barre-ok,
+     .ncl-barre-corr,
+     .ncl-ligne,
+     .ncl-ligne .bouton,
+     .ncl-plus { transition: none; }
+   }

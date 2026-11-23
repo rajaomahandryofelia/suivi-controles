@@ -1,0 +1,335 @@
+/* Panneau « Détail d'une non-conformité » : préfixe « nc- »
+   Style aligné sur Missions : verre sobre, palette blanc / vert / rouge / gris */
+
+/* ---------- Badges (gravité, statut, retard, récidive) ---------- */
+
+.nc-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+
+.nc-gravite,
+.nc-statut,
+.nc-retard {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.4;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+/* Gravité : dégradé de gris à rouge */
+.nc-gravite { color: #343434; background: #f1f3f5; border-color: var(--bordure); }
+.nc-gravite i { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; }
+
+.nc-gravite.MAJEURE,
+.nc-gravite.MOYENNE {
+  color: #8f1218;
+  background: rgba(237, 28, 36, 0.07);
+  border-color: rgba(237, 28, 36, 0.25);
+}
+.nc-gravite.MAJEURE i,
+.nc-gravite.MOYENNE i { background: var(--rouge); opacity: 0.6; }
+
+.nc-gravite.CRITIQUE,
+.nc-gravite.ELEVEE,
+.nc-gravite.HAUTE,
+.nc-gravite.BLOQUANTE {
+  color: #ffffff;
+  background: var(--rouge);
+}
+.nc-gravite.CRITIQUE i,
+.nc-gravite.ELEVEE i,
+.nc-gravite.HAUTE i,
+.nc-gravite.BLOQUANTE i { background: #ffffff; }
+
+/* Statut du dossier */
+.nc-statut { color: #343434; background: #f1f3f5; border-color: var(--bordure); }
+.nc-statut.OUVERTE { color: #8f1218; background: rgba(237, 28, 36, 0.07); border-color: rgba(237, 28, 36, 0.25); }
+.nc-statut.CORRIGEE { color: var(--vert); background: transparent; border-color: rgba(0, 122, 61, 0.45); }
+.nc-statut.VERIFIEE { color: #ffffff; background: var(--vert); }
+
+.nc-retard { color: #8f1218; background: #fef2f2; border-color: #fbd0d2; }
+
+/* ---------- Constat ---------- */
+
+.nc-constat-detail {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--bordure);
+  border-left: 3px solid var(--rouge);
+  border-radius: 14px;
+}
+.nc-constat-detail strong,
+.nc-photos-bloc > strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+.nc-constat-detail p { margin: 0; line-height: 1.55; color: var(--texte); }
+
+/* ---------- Photos ---------- */
+
+.nc-photos-bloc { margin-bottom: 20px; }
+.nc-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nc-photos li { display: grid; gap: 4px; }
+.nc-photos a {
+  display: block;
+  overflow: hidden;
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+  background: #f1f3f5;
+}
+.nc-photos a:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+.nc-photos img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.nc-photos a:hover img { transform: scale(1.05); }
+.nc-photos li > span { font-size: 0.76rem; color: var(--texte-doux); }
+
+/* ---------- Parcours (frise verticale) ---------- */
+
+.nc-etapes { margin: 22px 0; padding: 0; list-style: none; }
+
+.nc-etapes li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 12px;
+  padding-bottom: 18px;
+}
+.nc-etapes li:last-child { padding-bottom: 0; }
+
+/* Le trait qui relie les étapes */
+.nc-etapes li::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: -2px;
+  left: 9px;
+  width: 2px;
+  background: var(--bordure);
+}
+.nc-etapes li:last-child::before { display: none; }
+.nc-etapes li.fait::before { background: rgba(0, 122, 61, 0.35); }
+.nc-etapes li.retard::before { background: rgba(237, 28, 36, 0.3); }
+
+.nc-etape-point {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  margin: 4px 0 0 4px;
+  background: #ffffff;
+  border: 2px solid #94a3b8;
+  border-radius: 50%;
+}
+.nc-etapes li.fait .nc-etape-point {
+  background: var(--vert);
+  border-color: var(--vert);
+  box-shadow: 0 0 0 4px rgba(0, 122, 61, 0.12);
+}
+.nc-etapes li.retard .nc-etape-point {
+  background: var(--rouge);
+  border-color: var(--rouge);
+  box-shadow: 0 0 0 4px rgba(237, 28, 36, 0.12);
+}
+.nc-etapes li.attente .nc-etape-point { border-color: var(--vert); }
+.nc-etapes li.futur .nc-etape-point { border-style: dashed; }
+.nc-etapes li.futur { opacity: 0.7; }
+
+.nc-etapes li > div { display: grid; gap: 2px; min-width: 0; }
+.nc-etapes li strong { font-size: 0.95rem; color: var(--texte); }
+.nc-etapes li > div > span { font-size: 0.82rem; color: var(--texte-doux); }
+.nc-etape-note {
+  display: block;
+  margin-top: 6px;
+  padding: 8px 12px;
+  font-style: normal;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--texte);
+  background: rgba(0, 0, 0, 0.03);
+  border-left: 2px solid var(--bordure);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ---------- Informations (site, critère, partenaire) ---------- */
+
+.nc-infos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 20px;
+}
+.nc-info {
+  min-width: 0;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+}
+.nc-info.large { grid-column: 1 / -1; }
+.nc-info dt {
+  margin: 0 0 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+.nc-info dd { margin: 0; display: grid; gap: 2px; font-weight: 600; color: var(--texte); overflow-wrap: anywhere; }
+.nc-info dd small { font-size: 0.82rem; font-weight: 400; color: var(--texte-doux); }
+.nc-info dd a { font-size: 0.88rem; font-weight: 600; color: var(--vert); text-decoration: none; }
+.nc-info dd a:hover { text-decoration: underline; }
+.nc-info dd a:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; border-radius: 4px; }
+
+/* ---------- Formulaire de relance ---------- */
+
+.nc-relance {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 16px;
+  background: rgba(0, 122, 61, 0.04);
+  border: 1px solid rgba(0, 122, 61, 0.2);
+  border-radius: 16px;
+}
+.nc-relance > strong { font-size: 0.98rem; color: var(--texte); }
+.nc-relance > p { margin: -6px 0 0; font-size: 0.84rem; color: var(--texte-doux); }
+
+.nc-relance-champs { display: grid; grid-template-columns: 170px 1fr; gap: 12px; }
+.nc-relance-champs label { display: grid; gap: 6px; min-width: 0; }
+.nc-relance-champs label > span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+.nc-relance select,
+.nc-relance input[type="text"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--texte);
+  background: #ffffff;
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.nc-relance select:focus,
+.nc-relance input[type="text"]:focus {
+  outline: none;
+  border-color: var(--vert);
+  box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.15);
+}
+.nc-relance select:disabled,
+.nc-relance input[type="text"]:disabled { opacity: 0.6; cursor: not-allowed; }
+.nc-relance .bouton { justify-self: start; }
+
+/* ---------- Notes d'aide ---------- */
+
+.nc-note {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--texte);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--bordure);
+  border-left: 3px solid var(--vert);
+  border-radius: 12px;
+}
+
+/* ---------- Boutons d'action ---------- */
+
+.nc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--bordure);
+}
+.nc-actions .bouton,
+.nc-relance .bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 20px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: filter 0.15s ease, background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.nc-actions .bouton:not(.nc-secondaire) {
+  color: #ffffff;
+  background: var(--vert);
+  border: none;
+  box-shadow: 0 6px 16px rgba(0, 122, 61, 0.22);
+}
+.nc-actions .bouton:not(.nc-secondaire):hover:not(:disabled) { filter: brightness(1.06); }
+
+.bouton.nc-secondaire {
+  color: var(--texte);
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--bordure);
+  box-shadow: none;
+}
+.bouton.nc-secondaire:hover:not(:disabled) { background: rgba(0, 122, 61, 0.06); border-color: rgba(0, 122, 61, 0.4); }
+.nc-actions .bouton:active:not(:disabled),
+.nc-relance .bouton:active:not(:disabled) { transform: scale(0.98); }
+.nc-actions .bouton:disabled,
+.nc-relance .bouton:disabled { opacity: 0.6; cursor: wait; }
+.nc-actions .bouton:focus-visible,
+.nc-relance .bouton:focus-visible { outline: 3px solid var(--vert); outline-offset: 2px; }
+
+/* Le bouton « Fermer » reste à droite quand il y a de la place */
+.nc-actions .bouton.nc-secondaire:last-child { margin-left: auto; }
+
+/* ---------- Téléphone ---------- */
+
+@media (max-width: 520px) {
+  .nc-infos { grid-template-columns: 1fr; }
+  .nc-relance-champs { grid-template-columns: 1fr; }
+  .nc-relance .bouton { justify-self: stretch; }
+  .nc-actions { flex-direction: column; }
+  .nc-actions .bouton { width: 100%; }
+  .nc-actions .bouton.nc-secondaire:last-child { margin-left: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nc-photos img,
+  .nc-actions .bouton,
+  .nc-relance .bouton,
+  .nc-relance select,
+  .nc-relance input[type="text"] { transition: none; }
+}

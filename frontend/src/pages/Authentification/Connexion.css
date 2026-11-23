@@ -1,0 +1,670 @@
+/* Pages Connexion et Inscription – styles isolés par le préfixe « cnx- » */
+
+/* Plein écran en deux colonnes, indépendant de #root / body (CSS par défaut de Vite) */
+.cnx-page {
+    --cnx-rouge: #ed1c24;
+    --cnx-vert: #007a3d;
+    --cnx-vert-survol: #006232;
+    --cnx-vert-pale: #eaf6ef;
+    --cnx-texte: #343434;
+    --cnx-texte-doux: #5b6168;
+    --cnx-bordure: #e5e7eb;
+    --cnx-bordure-champ: #d1d5db;
+  
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    overflow: hidden;
+    background: #ffffff;
+    color: var(--cnx-texte);
+    color-scheme: light;
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial,
+      sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: left;
+    line-height: 1.5;
+  }
+  
+  .cnx-page *,
+  .cnx-page *::before,
+  .cnx-page *::after {
+    box-sizing: border-box;
+  }
+  
+  /* ====================== Panneau institutionnel (gauche) ====================== */
+  
+  .cnx-panneau {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    padding: clamp(32px, 4vw, 56px);
+    overflow: hidden;
+    background: linear-gradient(160deg, #f3faf6 0%, #ffffff 72%);
+    border-right: 1px solid var(--cnx-bordure);
+  }
+  
+  /* Grille de points très discrète */
+  .cnx-panneau::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0, 122, 61, 0.16) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.75), transparent 65%);
+    mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.75), transparent 65%);
+    pointer-events: none;
+  }
+  
+  .cnx-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .cnx-cercle {
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  .cnx-cercle-1 {
+    right: -120px;
+    bottom: -140px;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(0, 122, 61, 0.16),
+      rgba(0, 122, 61, 0.03) 70%
+    );
+    animation: cnx-flotte 14s ease-in-out infinite;
+  }
+  
+  .cnx-cercle-2 {
+    left: -70px;
+    top: 38%;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(0, 122, 61, 0.18);
+    animation: cnx-flotte 18s ease-in-out infinite reverse;
+  }
+  
+  /* Bande rouge et verte : clin d'œil au drapeau */
+  .cnx-ruban {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(to bottom, var(--cnx-rouge) 50%, var(--cnx-vert) 50%);
+  }
+  
+  .cnx-marque {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  .cnx-logo {
+    height: 56px;
+    width: auto;
+    max-width: 130px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  
+  .cnx-marque-texte {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  
+  .cnx-ministere {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cnx-texte-doux);
+  }
+  
+  .cnx-institution {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--cnx-texte);
+  }
+  
+  .cnx-hero {
+    position: relative;
+    z-index: 1;
+    animation: cnx-apparition 0.5s ease-out;
+  }
+  
+  .cnx-etiquette {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cnx-vert);
+    background: #ffffff;
+    border: 1px solid rgba(0, 122, 61, 0.25);
+    border-radius: 999px;
+  }
+  
+  .cnx-etiquette::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cnx-vert);
+    animation: cnx-pulse 2.4s ease-in-out infinite;
+  }
+  
+  .cnx-hero-titre {
+    margin: 18px 0 0;
+    font-size: clamp(2rem, 3.4vw, 3rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1f2933;
+  }
+  
+  /* Trait rouge d'accentuation */
+  .cnx-hero-titre::after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin-top: 18px;
+    border-radius: 2px;
+    background: var(--cnx-rouge);
+  }
+  
+  .cnx-hero-texte {
+    margin: 18px 0 0;
+    max-width: 480px;
+    font-size: 1.05rem;
+    color: var(--cnx-texte-doux);
+  }
+  
+  .cnx-fonctions {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  
+  .cnx-fonction {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--cnx-bordure);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    opacity: 0;
+    animation: cnx-apparition 0.5s ease-out forwards;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  
+  .cnx-fonction:nth-child(1) { animation-delay: 0.15s; }
+  .cnx-fonction:nth-child(2) { animation-delay: 0.25s; }
+  .cnx-fonction:nth-child(3) { animation-delay: 0.35s; }
+  .cnx-fonction:nth-child(4) { animation-delay: 0.45s; }
+  
+  .cnx-fonction:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 122, 61, 0.35);
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.08);
+  }
+  
+  .cnx-fonction-icone {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    color: var(--cnx-vert);
+    background: var(--cnx-vert-pale);
+    border-radius: 10px;
+  }
+  
+  .cnx-fonction-titre {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--cnx-texte);
+  }
+  
+  .cnx-fonction-texte {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--cnx-texte-doux);
+  }
+  
+  /* ====================== Côté formulaire (droite) ====================== */
+  
+  .cnx-cote-formulaire {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow-y: auto;
+    background: #ffffff;
+  }
+  
+  .cnx-principal {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px clamp(16px, 4vw, 48px);
+  }
+  
+  .cnx-carte {
+    width: 100%;
+    max-width: 420px;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+    animation: cnx-apparition 0.45s ease-out;
+  }
+  
+  .cnx-badge {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 22px;
+    color: #ffffff;
+    background: var(--cnx-vert);
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(0, 122, 61, 0.28);
+  }
+  
+  .cnx-titre {
+    margin: 0 0 6px;
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--cnx-texte);
+  }
+  
+  .cnx-sous-titre {
+    margin: 0 0 26px;
+    font-size: 0.95rem;
+    color: var(--cnx-texte-doux);
+  }
+  
+  /* ---------- Message d'erreur (reste rouge : signale un problème) ---------- */
+  
+  .cnx-erreur {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    color: #8f1218;
+    background: #fef2f2;
+    border: 1px solid #fbd0d2;
+    border-left: 3px solid var(--cnx-rouge);
+    border-radius: 8px;
+    animation: cnx-apparition 0.25s ease-out;
+  }
+  
+  /* ---------- Champs ---------- */
+  
+  .cnx-champ {
+    margin-bottom: 18px;
+  }
+  
+  .cnx-champ label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--cnx-texte);
+  }
+  
+  .cnx-saisie {
+    position: relative;
+  }
+  
+  .cnx-saisie .cnx-icone {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: #9ca3af;
+    pointer-events: none;
+    transition: color 0.2s ease;
+  }
+  
+  .cnx-saisie:focus-within .cnx-icone {
+    color: var(--cnx-vert);
+  }
+  
+  .cnx-saisie input {
+    display: block;
+    width: 100%;
+    height: 48px;
+    margin: 0;
+    padding: 0 14px 0 42px;
+    font-family: inherit;
+    font-size: 1rem; /* 16 px : évite le zoom automatique sur iOS */
+    color: var(--cnx-texte);
+    background: #ffffff;
+    border: 1px solid var(--cnx-bordure-champ);
+    border-radius: 10px;
+    box-shadow: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .cnx-saisie.cnx-avec-oeil input {
+    padding-right: 46px;
+  }
+  
+  .cnx-saisie input:hover {
+    border-color: #9ca3af;
+  }
+  
+  .cnx-saisie input:focus {
+    outline: none;
+    border-color: var(--cnx-vert);
+    box-shadow: 0 0 0 4px rgba(0, 122, 61, 0.14);
+  }
+  
+  /* Évite le fond jaune du remplissage automatique du navigateur */
+  .cnx-saisie input:-webkit-autofill {
+    -webkit-text-fill-color: var(--cnx-texte);
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  }
+  
+  .cnx-oeil {
+    position: absolute;
+    top: 50%;
+    right: 7px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    color: var(--cnx-texte-doux);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  
+  .cnx-oeil:hover {
+    color: var(--cnx-vert);
+    background: var(--cnx-vert-pale);
+    border: none;
+  }
+  
+  .cnx-oeil:focus-visible {
+    outline: 2px solid var(--cnx-vert);
+    outline-offset: 1px;
+  }
+  
+  /* ---------- Bouton principal (vert : action de confirmation) ---------- */
+  
+  .cnx-bouton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 50px;
+    margin: 8px 0 0;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--cnx-vert);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 122, 61, 0.28);
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  
+  .cnx-bouton:hover:not(:disabled) {
+    background: var(--cnx-vert-survol);
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 122, 61, 0.34);
+    transform: translateY(-1px);
+  }
+  
+  .cnx-bouton:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  .cnx-bouton:focus-visible {
+    outline: 3px solid rgba(0, 122, 61, 0.35);
+    outline-offset: 2px;
+  }
+  
+  .cnx-bouton:disabled {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+  
+  .cnx-fleche {
+    transition: transform 0.2s ease;
+  }
+  
+  .cnx-bouton:hover:not(:disabled) .cnx-fleche {
+    transform: translateX(3px);
+  }
+  
+  .cnx-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: cnx-tourne 0.7s linear infinite;
+  }
+  
+  /* ---------- Lien bas de carte ---------- */
+  
+  .cnx-lien-bas {
+    margin: 24px 0 0;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--cnx-texte-doux);
+    border-top: 1px solid var(--cnx-bordure);
+  }
+  
+  .cnx-page .cnx-lien-bas a {
+    font-weight: 600;
+    color: var(--cnx-vert);
+    text-decoration: none;
+  }
+  
+  .cnx-page .cnx-lien-bas a:hover {
+    color: var(--cnx-vert-survol);
+    text-decoration: underline;
+  }
+  
+  .cnx-page .cnx-lien-bas a:focus-visible {
+    outline: 2px solid var(--cnx-vert);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  
+  /* ---------- Pied de page ---------- */
+  
+  .cnx-pied {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 18px 16px;
+    font-size: 0.8rem;
+    text-align: center;
+    color: var(--cnx-texte-doux);
+    border-top: 1px solid var(--cnx-bordure);
+  }
+  
+  .cnx-pied svg {
+    flex-shrink: 0;
+    color: var(--cnx-vert);
+  }
+  
+  /* ====================== Animations ====================== */
+  
+  @keyframes cnx-apparition {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes cnx-flotte {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-14px, 12px);
+    }
+  }
+  
+  @keyframes cnx-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(0, 122, 61, 0.45);
+    }
+    50% {
+      box-shadow: 0 0 0 6px rgba(0, 122, 61, 0);
+    }
+  }
+  
+  @keyframes cnx-tourne {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .cnx-carte,
+    .cnx-erreur,
+    .cnx-hero,
+    .cnx-cercle,
+    .cnx-etiquette::before,
+    .cnx-spinner {
+      animation: none;
+    }
+    .cnx-fonction {
+      opacity: 1;
+      animation: none;
+    }
+    .cnx-saisie input,
+    .cnx-bouton,
+    .cnx-oeil,
+    .cnx-fleche,
+    .cnx-fonction {
+      transition: none;
+    }
+  }
+  
+  /* ====================== Responsive ====================== */
+  
+  @media (max-width: 1150px) {
+    .cnx-fonctions {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Écrans peu hauts : on garde l'essentiel dans le panneau */
+  @media (max-height: 720px) and (min-width: 901px) {
+    .cnx-fonctions {
+      display: none;
+    }
+  }
+  
+  /* Tablette et mobile : le panneau devient un bandeau */
+  @media (max-width: 900px) {
+    .cnx-page {
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .cnx-panneau {
+      flex-shrink: 0;
+      gap: 0;
+      padding: 16px 20px 20px;
+      border-right: none;
+      border-bottom: 1px solid var(--cnx-bordure);
+    }
+    .cnx-panneau::before,
+    .cnx-hero,
+    .cnx-fonctions,
+    .cnx-decor {
+      display: none;
+    }
+    .cnx-ruban {
+      top: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: auto;
+      height: 4px;
+      background: linear-gradient(to right, var(--cnx-rouge) 50%, var(--cnx-vert) 50%);
+    }
+    .cnx-logo {
+      height: 42px;
+      max-width: 96px;
+    }
+    .cnx-ministere {
+      font-size: 0.65rem;
+    }
+    .cnx-institution {
+      font-size: 0.85rem;
+    }
+    .cnx-cote-formulaire {
+      flex: 1 0 auto;
+      overflow: visible;
+    }
+    .cnx-principal {
+      align-items: flex-start;
+      padding: 28px 16px;
+    }
+    .cnx-titre {
+      font-size: 1.45rem;
+    }
+  }

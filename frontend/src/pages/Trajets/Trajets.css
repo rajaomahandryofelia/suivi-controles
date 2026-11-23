@@ -1,0 +1,218 @@
+/* Page Trajets : préfixe « tj- ».
+   Les blocs communs (titre, période, filtres, synthèse) reprennent « trp- » de PageTracabilite.css. */
+
+/* ---------- Liste : une ligne cliquable par mission ---------- */
+
+.tj-liste { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+.tj-ligne {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 16px;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(16, 24, 40, 0.05);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+  animation: tj-entree 0.35s ease both;
+}
+.tj-ligne:hover { background: rgba(0, 122, 61, 0.06); border-color: rgba(0, 122, 61, 0.4); }
+.tj-ligne:active { transform: scale(0.99); }
+.tj-ligne:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+.tj-ligne.alerte { box-shadow: inset 3px 0 0 var(--rouge), 0 6px 20px rgba(16, 24, 40, 0.05); }
+
+.tj-puce { flex: 0 0 auto; width: 10px; height: 10px; background: #cbd5e1; border-radius: 50%; }
+.tj-puce.ok { background: var(--vert); }
+.tj-puce.encours { background: var(--vert); animation: tj-pouls 1.8s ease-out infinite; }
+
+.tj-ligne-texte { display: grid; flex: 1; min-width: 0; gap: 2px; }
+.tj-ligne-texte strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--texte);
+}
+.tj-ligne-texte span {
+  overflow: hidden;
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--texte-doux);
+}
+
+.tj-ligne-trajet { display: grid; flex: 0 0 auto; justify-items: end; gap: 2px; }
+.tj-ligne-trajet strong { font-size: 0.95rem; font-variant-numeric: tabular-nums; color: var(--texte); }
+.tj-ligne-trajet small { font-size: 0.74rem; color: var(--texte-doux); }
+
+.tj-chevron {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid var(--texte-doux);
+  border-right: 2px solid var(--texte-doux);
+  opacity: 0.6;
+  transform: rotate(45deg);
+}
+
+/* ---------- Détail d'un trajet ---------- */
+
+.tj-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  color: var(--texte-doux);
+}
+.tj-etat {
+  padding: 3px 11px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #006232;
+  background: #eaf6ef;
+  border: 1px solid #b9dfc9;
+  border-radius: 999px;
+}
+.tj-etat.encours { color: var(--vert); background: rgba(0, 122, 61, 0.06); border-color: rgba(0, 122, 61, 0.4); }
+
+.tj-erreur { display: grid; gap: 12px; justify-items: start; }
+
+.tj-chiffres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.tj-chiffre {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(16, 24, 40, 0.05);
+  animation: tj-entree 0.35s ease both;
+}
+.tj-chiffre strong {
+  font-size: 1.5rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: var(--texte);
+}
+.tj-chiffre span { font-size: 0.78rem; line-height: 1.35; color: var(--texte-doux); }
+.tj-chiffre.alerte { box-shadow: inset 3px 0 0 var(--rouge), 0 6px 20px rgba(16, 24, 40, 0.05); }
+.tj-chiffre.alerte strong { color: #8f1218; }
+
+/* ---------- Carte ---------- */
+
+.tj-carte-cadre {
+  position: relative;
+  height: clamp(320px, 56vh, 580px);
+  overflow: hidden;
+  background: #eef0f2;
+  border: 1px solid var(--bordure);
+  border-radius: 20px;
+  box-shadow: 0 8px 28px rgba(16, 24, 40, 0.08);
+}
+.tj-carte { width: 100%; height: 100%; }
+.tj-carte-voile {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  z-index: 500;
+  padding: 8px 16px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--texte);
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  transform: translateX(-50%);
+}
+
+.tj-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 12px 4px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+}
+.tj-legende li { display: inline-flex; align-items: center; gap: 8px; }
+.tj-trait { width: 22px; height: 4px; background: var(--vert); border-radius: 2px; }
+.tj-trait.gris {
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #9aa0a6 0 4px, transparent 4px 8px);
+}
+.tj-zone {
+  width: 14px;
+  height: 14px;
+  background: rgba(0, 122, 61, 0.1);
+  border: 2px dashed var(--vert);
+  border-radius: 50%;
+}
+
+.tj-note { margin: 10px 4px 0; font-size: 0.78rem; line-height: 1.45; color: var(--texte-doux); }
+
+.tj-trous { margin-top: 22px; }
+.tj-trous h2 {
+  margin: 0 0 8px 4px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+.tj-trous ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.tj-trous li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  padding: 0 16px;
+  font-size: 0.86rem;
+  color: var(--texte);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+}
+.tj-trous li strong { font-variant-numeric: tabular-nums; color: var(--texte-doux); }
+
+/* ---------- Animations ---------- */
+
+@keyframes tj-entree { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes tj-pouls {
+  0% { box-shadow: 0 0 0 0 rgba(0, 122, 61, 0.5); }
+  100% { box-shadow: 0 0 0 8px rgba(0, 122, 61, 0); }
+}
+
+/* ---------- Téléphone ---------- */
+
+@media (max-width: 640px) {
+  .tj-chiffres { grid-template-columns: 1fr 1fr; }
+  .tj-ligne { padding: 10px 12px; }
+}
+
+/* ---------- Mouvement réduit ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .tj-ligne,
+  .tj-chiffre,
+  .tj-puce.encours { animation: none; }
+  .tj-ligne { transition: none; }
+}

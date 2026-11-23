@@ -1,0 +1,153 @@
+/* Page Partenaires : préfixe « pat- ».
+   La pilule et le tableau viennent de ../Liste.css, et le détail du panneau
+   réutilise les styles « sit- » de ../Sites/Sites.css (importé par la page).
+   Les retouches sont limitées à « .pat-page ». */
+
+   .pat-ilot {
+    width: min(100%, 640px);
+  }
+  
+  /* ---------- Tableau : apparition en cascade, survol, flèche ---------- */
+  
+  .pat-page .lst-tableau tbody tr {
+    animation: pat-ligne 0.4s ease both;
+    transition: background 0.2s;
+  }
+  .pat-page .lst-tableau tbody tr:nth-child(2) { animation-delay: 40ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(3) { animation-delay: 80ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(4) { animation-delay: 120ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(5) { animation-delay: 160ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(6) { animation-delay: 200ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(7) { animation-delay: 240ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(8) { animation-delay: 280ms; }
+  .pat-page .lst-tableau tbody tr:nth-child(n + 9) { animation-delay: 320ms; }
+  
+  @keyframes pat-ligne {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  
+  .pat-page .lst-tableau tbody tr.cliquable:hover,
+  .pat-page .lst-tableau tbody tr.cliquable:focus-visible {
+    background: rgba(20, 83, 45, 0.05);
+  }
+  .pat-page .lst-chevron {
+    transition: transform 0.25s ease, color 0.2s ease;
+  }
+  .pat-page tr.cliquable:hover .lst-chevron,
+  .pat-page tr.cliquable:focus-visible .lst-chevron {
+    color: var(--vert);
+    transform: translateX(4px);
+  }
+  
+  /* ---------- Alerte « Dynamic Island » (verre neutre) ---------- */
+  
+  .pat-ile-zone {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 18px;
+  }
+  .pat-ile {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    height: 46px;
+    padding: 0 22px 0 16px;
+    overflow: hidden;
+    color: var(--texte, #1b2430);
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(16px) saturate(170%);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    animation: pat-ile-ouvre 0.8s cubic-bezier(0.2, 1.1, 0.3, 1) both;
+  }
+  .pat-ile-point {
+    position: relative;
+    flex-shrink: 0;
+    width: 12px;
+    height: 12px;
+    background: #d92d20;
+    border-radius: 50%;
+  }
+  .pat-ile-point::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #d92d20;
+    animation: pat-ile-onde 1.8s ease-out infinite;
+  }
+  .pat-ile-texte {
+    font-size: 0.86rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: pat-ile-texte 0.5s ease 0.45s both;
+  }
+  
+  @keyframes pat-ile-ouvre {
+    0% { max-width: 46px; padding-right: 0; opacity: 0; transform: translateY(-14px) scale(0.6); }
+    25% { opacity: 1; }
+    100% { max-width: 100%; padding-right: 22px; transform: none; }
+  }
+  @keyframes pat-ile-texte {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pat-ile-onde {
+    0% { transform: scale(1); opacity: 0.7; }
+    100% { transform: scale(3); opacity: 0; }
+  }
+  
+  @media (max-width: 640px) {
+    .pat-ile { height: auto; min-height: 46px; padding: 10px 18px 10px 16px; border-radius: 24px; }
+    .pat-ile-texte { white-space: normal; }
+  }
+  
+  /* ---------- Détail (dans le carré de verre) ---------- */
+  
+  .pat-note {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    color: var(--texte-doux);
+    background: rgba(246, 248, 247, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+  }
+  
+  .pat-lien {
+    color: var(--vert);
+    text-decoration: none;
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.25s;
+  }
+  
+  .pat-lien:hover,
+  .pat-lien:focus-visible {
+    background-size: 100% 1px;
+  }
+  
+  /* Tableau des sites du partenaire : bande de verre translucide */
+  .pat-page .sit-mini-cadre {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(16, 24, 40, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .pat-page .lst-tableau tbody tr,
+    .pat-ile,
+    .pat-ile-texte,
+    .pat-ile-point::after { animation: none; }
+    .pat-page .lst-chevron,
+    .pat-lien { transition: none; }
+  }

@@ -1,0 +1,79 @@
+/* Aides à la saisie (Connexion et Inscription). Utilise les variables de .cnx-page. */
+
+.aide-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  
+  /* ---------- Verr. Maj. ---------- */
+  .aide-verrmaj-zone {
+    margin: 0;
+  }
+  .aide-verrmaj {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    color: #8a5a00;
+  }
+  .aide-verrmaj svg {
+    flex-shrink: 0;
+  }
+  
+  /* ---------- Force du mot de passe ---------- */
+  .aide-force {
+    margin: 0 0 18px;
+  }
+  .aide-force-barres {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .aide-force-barres span {
+    height: 5px;
+    background: var(--cnx-bordure, #e5e7eb);
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+  .aide-force-barres .actif.niveau-1 { background: var(--cnx-rouge, #ed1c24); }
+  .aide-force-barres .actif.niveau-2 { background: #d68910; }
+  .aide-force-barres .actif.niveau-3 { background: #4caf7a; }
+  .aide-force-barres .actif.niveau-4 { background: var(--cnx-vert, #007a3d); }
+  
+  .aide-force-texte {
+    margin: 6px 0 4px;
+    font-size: 0.82rem;
+    color: var(--cnx-texte-doux, #5b6168);
+  }
+  .aide-force-regles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+    color: var(--cnx-texte-doux, #5b6168);
+  }
+  .aide-force-regles li {
+    display: flex;
+    gap: 6px;
+  }
+  .aide-force-regles li.ok {
+    color: var(--cnx-vert, #007a3d);
+  }
+  
+  /* Confirmation concordante */
+  .ins-ok-champ {
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    color: var(--cnx-vert, #007a3d);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .aide-force-barres span {
+      transition: none;
+    }
+  }

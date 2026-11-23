@@ -1,0 +1,372 @@
+/* Fiche détaillée d'une demande (fenêtre superposée). Préfixe « tdb- ».
+   Style verre sobre : fenêtre arrondie translucide, avatar noir, champs en petites cartes de verre.
+   Seul le CSS change : FicheDemande.tsx reste identique. */
+
+/* ---------- Fond assombri et flouté ---------- */
+
+.tdb-fond {
+  --f-vert: #007a3d;
+  --f-vert-fonce: #006232;
+  --f-rouge: #ed1c24;
+  --f-texte: #1f2933;
+  --f-doux: #5b6168;
+  --f-ressort: cubic-bezier(0.32, 1.25, 0.4, 1);
+
+  --ico-personne: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23007a3d%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27M20%2021v-2a4%204%200%200%200-4-4H8a4%204%200%200%200-4%204v2%27/%3E%3Ccircle%20cx=%2712%27%20cy=%277%27%20r=%274%27/%3E%3C/svg%3E");
+  --ico-badge: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23007a3d%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Crect%20x=%273%27%20y=%275%27%20width=%2718%27%20height=%2714%27%20rx=%272%27/%3E%3Ccircle%20cx=%279%27%20cy=%2711%27%20r=%272%27/%3E%3Cpath%20d=%27M6%2016c.8-1.6%204.2-1.6%206%200%27/%3E%3Cpath%20d=%27M14%2010h4M14%2014h3%27/%3E%3C/svg%3E");
+  --ico-telephone: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23007a3d%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27M22%2016.9v3a2%202%200%200%201-2.2%202%2019.8%2019.8%200%200%201-8.6-3.1%2019.5%2019.5%200%200%201-6-6A19.8%2019.8%200%200%201%202.1%204.2%202%202%200%200%201%204.1%202h3a2%202%200%200%201%202%201.7c.1%201%20.4%201.9.7%202.8a2%202%200%200%201-.5%202.1L8.1%209.9a16%2016%200%200%200%206%206l1.3-1.3a2%202%200%200%201%202.1-.4c.9.3%201.8.6%202.8.7a2%202%200%200%201%201.7%202z%27/%3E%3C/svg%3E");
+  --ico-courrier: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23007a3d%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Crect%20x=%272%27%20y=%274%27%20width=%2720%27%20height=%2716%27%20rx=%272%27/%3E%3Cpath%20d=%27m22%207-10%206L2%207%27/%3E%3C/svg%3E");
+  --ico-compte: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23007a3d%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Ccircle%20cx=%2712%27%20cy=%2712%27%20r=%2710%27/%3E%3Ccircle%20cx=%2712%27%20cy=%2710%27%20r=%273%27/%3E%3Cpath%20d=%27M7%2020.7a5%205%200%200%201%2010%200%27/%3E%3C/svg%3E");
+  --ico-info: url("data:image/svg+xml,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23007a3d%27%20stroke-width=%271.8%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Ccircle%20cx=%2712%27%20cy=%2712%27%20r=%2710%27/%3E%3Cpath%20d=%27M12%2016v-4M12%208h.01%27/%3E%3C/svg%3E");
+
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(15, 23, 42, 0.35);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  animation: tdb-fond-apparition 0.25s ease-out;
+}
+
+/* ---------- Fenêtre : verre ---------- */
+
+.tdb-fiche {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.84);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  backdrop-filter: blur(28px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  animation: tdb-fiche-apparition 0.5s var(--f-ressort) both;
+}
+
+.tdb-fiche:focus {
+  outline: none;
+}
+
+/* ---------- En-tête ---------- */
+
+.tdb-fiche-tete {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 22px 16px 24px;
+  border-bottom: 1px solid rgba(16, 24, 40, 0.07);
+}
+
+/* Avatar : initiales dans un rond noir */
+.tdb-fiche-tete .tdb-avatar {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #0b0b0c;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(11, 11, 12, 0.25);
+}
+
+.tdb-fiche-titres {
+  flex: 1;
+  min-width: 0;
+}
+
+.tdb-fiche-titres h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--f-texte);
+  overflow-wrap: anywhere;
+}
+
+/* Statut « en attente » : petite pastille ambre */
+.tdb-fiche-titres p {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 3px 11px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #8a5a00;
+  background: rgba(214, 137, 16, 0.12);
+  border: 1px solid rgba(214, 137, 16, 0.3);
+  border-radius: 999px;
+}
+
+.tdb-fiche-titres p::before {
+  content: "";
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d68910;
+}
+
+/* Bouton fermer */
+.tdb-fiche-fermer {
+  flex-shrink: 0;
+  align-self: flex-start;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  color: var(--f-doux);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.35s var(--f-ressort);
+}
+
+.tdb-fiche-fermer:hover {
+  color: var(--f-rouge);
+  background: #ffffff;
+  transform: rotate(90deg);
+}
+
+.tdb-fiche-fermer:focus-visible {
+  outline: 2px solid var(--f-vert);
+  outline-offset: 2px;
+}
+
+/* ---------- Informations : petites cartes de verre ---------- */
+
+.tdb-fiche-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+  padding: 18px 24px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 122, 61, 0.35) transparent;
+}
+
+.tdb-fiche-item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 12px;
+  padding: 11px 14px 11px 12px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Pastille d'icône */
+.tdb-fiche-item::before {
+  content: "";
+  grid-row: 1 / 3;
+  width: 36px;
+  height: 36px;
+  background-color: rgba(0, 122, 61, 0.1);
+  background-image: var(--ico-info);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
+  border-radius: 50%;
+}
+
+/* Les six champs principaux sont toujours dans cet ordre (voir CHAMPS_PRINCIPAUX) */
+.tdb-fiche-item:nth-child(1)::before,
+.tdb-fiche-item:nth-child(2)::before { background-image: var(--ico-personne); }
+.tdb-fiche-item:nth-child(3)::before { background-image: var(--ico-badge); }
+.tdb-fiche-item:nth-child(4)::before { background-image: var(--ico-telephone); }
+.tdb-fiche-item:nth-child(5)::before { background-image: var(--ico-courrier); }
+.tdb-fiche-item:nth-child(6)::before { background-image: var(--ico-compte); }
+
+/* L'adresse e-mail (souvent longue) prend toute la largeur */
+.tdb-fiche-item:nth-child(5) {
+  grid-column: 1 / -1;
+}
+/* L'identifiant aussi, s'il est seul sur sa ligne */
+.tdb-fiche-item:nth-child(6):last-child {
+  grid-column: 1 / -1;
+}
+
+.tdb-fiche-item dt {
+  margin: 0 0 1px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--f-doux);
+}
+
+.tdb-fiche-item dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--f-texte);
+  overflow-wrap: anywhere;
+}
+
+.tdb-fiche-item dd.vide {
+  font-weight: 400;
+  font-style: italic;
+  color: #9ca3af;
+}
+
+/* ---------- Pied : actions en pilules ---------- */
+
+.tdb-fiche-pied {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 24px 20px;
+  border-top: 1px solid rgba(16, 24, 40, 0.07);
+}
+
+.tdb-fiche-bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  margin: 0;
+  padding: 0 22px;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.25s ease, transform 0.35s var(--f-ressort);
+}
+
+.tdb-fiche-bouton:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Accepter : vert plein */
+.tdb-fiche-bouton.accepter {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00a152, #007a3d);
+  border: 1px solid transparent;
+  box-shadow: 0 6px 16px rgba(0, 122, 61, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.tdb-fiche-bouton.accepter:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00a152, #006232);
+  box-shadow: 0 10px 22px rgba(0, 122, 61, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Refuser : verre avec contour rouge, se remplit au survol */
+.tdb-fiche-bouton.refuser {
+  color: var(--f-rouge);
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(237, 28, 36, 0.45);
+}
+
+.tdb-fiche-bouton.refuser:hover:not(:disabled) {
+  color: #ffffff;
+  background: var(--f-rouge);
+  border-color: var(--f-rouge);
+  box-shadow: 0 8px 18px rgba(237, 28, 36, 0.28);
+  transform: translateY(-1px);
+}
+
+.tdb-fiche-bouton:focus-visible {
+  outline: 2px solid var(--f-vert);
+  outline-offset: 2px;
+}
+
+.tdb-fiche-bouton.refuser:focus-visible {
+  outline-color: var(--f-rouge);
+}
+
+.tdb-fiche-bouton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---------- Animations ---------- */
+
+@keyframes tdb-fond-apparition {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes tdb-fiche-apparition {
+  from { opacity: 0; transform: translateY(18px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tdb-fond,
+  .tdb-fiche {
+    animation: none;
+  }
+  .tdb-fiche-fermer,
+  .tdb-fiche-bouton {
+    transition: none;
+  }
+  .tdb-fiche-fermer:hover,
+  .tdb-fiche-bouton.accepter:hover:not(:disabled),
+  .tdb-fiche-bouton.refuser:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* ---------- Petits écrans ---------- */
+
+@media (max-width: 520px) {
+  .tdb-fiche {
+    border-radius: 24px;
+  }
+  .tdb-fiche-tete {
+    gap: 12px;
+    padding: 18px 14px 14px 16px;
+  }
+  .tdb-fiche-tete .tdb-avatar {
+    width: 46px;
+    height: 46px;
+    font-size: 0.95rem;
+  }
+  .tdb-fiche-titres h2 {
+    font-size: 1.1rem;
+  }
+  .tdb-fiche-grille {
+    grid-template-columns: 1fr;
+    padding: 14px 16px;
+  }
+  .tdb-fiche-pied {
+    flex-direction: column-reverse;
+    padding: 12px 16px 18px;
+  }
+  .tdb-fiche-bouton {
+    width: 100%;
+  }
+}

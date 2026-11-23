@@ -1,0 +1,100 @@
+/* Menu latéral : 3 sections repliables (s'ajoute à Layout.css sans le modifier) */
+
+.menu-groupe {
+    margin-top: 6px;
+  }
+  
+  /* ---------- En-tête de section (le bouton sur lequel on clique) ---------- */
+  
+  .menu-groupe-entete {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--texte-doux);
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  
+  .menu-groupe-titre {
+    flex: 1;
+  }
+  
+  .menu-groupe-entete:hover {
+    color: var(--vert);
+    background: rgba(0, 122, 61, 0.1);
+  }
+  
+  .menu-groupe-entete:focus-visible {
+    outline: 2px solid var(--vert);
+    outline-offset: -2px;
+  }
+  
+  .menu-groupe.ouvert > .menu-groupe-entete {
+    color: var(--vert);
+  }
+  
+  /* Section qui contient la page affichée */
+  .menu-groupe.contient-page > .menu-groupe-entete {
+    color: var(--vert);
+  }
+  
+  /* Petit point vert : « la page où vous êtes est dans cette section » (visible quand elle est repliée) */
+  .menu-groupe-point {
+    width: 7px;
+    height: 7px;
+    background: var(--vert);
+    border-radius: 50%;
+  }
+  
+  .menu-chevron {
+    flex: 0 0 auto;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  .menu-groupe.ouvert .menu-chevron {
+    transform: rotate(180deg);
+  }
+  
+  /* ---------- Liste des pages de la section : déroulement animé ---------- */
+  
+  .menu-groupe-liste {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden; /* replié : les liens ne reçoivent plus le focus clavier */
+    transition: grid-template-rows 0.3s ease, visibility 0s linear 0.3s;
+  }
+  
+  .menu-groupe.ouvert .menu-groupe-liste {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.3s ease, visibility 0s linear 0s;
+  }
+  
+  .menu-groupe-interieur {
+    min-height: 0;
+    overflow: hidden;
+    /* trait vertical : les pages « appartiennent » à la section */
+    margin-left: 18px;
+    padding-left: 6px;
+    border-left: 1px solid var(--bordure);
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .menu-groupe-entete,
+    .menu-chevron,
+    .menu-groupe-liste,
+    .menu-groupe.ouvert .menu-groupe-liste {
+      transition: none;
+    }
+  }

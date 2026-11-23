@@ -1,0 +1,427 @@
+/* Demandes d'inscription : carte, liste et menu d'actions (⋮). Préfixe « tdb- ».
+   Même style que la fiche : ruban rouge et vert, avatars lumineux, cartes qui s'animent.
+   Seul le CSS change : DemandesInscription.tsx et MenuDemande.tsx restent identiques.
+   (Les sélecteurs :has() ne servent qu'à habiller cette carte sans toucher aux autres ;
+   sur un navigateur très ancien, la carte garde simplement le style de base.) */
+
+   :root {
+    /* Palette de la charte, indépendante des variables globales de l'application */
+    --dm-vert: #007a3d;
+    --dm-vert-fonce: #006232;
+    --dm-vert-pale: #eaf6ef;
+    --dm-rouge: #ed1c24;
+    --dm-texte: #1f2933;
+    --dm-doux: #5b6168;
+    --dm-bordure: #e5e7eb;
+  }
+  
+  /* ---------- Carte « Demandes d'inscription » (repérée par son sous-titre) ---------- */
+  
+  .tdb-carte:has(> .tdb-carte-tete p) {
+    position: relative;
+    z-index: 2; /* le menu ⋮ peut dépasser de la carte sans passer sous les indicateurs */
+    padding-top: 26px;
+  }
+  
+  /* Ruban rouge et vert qui se déploie en haut de la carte */
+  .tdb-carte:has(> .tdb-carte-tete p)::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+    background: linear-gradient(to right, var(--dm-rouge) 50%, var(--dm-vert) 50%);
+    transform-origin: left;
+    animation: tdb-ruban-carte 0.8s 0.15s cubic-bezier(0.2, 0.9, 0.3, 1) backwards;
+  }
+  
+  /* En-tête : icône lumineuse et titre plus affirmé */
+  .tdb-carte-tete:has(p) .tdb-icone {
+    width: 46px;
+    height: 46px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #00a152 0%, #007a3d 100%);
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(0, 122, 61, 0.3);
+  }
+  .tdb-carte-tete:has(p) h2 {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--dm-texte);
+  }
+  .tdb-carte-tete:has(p) p {
+    font-size: 0.85rem;
+    color: var(--dm-doux);
+  }
+  
+  /* Pastille du nombre de demandes (rouge : il y a quelque chose à traiter) */
+  .tdb-badge {
+    margin-left: auto;
+    min-width: 30px;
+    padding: 3px 11px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-align: center;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff3b42 0%, #ed1c24 100%);
+    border-radius: 999px;
+    box-shadow: 0 4px 12px rgba(237, 28, 36, 0.35);
+    animation: tdb-badge-pulse 2.4s ease-in-out infinite;
+  }
+  
+  /* ---------- Liste ---------- */
+  
+  .tdb-demandes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .tdb-demande {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px 14px 22px;
+    background: #ffffff;
+    border: 1px solid var(--dm-bordure);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    /* « backwards » : aucune transformation ne reste après l'animation (le menu ⋮ passe par-dessus) */
+    animation: tdb-demande-apparition 0.5s cubic-bezier(0.2, 0.9, 0.3, 1) backwards;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .tdb-demande:nth-child(1) { animation-delay: 0.1s; }
+  .tdb-demande:nth-child(2) { animation-delay: 0.16s; }
+  .tdb-demande:nth-child(3) { animation-delay: 0.22s; }
+  .tdb-demande:nth-child(4) { animation-delay: 0.28s; }
+  .tdb-demande:nth-child(5) { animation-delay: 0.34s; }
+  .tdb-demande:nth-child(n + 6) { animation-delay: 0.4s; }
+  
+  /* Liseré rouge et vert à gauche : s'allonge au survol */
+  .tdb-demande::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 16px;
+    bottom: 16px;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: linear-gradient(to bottom, var(--dm-rouge) 50%, var(--dm-vert) 50%);
+    transition: top 0.25s ease, bottom 0.25s ease;
+  }
+  
+  .tdb-demande:hover {
+    z-index: 4;
+    transform: translateY(-2px);
+    border-color: rgba(0, 122, 61, 0.4);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.09);
+  }
+  .tdb-demande:hover::before {
+    top: 8px;
+    bottom: 8px;
+  }
+  /* La ligne dont le menu est ouvert reste au-dessus des suivantes */
+  .tdb-demande:focus-within {
+    z-index: 5;
+  }
+  
+  /* Avatar : initiales sur dégradé vert, avec halo */
+  .tdb-demande .tdb-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+    background: linear-gradient(135deg, #00a152 0%, #007a3d 100%);
+    box-shadow: 0 0 0 3px #ffffff, 0 0 0 4px rgba(0, 122, 61, 0.22), 0 6px 14px rgba(0, 122, 61, 0.28);
+    transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.3, 1);
+  }
+  .tdb-demande:hover .tdb-avatar {
+    transform: scale(1.07);
+  }
+  
+  .tdb-demande-infos {
+    min-width: 0;
+  }
+  .tdb-demande-infos strong {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dm-texte);
+  }
+  .tdb-demande-infos span {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.86rem;
+    color: var(--dm-doux);
+    overflow-wrap: anywhere;
+  }
+  
+  .tdb-demande-actions {
+    display: flex;
+    gap: 8px;
+  }
+  
+  /* Ancien style du bouton « Refuser » (conservé tel quel) */
+  .application .bouton.tdb-refuser {
+    color: var(--rouge);
+    background: #ffffff;
+    border: 1px solid #fbd0d2;
+  }
+  .application .bouton.tdb-refuser:hover:not(:disabled) {
+    color: var(--rouge);
+    background: #fef2f2;
+    box-shadow: none;
+  }
+  
+  /* ---------- Aucune demande : état vide illustré ---------- */
+  
+  .tdb-carte-tete:has(p) ~ .tdb-vide {
+    padding: 30px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--dm-doux);
+    background: linear-gradient(160deg, #f3faf6 0%, #ffffff 80%);
+    border: 1px dashed rgba(0, 122, 61, 0.35);
+    border-radius: 14px;
+  }
+  .tdb-carte-tete:has(p) ~ .tdb-vide::before {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 52px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    background-color: var(--dm-vert-pale);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007a3d' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 26px 26px;
+    animation: tdb-pastille-apparition 0.6s 0.2s cubic-bezier(0.2, 1.2, 0.3, 1) backwards;
+  }
+  
+  /* ---------- Menu ⋮ (actions d'une demande) ---------- */
+  
+  .tdb-menu {
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .tdb-menu-declencheur {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: 0;
+    color: var(--dm-doux);
+    background: #ffffff;
+    border: 1px solid var(--dm-bordure);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+      box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .tdb-menu-declencheur:hover:not(:disabled) {
+    color: var(--dm-vert);
+    background: var(--dm-vert-pale);
+    border-color: rgba(0, 122, 61, 0.4);
+  }
+  .tdb-menu-declencheur[aria-expanded="true"] {
+    color: #ffffff;
+    background: var(--dm-vert);
+    border-color: var(--dm-vert);
+    box-shadow: 0 6px 16px rgba(0, 122, 61, 0.32);
+  }
+  .tdb-menu-declencheur:focus-visible {
+    outline: 3px solid rgba(0, 122, 61, 0.35);
+    outline-offset: 2px;
+  }
+  .tdb-menu-declencheur:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .tdb-menu-liste {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 30;
+    min-width: 200px;
+    margin: 0;
+    padding: 6px;
+    list-style: none;
+    background: #ffffff;
+    border: 1px solid var(--dm-bordure);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18), 0 2px 6px rgba(15, 23, 42, 0.06);
+    transform-origin: top right;
+    animation: tdb-menu-apparition 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+  }
+  /* Petite pointe qui relie le menu à son bouton */
+  .tdb-menu-liste::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 15px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-top: 1px solid var(--dm-bordure);
+    border-left: 1px solid var(--dm-bordure);
+    border-radius: 3px 0 0 0;
+    transform: rotate(45deg);
+  }
+  
+  .tdb-menu-liste > li {
+    position: relative;
+    animation: tdb-menu-item-apparition 0.25s ease-out backwards;
+  }
+  .tdb-menu-liste > li:nth-child(1) { animation-delay: 0.04s; }
+  .tdb-menu-liste > li:nth-child(3) { animation-delay: 0.08s; }
+  .tdb-menu-liste > li:nth-child(4) { animation-delay: 0.12s; }
+  
+  .tdb-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 0;
+    padding: 10px 12px;
+    font: inherit;
+    font-size: 0.93rem;
+    font-weight: 600;
+    text-align: left;
+    color: var(--dm-texte);
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .tdb-menu-item svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .tdb-menu-item:hover,
+  .tdb-menu-item:focus-visible {
+    outline: none;
+    border: none;
+    background: #f3f4f6;
+  }
+  .tdb-menu-item:hover svg,
+  .tdb-menu-item:focus-visible svg {
+    transform: translateX(2px) scale(1.08);
+  }
+  
+  .tdb-menu-separateur {
+    height: 1px;
+    margin: 6px 6px;
+    background: var(--dm-bordure);
+    list-style: none;
+  }
+  
+  .tdb-menu-item.consulter {
+    color: var(--dm-texte);
+  }
+  .tdb-menu-item.consulter:hover,
+  .tdb-menu-item.consulter:focus-visible {
+    color: var(--dm-vert);
+    background: var(--dm-vert-pale);
+  }
+  
+  .tdb-menu-item.accepter {
+    color: var(--dm-vert);
+  }
+  .tdb-menu-item.accepter:hover,
+  .tdb-menu-item.accepter:focus-visible {
+    background: #e3f4ea;
+  }
+  
+  .tdb-menu-item.refuser {
+    color: var(--dm-rouge);
+  }
+  .tdb-menu-item.refuser:hover,
+  .tdb-menu-item.refuser:focus-visible {
+    background: #fdeced;
+  }
+  
+  /* ---------- Animations ---------- */
+  
+  @keyframes tdb-demande-apparition {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes tdb-ruban-carte {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+  
+  @keyframes tdb-badge-pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(237, 28, 36, 0.35), 0 0 0 0 rgba(237, 28, 36, 0.45); }
+    50%      { box-shadow: 0 4px 12px rgba(237, 28, 36, 0.35), 0 0 0 7px rgba(237, 28, 36, 0); }
+  }
+  
+  @keyframes tdb-pastille-apparition {
+    from { opacity: 0; transform: scale(0.4); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  
+  @keyframes tdb-menu-apparition {
+    from { opacity: 0; transform: translateY(-6px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  
+  @keyframes tdb-menu-item-apparition {
+    from { opacity: 0; transform: translateX(8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .tdb-carte:has(> .tdb-carte-tete p)::before,
+    .tdb-badge,
+    .tdb-demande,
+    .tdb-carte-tete:has(p) ~ .tdb-vide::before,
+    .tdb-menu-liste,
+    .tdb-menu-liste > li {
+      animation: none;
+    }
+    .tdb-demande,
+    .tdb-demande::before,
+    .tdb-demande .tdb-avatar,
+    .tdb-menu-declencheur,
+    .tdb-menu-item,
+    .tdb-menu-item svg {
+      transition: none;
+    }
+    .tdb-demande:hover,
+    .tdb-demande:hover .tdb-avatar,
+    .tdb-menu-item:hover svg,
+    .tdb-menu-item:focus-visible svg {
+      transform: none;
+    }
+  }
+  
+  /* ---------- Petits écrans : l'avatar, les infos et le menu ⋮ restent sur une ligne ---------- */
+  
+  @media (max-width: 640px) {
+    .tdb-demande {
+      gap: 12px;
+      padding: 12px 12px 12px 18px;
+    }
+    .tdb-demande .tdb-avatar {
+      width: 42px;
+      height: 42px;
+      font-size: 0.9rem;
+    }
+    .tdb-menu-liste {
+      min-width: 184px;
+    }
+  }

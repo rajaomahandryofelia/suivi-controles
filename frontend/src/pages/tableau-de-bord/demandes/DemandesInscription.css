@@ -1,0 +1,253 @@
+/* Demandes d'inscription : carte de verre, lignes en pilules, deux boutons par ligne */
+
+.dem-carte {
+    padding: 20px 22px 14px;
+    background: var(--verre-fond-fort, rgba(255, 255, 255, 0.72));
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
+    backdrop-filter: blur(18px) saturate(170%);
+    border: 1px solid var(--verre-bord, rgba(255, 255, 255, 0.85));
+    border-radius: var(--rayon-panneau, 28px);
+    box-shadow:
+      0 1px 2px rgba(16, 24, 40, 0.04),
+      0 10px 30px rgba(16, 24, 40, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  
+  .dem-tete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .dem-titres h2 {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  
+  .dem-titres p {
+    margin: 2px 0 0;
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+  }
+  
+  /* Petite île noire avec le nombre de demandes */
+  .dem-compteur {
+    flex: none;
+    min-width: 28px;
+    padding: 3px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    color: #ffffff;
+    background: #0b0b0c;
+    border-radius: 999px;
+  }
+  
+  .dem-vide {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 8px 0 10px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--texte-doux);
+  }
+  
+  .dem-vide-point {
+    width: 8px;
+    height: 8px;
+    background: var(--vert, #007a3d);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.16);
+  }
+  
+  /* ---------- Lignes ---------- */
+  
+  .dem-liste {
+    display: grid;
+    gap: 4px;
+  }
+  
+  .dem-ligne {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 10px 6px 6px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, opacity 0.2s ease;
+  }
+  
+  .dem-ligne:hover {
+    background: rgba(0, 122, 61, 0.07);
+    border-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 6px 18px rgba(0, 122, 61, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  }
+  
+  /* Demande en cours de traitement : grisée, plus rien ne se clique */
+  .dem-ligne.traitement {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+  
+  .dem-ligne-corps {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding: 0;
+    font-family: inherit;
+    text-align: left;
+    color: var(--texte);
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  
+  .dem-ligne-corps:focus-visible {
+    outline: 2px solid var(--vert, #007a3d);
+    outline-offset: 2px;
+  }
+  
+  /* Initiales dans un rond noir, comme les petites îles */
+  .dem-avatar {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: #0b0b0c;
+    border-radius: 50%;
+  }
+  
+  .dem-ligne-infos {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+  }
+  
+  .dem-ligne-infos strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  
+  .dem-ligne-infos span {
+    font-size: 0.78rem;
+    line-height: 1.3;
+    color: var(--texte-doux);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* ---------- Boutons Refuser / Accepter ---------- */
+  
+  .dem-ligne-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .dem-bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 15px;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+      box-shadow 0.25s ease, transform 0.35s var(--ressort, ease);
+  }
+  
+  .dem-bouton:active:not(:disabled) {
+    transform: scale(0.96);
+  }
+  
+  .dem-bouton:focus-visible {
+    outline: 2px solid var(--vert, #007a3d);
+    outline-offset: 2px;
+  }
+  
+  .dem-bouton:disabled {
+    cursor: not-allowed;
+  }
+  
+  /* Refuser : verre avec contour rouge, se remplit au survol */
+  .dem-bouton.refuser {
+    color: var(--rouge, #ed1c24);
+    background: rgba(255, 255, 255, 0.65);
+    border: 1px solid rgba(237, 28, 36, 0.4);
+  }
+  
+  .dem-bouton.refuser:hover:not(:disabled) {
+    color: #ffffff;
+    background: var(--rouge, #ed1c24);
+    border-color: var(--rouge, #ed1c24);
+    box-shadow: 0 6px 16px rgba(237, 28, 36, 0.28);
+    transform: translateY(-1px);
+  }
+  
+  /* Accepter : vert plein */
+  .dem-bouton.accepter {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00a152, #007a3d);
+    border: 1px solid transparent;
+    box-shadow: 0 4px 12px rgba(0, 122, 61, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+  
+  .dem-bouton.accepter:hover:not(:disabled) {
+    background: linear-gradient(135deg, #00a152, #006232);
+    box-shadow: 0 8px 18px rgba(0, 122, 61, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+  }
+  
+  /* ---------- Petits écrans et accessibilité ---------- */
+  
+  @media (max-width: 640px) {
+    .dem-ligne {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 8px;
+      padding: 10px;
+      border-radius: 24px;
+    }
+    .dem-ligne-actions {
+      justify-content: flex-end;
+    }
+  }
+  
+  @media (max-width: 560px) {
+    .dem-carte {
+      padding: 16px 14px 10px;
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .dem-ligne,
+    .dem-bouton {
+      transition: none;
+    }
+    .dem-bouton.refuser:hover:not(:disabled),
+    .dem-bouton.accepter:hover:not(:disabled) {
+      transform: none;
+    }
+  }

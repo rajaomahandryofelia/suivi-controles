@@ -1,0 +1,225 @@
+/* Parcours des contrôles : quatre étapes reliées, une ligne de demandes en dessous */
+
+.ind-panneau.ind-proc {
+    padding: 20px 22px 18px;
+  }
+  
+  /* Le panneau entier ne se soulève pas : ce sont les étapes qui réagissent */
+  .ind-proc:hover {
+    transform: none;
+  }
+  
+  .ind-proc-etapes {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 28px;
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .ind-proc-etape {
+    position: relative;
+    min-width: 0;
+  }
+  
+  /* Petite flèche entre deux étapes */
+  .ind-proc-etape:not(:last-child)::after {
+    content: "›";
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    width: 16px;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-align: center;
+    color: #9ca3af;
+    pointer-events: none;
+  }
+  
+  /* ---------- Une étape ---------- */
+  
+  .ind-proc-carte {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+    height: 100%;
+    padding: 14px 16px 16px;
+    font-family: inherit;
+    text-align: left;
+    color: var(--texte);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--verre-bord);
+    border-radius: 22px;
+    box-shadow: var(--verre-reflet);
+    cursor: pointer;
+    transition: transform 0.45s var(--ressort), box-shadow 0.3s ease, border-color 0.25s ease;
+  }
+  
+  .ind-proc-carte:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(16, 24, 40, 0.12), var(--verre-reflet);
+  }
+  
+  .ind-proc-carte:active {
+    transform: scale(0.985);
+  }
+  
+  .ind-proc-carte:focus-visible {
+    outline: 2px solid var(--vert);
+    outline-offset: 2px;
+  }
+  
+  .ind-proc-carte.attention {
+    border-color: rgba(217, 164, 0, 0.45);
+  }
+  
+  .ind-proc-carte.danger {
+    border-color: rgba(237, 28, 36, 0.4);
+  }
+  
+  .ind-proc-tete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    min-height: 22px;
+    margin-bottom: 6px;
+  }
+  
+  .ind-proc-rang {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--texte-doux);
+    background: rgba(16, 24, 40, 0.07);
+    border-radius: 50%;
+  }
+  
+  .ind-proc-tag {
+    padding: 2px 9px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-radius: 999px;
+  }
+  
+  .ind-proc-carte.attention .ind-proc-tag {
+    color: #8a6d00;
+    background: rgba(217, 164, 0, 0.16);
+  }
+  
+  .ind-proc-carte.danger .ind-proc-tag {
+    color: #b91c1c;
+    background: rgba(237, 28, 36, 0.12);
+  }
+  
+  .ind-proc-nombre {
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+    color: var(--texte);
+  }
+  
+  .ind-proc-carte.vide .ind-proc-nombre {
+    color: #b6bcc4;
+  }
+  
+  .ind-proc-libelle {
+    font-size: 0.84rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--texte-doux);
+  }
+  
+  .ind-proc-note {
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #b91c1c;
+  }
+  
+  /* ---------- Demandes d'inscription : une seule ligne ---------- */
+  
+  .ind-proc-demandes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 600;
+    text-align: left;
+    color: #1d4ed8;
+    background: rgba(29, 78, 216, 0.07);
+    border: 1px solid rgba(29, 78, 216, 0.18);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.4s var(--ressort);
+  }
+  
+  .ind-proc-demandes:hover {
+    background: rgba(29, 78, 216, 0.12);
+    transform: translateY(-1px);
+  }
+  
+  .ind-proc-demandes:active {
+    transform: scale(0.99);
+  }
+  
+  .ind-proc-demandes:focus-visible {
+    outline: 2px solid var(--vert);
+    outline-offset: 2px;
+  }
+  
+  .ind-proc-demandes-point {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    background: #1d4ed8;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.16);
+  }
+  
+  .ind-proc-demandes-action {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  
+  /* ---------- Petits écrans et accessibilité ---------- */
+  
+  @media (max-width: 760px) {
+    .ind-proc-etapes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .ind-proc-etape:not(:last-child)::after {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 420px) {
+    .ind-proc-etapes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ind-proc-carte,
+    .ind-proc-demandes {
+      transition: none;
+    }
+    .ind-proc-carte:hover,
+    .ind-proc-demandes:hover {
+      transform: none;
+    }
+  }

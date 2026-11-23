@@ -1,0 +1,124 @@
+/* Fenêtre « Êtes-vous sûr de vouloir vous déconnecter ? » – préfixe « deco- »
+   (mêmes couleurs que les pages de connexion et le tableau de bord) */
+
+   .deco-fond {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(17, 24, 39, 0.5);
+    animation: deco-fond-apparition 0.2s ease-out;
+  }
+  
+  .deco-fenetre {
+    width: 100%;
+    max-width: 440px;
+    padding: 28px 24px 22px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(16, 24, 40, 0.3);
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    animation: deco-fenetre-apparition 0.25s ease-out;
+  }
+  
+  .deco-icone {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    margin: 0 auto 16px;
+    color: var(--vert, #007a3d);
+    background: var(--vert-pale, #eaf6ef);
+    border-radius: 16px;
+  }
+  
+  .deco-fenetre h2 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--texte, #343434);
+  }
+  
+  .deco-fenetre p {
+    margin: 0 0 22px;
+    font-size: 0.97rem;
+    line-height: 1.45;
+    color: var(--gris, #5b6168);
+  }
+  
+  .deco-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .deco-bouton {
+    flex: 1;
+    min-height: 44px;
+    margin: 0;
+    padding: 0 14px;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  
+  .deco-bouton.non {
+    color: var(--texte, #343434);
+    background: #ffffff;
+    border: 1px solid var(--bordure-champ, #d1d5db);
+  }
+  .deco-bouton.non:hover {
+    background: #f3f4f6;
+  }
+  
+  .deco-bouton.oui {
+    color: #ffffff;
+    background: var(--vert, #007a3d);
+    border: 1px solid var(--vert, #007a3d);
+    box-shadow: 0 4px 12px rgba(0, 122, 61, 0.24);
+  }
+  .deco-bouton.oui:hover {
+    background: var(--vert-survol, #006232);
+    border-color: var(--vert-survol, #006232);
+    transform: translateY(-1px);
+  }
+  
+  .deco-bouton:focus-visible {
+    outline: 3px solid rgba(0, 122, 61, 0.35);
+    outline-offset: 2px;
+  }
+  
+  @keyframes deco-fond-apparition {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes deco-fenetre-apparition {
+    from { opacity: 0; transform: translateY(10px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .deco-fond,
+    .deco-fenetre {
+      animation: none;
+    }
+    .deco-bouton {
+      transition: none;
+    }
+    .deco-bouton.oui:hover {
+      transform: none;
+    }
+  }
+  
+  @media (max-width: 380px) {
+    .deco-actions {
+      flex-direction: column-reverse;
+    }
+  }

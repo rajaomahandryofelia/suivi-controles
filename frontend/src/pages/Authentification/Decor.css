@@ -1,0 +1,304 @@
+/* Décor et micro-interactions des pages Connexion / Inscription.
+   Ne modifie ni le panneau ni le logo : s'ajoute par-dessus Connexion.css. */
+
+/* ---------- Allée des baobabs en bas du panneau (sous le contenu, z-index 0) ---------- */
+.cnx-panneau::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 38%;
+  background: url("../../assets/baobabs.svg") center bottom / cover no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  animation: cnx-lever 1s ease-out both;
+}
+
+@keyframes cnx-lever {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Champs : l'ensemble s'éclaire quand on saisit ---------- */
+.cnx-champ label {
+  transition: color 0.2s ease;
+}
+.cnx-champ:focus-within label {
+  color: var(--cnx-vert);
+}
+.cnx-saisie .cnx-icone {
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+.cnx-saisie:focus-within .cnx-icone {
+  transform: translateY(-50%) scale(1.12);
+}
+.cnx-saisie input:focus {
+  background: #fbfefc;
+}
+
+/* ---------- Erreur : une brève secousse (réponse à l'action de l'utilisateur) ---------- */
+.cnx-erreur {
+  animation: cnx-apparition 0.25s ease-out, cnx-secoue 0.4s ease-in-out 0.1s;
+}
+@keyframes cnx-secoue {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ---------- Passage Connexion <-> Inscription : le formulaire glisse en douceur ---------- */
+.cnx-principal {
+  animation: cnx-entree-formulaire 0.5s ease-out both;
+}
+@keyframes cnx-entree-formulaire {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ---------- Émissions : pylône, parabole et ondes en haut du panneau (rappel de l'ORTM) ----------
+   Posé sur le fond du panneau, sous la ligne des logos (aucune modification de PanneauInstitutionnel). */
+.cnx-panneau {
+  background-image: url("../../assets/emissions.svg"),
+    linear-gradient(160deg, #f3faf6 0%, #ffffff 72%);
+  background-repeat: no-repeat, no-repeat;
+  background-position: right 6px top 140px, 0 0;
+  background-size: min(70%, 470px) auto, 100% 100%;
+}
+
+/* ---------- Deuxième logo : coin supérieur droit du panneau, symétrique du premier ----------
+   Il se place dans la même cellule de la grille que le panneau (colonne 1), sans modifier
+   PanneauInstitutionnel. Les colonnes sont rendues explicites pour que l'ordre ne change pas. */
+.cnx-page > .cnx-panneau {
+  grid-column: 1;
+  grid-row: 1;
+}
+.cnx-page > .cnx-cote-formulaire {
+  grid-column: 2;
+  grid-row: 1;
+}
+.cnx-logo-secondaire {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  align-self: start;
+  position: relative;
+  z-index: 2;
+  height: 80px;
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+  /* même marge haute que le panneau ; +6px pour le ruban rouge et vert */
+  margin: clamp(32px, 4vw, 56px) calc(clamp(32px, 4vw, 56px) + 6px) 0 0;
+}
+
+/* ---------- Préférence « réduire les animations » ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cnx-panneau::after,
+  .cnx-principal,
+  .cnx-erreur {
+    animation: none;
+  }
+  .cnx-champ label,
+  .cnx-saisie .cnx-icone {
+    transition: none;
+  }
+  .cnx-saisie:focus-within .cnx-icone {
+    transform: translateY(-50%);
+  }
+}
+
+/* ---------- Panneau réduit en bandeau (tablette / mobile) ---------- */
+@media (max-width: 900px) {
+  .cnx-panneau::after {
+    display: none;
+  }
+  .cnx-panneau {
+    background-image: linear-gradient(160deg, #f3faf6 0%, #ffffff 72%);
+    background-size: 100% 100%;
+  }
+  .cnx-logo-secondaire {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    margin: 0;
+    height: 54px;
+    max-width: 120px;
+  }
+}
+
+/* ====================== Écrans de confirmation (connexion réussie / demande envoyée) ====================== */
+
+/* Coche animée : cercle puis coche se tracent */
+.cnx-validation {
+  width: 72px;
+  height: 72px;
+  margin: 0 0 18px;
+}
+.cnx-validation svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cnx-validation-cercle {
+  fill: var(--cnx-vert-pale);
+  stroke: var(--cnx-vert);
+  stroke-width: 2;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: cnx-trace 0.6s ease-out forwards;
+}
+.cnx-validation-coche {
+  fill: none;
+  stroke: var(--cnx-vert);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: cnx-trace 0.4s ease-out 0.45s forwards;
+}
+@keyframes cnx-trace {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Barre de progression avant la redirection */
+.cnx-progression {
+  height: 4px;
+  margin: 4px 0 22px;
+  overflow: hidden;
+  background: var(--cnx-bordure);
+  border-radius: 2px;
+}
+.cnx-progression span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--cnx-vert);
+  transform-origin: left;
+  animation: cnx-progression linear forwards;
+}
+@keyframes cnx-progression {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Récapitulatif de la demande */
+.cnx-recap {
+  display: grid;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  background: #fafbfa;
+  border: 1px solid var(--cnx-bordure);
+  border-radius: 10px;
+}
+.cnx-recap > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.88rem;
+}
+.cnx-recap dt {
+  flex-shrink: 0;
+  color: var(--cnx-texte-doux);
+}
+.cnx-recap dd {
+  margin: 0;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+/* Suite de la demande : trois étapes */
+.cnx-etapes {
+  display: grid;
+  margin: 20px 0 22px;
+  padding: 0;
+  list-style: none;
+}
+.cnx-etapes li {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  padding-bottom: 16px;
+  opacity: 0;
+  animation: cnx-apparition 0.45s ease-out forwards;
+}
+.cnx-etapes li:nth-child(1) { animation-delay: 0.5s; }
+.cnx-etapes li:nth-child(2) { animation-delay: 0.7s; }
+.cnx-etapes li:nth-child(3) { animation-delay: 0.9s; }
+.cnx-etapes li:last-child {
+  padding-bottom: 0;
+}
+.cnx-etapes li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  bottom: 2px;
+  left: 13px;
+  width: 2px;
+  background: var(--cnx-bordure);
+}
+.cnx-etapes li.fait:not(:last-child)::before {
+  background: var(--cnx-vert);
+}
+.cnx-etape-pastille {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--cnx-texte-doux);
+  background: #ffffff;
+  border: 2px solid var(--cnx-bordure-champ);
+  border-radius: 50%;
+}
+.cnx-etapes li.fait .cnx-etape-pastille {
+  color: #ffffff;
+  background: var(--cnx-vert);
+  border-color: var(--cnx-vert);
+}
+.cnx-etapes li.en-cours .cnx-etape-pastille {
+  color: var(--cnx-vert);
+  border-color: var(--cnx-vert);
+  animation: cnx-pulse 2.4s ease-in-out infinite;
+}
+.cnx-etapes li > div strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--cnx-texte);
+}
+.cnx-etapes li > div span {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--cnx-texte-doux);
+}
+
+/* Lien qui ressemble au bouton principal */
+.cnx-page a.cnx-bouton,
+.cnx-page a.cnx-bouton:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cnx-validation-cercle,
+  .cnx-validation-coche {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .cnx-progression span {
+    animation: none;
+    transform: none;
+  }
+  .cnx-etapes li {
+    opacity: 1;
+    animation: none;
+  }
+  .cnx-etapes li.en-cours .cnx-etape-pastille {
+    animation: none;
+  }
+}

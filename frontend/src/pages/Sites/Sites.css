@@ -1,0 +1,319 @@
+/* Page Sites : panneau (détail et formulaire), préfixe « sit- ».
+   Les styles de la liste sont dans ../Liste.css (préfixe « lst- »). */
+
+/* ---------- Détail d'un site ---------- */
+
+.sit-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.sit-infos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 22px;
+}
+
+.sit-info {
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+}
+
+.sit-info.large {
+  grid-column: 1 / -1;
+}
+
+.sit-info dt {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.sit-info dd {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-size: 0.97rem;
+  color: var(--texte);
+}
+
+.sit-position {
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.sit-position a {
+  font-weight: 600;
+  color: var(--vert);
+  text-decoration: none;
+}
+
+.sit-position a:hover {
+  text-decoration: underline;
+}
+
+.sit-section {
+  margin-bottom: 22px;
+}
+
+.sit-section-titre {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.sit-nombre {
+  padding: 2px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--texte-doux);
+  background: #f3f4f6;
+  border-radius: 999px;
+}
+
+.sit-vide {
+  margin: 0;
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--texte-doux);
+  background: #f6f8f7;
+  border-radius: 12px;
+}
+
+.sit-mini-cadre {
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+}
+
+.sit-mini {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.sit-mini th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  background: #fafcfb;
+  border-bottom: 1px solid var(--bordure);
+  white-space: nowrap;
+}
+
+.sit-mini td {
+  padding: 10px 14px;
+  vertical-align: middle;
+  border-top: 1px solid var(--bordure);
+}
+
+.sit-mini tbody tr:first-child td {
+  border-top: none;
+}
+
+.sit-mini .centre {
+  text-align: center;
+}
+
+.sit-mini .sit-large {
+  min-width: 200px;
+}
+
+.sit-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.sit-badge.neutre {
+  color: #4b5563;
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+}
+
+.sit-badge.vert {
+  color: #006232;
+  background: #eaf6ef;
+  border-color: #b9dfc9;
+}
+
+.sit-badge.rouge {
+  color: #b91c1c;
+  background: #fef2f2;
+  border-color: #fbd0d2;
+}
+
+.sit-badge.ambre {
+  color: #b45309;
+  background: #fff0e1;
+  border-color: #f8cf9f;
+}
+
+.application .bouton.sit-bouton-suppression {
+  color: var(--rouge);
+  border-color: #fbd0d2;
+}
+
+.application .bouton.sit-bouton-suppression:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
+/* ---------- Formulaire ---------- */
+
+.sit-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 18px;
+}
+
+.sit-champ-large {
+  grid-column: 1 / -1;
+}
+
+.sit-groupe {
+  grid-column: 1 / -1;
+  margin: 4px 0 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.sit-aide {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+}
+
+.sit-aide.alerte {
+  color: #b45309;
+}
+
+.sit-case {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.sit-case input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--vert);
+}
+
+.sit-case span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.sit-case small {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--texte-doux);
+}
+
+.sit-lien {
+  font-weight: 600;
+  color: var(--vert);
+  text-decoration: none;
+}
+
+.sit-lien:hover,
+.sit-lien:focus-visible {
+  text-decoration: underline;
+}
+
+/* ---------- Position GPS ---------- */
+
+.sit-gps-entete {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 4px 0 10px;
+}
+
+.sit-gps-entete .sit-groupe {
+  margin: 0;
+}
+
+.sit-gps-bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sit-info-position {
+  grid-column: 1 / -1;
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  color: #006232;
+}
+
+.sit-info-position.erreur {
+  color: #b91c1c;
+}
+
+.sit-carte {
+  grid-column: 1 / -1;
+  margin: 2px 0 18px;
+  overflow: hidden;
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+}
+
+.sit-info .sit-carte {
+  margin: 10px 0 0;
+}
+
+.sit-carte iframe {
+  display: block;
+  width: 100%;
+  height: 220px;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .sit-grille,
+  .sit-infos {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,166 @@
+/* Compléments pour la page d'inscription.
+   Les styles de base (cnx-*) viennent de Connexion.css. */
+
+/* Carte plus large pour le formulaire à deux colonnes */
+.cnx-carte.ins-large {
+    max-width: 540px;
+  }
+  
+  /* Champs sans icône : on retire l'espace réservé à l'icône */
+  .cnx-saisie.ins-simple input {
+    padding: 0 14px;
+  }
+  
+  /* Grille à deux colonnes */
+  .ins-grille {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 0.9rem;
+  }
+  
+  .ins-grille > .cnx-champ {
+    min-width: 0; /* évite tout débordement horizontal */
+  }
+  
+  /* Texte d'aide sous les mots de passe */
+  .ins-aide {
+    margin: -6px 0 18px;
+    font-size: 0.8rem;
+    color: var(--cnx-texte-doux);
+  }
+  
+  /* Message de succès (demande envoyée) */
+  .ins-succes {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 8px 0 0;
+    padding: 14px 16px;
+    color: #064e2b;
+    background: #f0faf4;
+    border: 1px solid #c3e6d1;
+    border-left: 3px solid var(--cnx-vert);
+    border-radius: 8px;
+    animation: cnx-apparition 0.25s ease-out;
+  }
+  
+  .ins-succes svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--cnx-vert);
+  }
+  
+  .ins-succes p {
+    margin: 0;
+    font-size: 0.92rem;
+  }
+  
+  /* Bouton « Retour » : restylé uniquement sur cette page
+     (les autres pages gardent le style défini dans Auth.css) */
+  .cnx-page .bouton-retour {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0 0 1.2rem;
+    padding: 0.45rem 0.9rem;
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--cnx-vert);
+    background: #ffffff;
+    border: 1px solid var(--cnx-vert);
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .cnx-page .bouton-retour:hover {
+    background: rgba(0, 122, 61, 0.08);
+  }
+  
+  .cnx-page .bouton-retour:focus-visible {
+    outline: 2px solid var(--cnx-vert);
+    outline-offset: 2px;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ins-succes {
+      animation: none;
+    }
+    .cnx-page .bouton-retour {
+      transition: none;
+    }
+  }
+  
+  /* Une seule colonne sur petit écran */
+  @media (max-width: 520px) {
+    .ins-grille {
+      grid-template-columns: 1fr;
+    }
+  }
+
+/* ---------- Coche animée de la page « Demande envoyée » ---------- */
+.ins-validation {
+  width: 72px;
+  height: 72px;
+  margin: 0 0 18px;
+}
+
+.ins-validation svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ins-validation-cercle {
+  fill: var(--cnx-vert-pale);
+  stroke: var(--cnx-vert);
+  stroke-width: 2;
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: ins-trace 0.6s ease-out forwards;
+}
+
+.ins-validation-coche {
+  fill: none;
+  stroke: var(--cnx-vert);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: ins-trace 0.4s ease-out 0.45s forwards;
+}
+
+@keyframes ins-trace {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ins-validation-cercle,
+  .ins-validation-coche {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---------- Erreurs rattachées à chaque champ ---------- */
+.ins-erreur-champ {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #8f1218;
+}
+
+.cnx-saisie input[aria-invalid="true"] {
+  border-color: var(--cnx-rouge);
+}
+
+.cnx-saisie input[aria-invalid="true"]:focus {
+  border-color: var(--cnx-rouge);
+  box-shadow: 0 0 0 4px rgba(237, 28, 36, 0.14);
+}

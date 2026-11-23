@@ -1,0 +1,73 @@
+/* Trajet d'une tournée : préfixe « tt- ».
+   Les blocs communs (chiffres, carte, légende, lignes) reprennent « tj- » de Trajets.css. */
+
+/* ---------- Repère numérique d'un site sur la carte ---------- */
+
+.tt-repere span {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: #343434;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 3px 10px rgba(16, 24, 40, 0.3);
+  }
+  
+  /* ---------- Titres de section ---------- */
+  
+  .tt-titre {
+    margin: 0 0 8px 4px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+  }
+  
+  /* ---------- Ordre de route ---------- */
+  
+  .tt-route {
+    margin-top: 22px;
+    padding: 16px 18px;
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--bordure);
+    border-radius: 18px;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.05);
+  }
+  .tt-route .tt-titre { margin-left: 0; }
+  
+  .tt-route-trajet {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 14px;
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--texte);
+  }
+  .tt-fleche { font-size: 1.3rem; font-weight: 700; color: var(--vert); }
+  
+  .tt-route-meta { margin: 8px 0 0; font-size: 0.82rem; line-height: 1.45; color: var(--texte-doux); }
+  
+  /* ---------- Étapes ---------- */
+  
+  .tt-etapes { margin-top: 22px; }
+  
+  .tt-rang {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: #343434;
+    border-radius: 50%;
+  }

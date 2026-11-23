@@ -1,0 +1,258 @@
+/* Tableau de bord : styles isolés par le préfixe « tdb- » */
+
+
+/* ---------- En-tête (même esprit que le panneau de la connexion) ---------- */
+
+.tdb-hero {
+  position: relative;
+  margin-bottom: 22px;
+  padding: 26px 28px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #f3faf6 0%, #ffffff 72%);
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+  animation: tdb-apparition 0.45s ease-out;
+}
+
+.tdb-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(0, 122, 61, 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7), transparent 60%);
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7), transparent 60%);
+  pointer-events: none;
+}
+
+.tdb-hero::after {
+  content: "";
+  position: absolute;
+  right: -90px;
+  bottom: -110px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(0, 122, 61, 0.16),
+    rgba(0, 122, 61, 0.03) 70%
+  );
+  pointer-events: none;
+}
+
+.tdb-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.tdb-etiquette {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vert);
+  background: #ffffff;
+  border: 1px solid rgba(0, 122, 61, 0.25);
+  border-radius: 999px;
+}
+
+.tdb-etiquette::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--vert);
+  animation: tdb-pulse 2.4s ease-in-out infinite;
+}
+
+.tdb-titre {
+  margin: 16px 0 0;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #1f2933;
+}
+
+
+/* Trait rouge d'accentuation */
+
+.tdb-titre::after {
+  content: "";
+  display: block;
+  width: 56px;
+  height: 4px;
+  margin-top: 14px;
+  border-radius: 2px;
+  background: var(--rouge);
+}
+
+.tdb-date {
+  margin: 14px 0 0;
+  font-size: 0.95rem;
+  color: var(--texte-doux);
+  text-transform: capitalize;
+}
+
+
+/* ---------- Messages ---------- */
+
+.tdb-erreur,
+.tdb-succes {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  animation: tdb-apparition 0.25s ease-out;
+}
+
+.tdb-erreur {
+  color: #8f1218;
+  background: #fef2f2;
+  border: 1px solid #fbd0d2;
+  border-left: 3px solid var(--rouge);
+}
+
+.tdb-succes {
+  color: #0b5a2e;
+  background: var(--vert-pale);
+  border: 1px solid rgba(0, 122, 61, 0.25);
+  border-left: 3px solid var(--vert);
+}
+
+
+/* ---------- Cartes de section ---------- */
+
+.tdb-carte {
+  margin-bottom: 22px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  animation: tdb-apparition 0.45s ease-out;
+}
+
+.tdb-carte-tete {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tdb-icone {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  color: var(--vert);
+  background: var(--vert-pale);
+  border-radius: 10px;
+}
+
+.tdb-carte-tete h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.tdb-carte-tete p {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: var(--texte-doux);
+}
+
+.tdb-vide {
+  margin: 0;
+  padding: 18px;
+  text-align: center;
+  font-size: 0.92rem;
+  color: var(--texte-doux);
+  background: #fafcfb;
+  border: 1px dashed var(--bordure);
+  border-radius: 10px;
+}
+
+
+/* Pastille d'initiales (utilisée par les demandes et par la fiche) */
+
+.tdb-avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--vert);
+  background: var(--vert-pale);
+  border-radius: 50%;
+}
+
+
+/* ---------- Chargement ---------- */
+
+.tdb-chargement {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  color: var(--texte-doux);
+}
+
+.tdb-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 122, 61, 0.25);
+  border-top-color: var(--vert);
+  border-radius: 50%;
+  animation: tdb-tourne 0.7s linear infinite;
+}
+
+
+/* ---------- Animations ---------- */
+
+@keyframes tdb-apparition {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tdb-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 122, 61, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(0, 122, 61, 0);
+  }
+}
+
+@keyframes tdb-tourne {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.tdb-hero,
+.tdb-carte,
+.tdb-erreur,
+.tdb-succes,
+.tdb-etiquette::before,
+.tdb-spinner {
+  animation: none;
+}
+}

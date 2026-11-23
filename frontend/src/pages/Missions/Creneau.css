@@ -1,0 +1,44 @@
+/* Créneau prévu (début / fin) : petits compléments de la page Missions */
+
+.mis-champ-large {
+    grid-column: 1 / -1;
+  }
+  
+  /* Titres « Début prévu » / « Fin prévue » dans le formulaire */
+  .mis-groupe {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 6px 0 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+  }
+  
+  .mis-groupe::before {
+    content: "";
+    width: 4px;
+    height: 14px;
+    background: var(--vert);
+    border-radius: 2px;
+  }
+  
+  .mis-groupe.fin::before {
+    background: var(--rouge);
+  }
+  
+  /* Heure sous la date dans la liste */
+  .mis-heure {
+    display: block;
+    margin-top: 2px;
+    font-size: 0.82rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--texte-doux);
+  }
+  
+  .mis-tableau tbody tr.retard .mis-heure {
+    color: #b91c1c;
+  }

@@ -1,0 +1,281 @@
+/* Cloche de notifications : préfixe « clo- » */
+
+.clo-bouton {
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    color: var(--texte-doux);
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 122, 61, 0.22);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease,
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  
+  /* Dans la carte utilisateur du menu : à droite de l'avatar et du nom */
+  .menu-profil .clo-bouton {
+    margin-left: auto;
+  }
+  
+  .clo-bouton:hover,
+  .clo-bouton.ouvert {
+    color: var(--vert);
+    background: rgba(0, 122, 61, 0.12);
+    box-shadow: 0 6px 18px rgba(0, 122, 61, 0.2);
+    transform: translateY(-1px);
+  }
+  
+  .clo-bouton:active {
+    transform: scale(0.94);
+  }
+  
+  .clo-bouton:focus-visible {
+    outline: 2px solid var(--vert);
+    outline-offset: 2px;
+  }
+  
+  /* La cloche sonne quand une notification arrive */
+  .clo-bouton.sonne svg {
+    transform-origin: 50% 8%;
+    animation: clo-sonne 1.2s ease;
+  }
+  
+  .clo-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    display: grid;
+    place-items: center;
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+    background: var(--rouge);
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    animation: clo-badge-pulse 2s ease-in-out infinite;
+  }
+  
+  /* ---------- Panneau (affiché en dehors du cadre de l'application) ---------- */
+  
+  /* Le panneau n'est plus dans le cadre de l'application : il reprend ses couleurs */
+  .clo-portail {
+    --vert: #007a3d;
+    --vert-pale: #eaf6ef;
+    --rouge: #ed1c24;
+    --texte: #343434;
+    --texte-doux: #5b6168;
+    --bordure: #e5e7eb;
+  
+    font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  }
+  
+  .clo-voile {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+  }
+  
+  .clo-panneau {
+    position: fixed;
+    z-index: 71;
+    max-height: calc(100vh - 24px);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 22px;
+    box-shadow: 0 24px 60px rgba(16, 24, 40, 0.24), 0 3px 12px rgba(16, 24, 40, 0.08);
+    animation: clo-entree 0.35s cubic-bezier(0.22, 1.15, 0.36, 1) both;
+  }
+  
+  .clo-panneau::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--rouge) 50%, var(--vert) 50%);
+  }
+  
+  .clo-entete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 18px 20px 10px;
+  }
+  
+  .clo-entete h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: #1f2933;
+  }
+  
+  .clo-tout {
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--vert);
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .clo-tout:hover {
+    background: rgba(0, 122, 61, 0.12);
+  }
+  
+  .clo-liste {
+    max-height: min(60vh, 440px);
+    margin: 0;
+    padding: 0 8px 10px;
+    overflow-y: auto;
+    list-style: none;
+  }
+  
+  .clo-item {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 12px;
+    font-family: inherit;
+    text-align: left;
+    background: transparent;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .clo-item:hover {
+    background: rgba(0, 122, 61, 0.09);
+  }
+  
+  .clo-item.non-lue {
+    background: rgba(0, 122, 61, 0.07);
+  }
+  
+  .clo-item:focus-visible {
+    outline: 2px solid var(--vert);
+    outline-offset: -2px;
+  }
+  
+  .clo-point {
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    margin-top: 6px;
+    background: transparent;
+    border-radius: 50%;
+  }
+  
+  .clo-item.non-lue .clo-point {
+    background: var(--vert);
+  }
+  
+  .clo-texte {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  
+  .clo-message {
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: var(--texte);
+  }
+  
+  .clo-item.non-lue .clo-message {
+    font-weight: 600;
+  }
+  
+  .clo-temps {
+    font-size: 0.76rem;
+    color: var(--texte-doux);
+  }
+  
+  .clo-vide {
+    margin: 0;
+    padding: 22px 20px 28px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--texte-doux);
+  }
+  
+  /* ---------- Animations ---------- */
+  
+  @keyframes clo-entree {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes clo-sonne {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    15% {
+      transform: rotate(16deg);
+    }
+    30% {
+      transform: rotate(-14deg);
+    }
+    45% {
+      transform: rotate(10deg);
+    }
+    60% {
+      transform: rotate(-8deg);
+    }
+    75% {
+      transform: rotate(4deg);
+    }
+  }
+  
+  @keyframes clo-badge-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(237, 28, 36, 0.45);
+    }
+    50% {
+      box-shadow: 0 0 0 5px rgba(237, 28, 36, 0);
+    }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .clo-panneau,
+    .clo-badge,
+    .clo-bouton.sonne svg {
+      animation: none;
+    }
+    .clo-bouton,
+    .clo-bouton:hover,
+    .clo-bouton:active {
+      transition: none;
+      transform: none;
+    }
+  }

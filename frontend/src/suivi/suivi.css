@@ -1,0 +1,53 @@
+/* Indicateur de suivi du trajet : préfixe « sv- » */
+
+.sv-indicateur { display: grid; justify-items: start; gap: 6px; margin: 0 0 14px; }
+
+.sv-pastille {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 18px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--texte);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid var(--bordure);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.sv-point {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  background: #94a3b8;
+  border-radius: 50%;
+}
+
+.sv-pastille.ok { border-color: rgba(0, 122, 61, 0.4); }
+.sv-pastille.ok .sv-point { background: var(--vert); animation: sv-pulse 2s ease-out infinite; }
+
+.sv-pastille.alerte { color: #8f1218; border-color: #fbd0d2; }
+.sv-pastille.alerte .sv-point { background: var(--rouge); }
+
+.sv-note {
+  margin: 0;
+  padding-left: 6px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--texte-doux);
+}
+
+@keyframes sv-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 122, 61, 0.45); }
+  100% { box-shadow: 0 0 0 9px rgba(0, 122, 61, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv-pastille { transition: none; }
+  .sv-pastille.ok .sv-point { animation: none; }
+}

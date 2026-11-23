@@ -1,0 +1,274 @@
+/* Page Conventions : habillage « verre » ajouté par-dessus ./Conventions.css
+   (importer ce fichier APRÈS Conventions.css). Aucune règle existante n'est supprimée. */
+
+/* ---------- Tableau : apparition en cascade ---------- */
+
+.conv-table tbody tr {
+  animation: cvi-ligne 0.4s ease both;
+}
+.conv-table tbody tr:nth-child(2) { animation-delay: 40ms; }
+.conv-table tbody tr:nth-child(3) { animation-delay: 80ms; }
+.conv-table tbody tr:nth-child(4) { animation-delay: 120ms; }
+.conv-table tbody tr:nth-child(5) { animation-delay: 160ms; }
+.conv-table tbody tr:nth-child(6) { animation-delay: 200ms; }
+.conv-table tbody tr:nth-child(7) { animation-delay: 240ms; }
+.conv-table tbody tr:nth-child(8) { animation-delay: 280ms; }
+.conv-table tbody tr:nth-child(n + 9) { animation-delay: 320ms; }
+
+@keyframes cvi-ligne {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- Alerte « Dynamic Island » (verre neutre) ---------- */
+
+.cvi-ile-zone {
+  display: flex;
+  justify-content: center;
+}
+.cvi-ile {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  height: 46px;
+  padding: 0 22px 0 16px;
+  overflow: hidden;
+  color: var(--conv-texte, #1d2b24);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  box-shadow: 0 8px 28px rgba(16, 24, 40, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px) saturate(170%);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  animation: cvi-ile-ouvre 0.8s cubic-bezier(0.2, 1.1, 0.3, 1) both;
+}
+.cvi-ile-point {
+  position: relative;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  background: #d92d20;
+  border-radius: 50%;
+}
+.cvi-ile-point::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #d92d20;
+  animation: cvi-ile-onde 1.8s ease-out infinite;
+}
+.cvi-ile-texte {
+  font-size: 0.86rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: cvi-ile-texte 0.5s ease 0.45s both;
+}
+
+@keyframes cvi-ile-ouvre {
+  0% { max-width: 46px; padding-right: 0; opacity: 0; transform: translateY(-14px) scale(0.6); }
+  25% { opacity: 1; }
+  100% { max-width: 100%; padding-right: 22px; transform: none; }
+}
+@keyframes cvi-ile-texte {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cvi-ile-onde {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .cvi-ile { height: auto; min-height: 46px; padding: 10px 18px 10px 16px; border-radius: 24px; }
+  .cvi-ile-texte { white-space: normal; }
+}
+
+/* ---------- Grand panneau : carré de verre transparent ---------- */
+
+.conv-voile {
+  background: rgba(16, 24, 40, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.conv-ilot {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.46));
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(16, 24, 40, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+}
+
+/* Informations de la convention : texte simple dans un bloc translucide (comme la fiche contrôleur) */
+.conv-details {
+  gap: 14px 18px;
+  margin: 0 0 18px;
+  padding: 16px 18px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+}
+.conv-details > div {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.conv-details dt {
+  font-size: 0.76rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.conv-details dd { font-size: 0.92rem; }
+
+/* En-tête du panneau plus aéré, sans trait */
+.conv-ilot-entete { margin-bottom: 4px; }
+.conv-ilot h2 { margin: 12px 0 16px; letter-spacing: -0.01em; }
+
+/* Échéances et formulaires : même verre translucide */
+.ech-carte,
+.ech-formulaire,
+.conv-onglets {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+}
+.ech-carte:hover,
+.ech-carte.ouverte {
+  background: rgba(255, 255, 255, 0.85);
+}
+.ech-paiements > li {
+  background: rgba(230, 244, 234, 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conv-table tbody tr,
+  .cvi-ile,
+  .cvi-ile-texte,
+  .cvi-ile-point::after { animation: none; }
+}
+
+/* ---------- Panneau plus bas et moins haut ---------- */
+
+/* Plus de marge en haut qu'en bas : le carré descend et ne touche plus le haut de l'écran */
+.conv-voile {
+  padding: 84px 20px 28px;
+}
+
+/* Hauteur limitée : le contenu défile à l'intérieur du carré */
+.conv-ilot {
+  max-height: calc(100vh - 124px);
+}
+
+@media (max-width: 640px) {
+  .conv-voile { padding: 64px 12px 16px; }
+  .conv-ilot { max-height: calc(100vh - 84px); }
+}
+
+/* ---------- Page Conventions au même design que les autres listes ---------- */
+
+.cv-page {
+  --conv-vert: #1b7a3d;
+  --conv-vert-clair: #e6f4ea;
+  --conv-rouge: #c62828;
+  --conv-rouge-clair: #fdecea;
+  --conv-texte: #1d2b24;
+  --conv-doux: #5d6b63;
+  --conv-bord: rgba(27, 122, 61, 0.16);
+}
+
+/* Lignes : apparition en cascade, survol, flèche */
+.cv-page .lst-tableau tbody tr {
+  animation: cvi-ligne 0.4s ease both;
+  transition: background 0.2s;
+}
+.cv-page .lst-tableau tbody tr:nth-child(2) { animation-delay: 40ms; }
+.cv-page .lst-tableau tbody tr:nth-child(3) { animation-delay: 80ms; }
+.cv-page .lst-tableau tbody tr:nth-child(4) { animation-delay: 120ms; }
+.cv-page .lst-tableau tbody tr:nth-child(5) { animation-delay: 160ms; }
+.cv-page .lst-tableau tbody tr:nth-child(6) { animation-delay: 200ms; }
+.cv-page .lst-tableau tbody tr:nth-child(7) { animation-delay: 240ms; }
+.cv-page .lst-tableau tbody tr:nth-child(8) { animation-delay: 280ms; }
+.cv-page .lst-tableau tbody tr:nth-child(n + 9) { animation-delay: 320ms; }
+.cv-page .lst-tableau tbody tr.cliquable:hover,
+.cv-page .lst-tableau tbody tr.cliquable:focus-visible { background: rgba(20, 83, 45, 0.05); }
+.cv-page .lst-chevron { transition: transform 0.25s ease, color 0.2s ease; }
+.cv-page tr.cliquable:hover .lst-chevron,
+.cv-page tr.cliquable:focus-visible .lst-chevron { color: var(--vert, #14532d); transform: translateX(4px); }
+
+/* Colonnes de montants */
+.cv-page .cv-droite { text-align: right; white-space: nowrap; }
+.cv-page .cv-droite small { display: block; font-size: 0.75rem; color: var(--conv-doux); }
+.cv-page .cv-periode { white-space: nowrap; color: var(--conv-doux); }
+.cv-page .du { color: var(--conv-rouge); font-weight: 600; }
+
+/* Total des arriérés : pastille à droite de la recherche */
+.cv-arrieres {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+.cv-arrieres span { font-size: 0.8rem; color: var(--conv-doux); }
+.cv-arrieres strong { font-size: 0.95rem; color: var(--conv-vert); }
+.cv-arrieres strong.du { color: var(--conv-rouge); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-page .lst-tableau tbody tr { animation: none; }
+  .cv-page .lst-chevron { transition: none; }
+}
+
+/* ---------- Colonnes Payé / boutons du tableau ---------- */
+.cv-page .paye { color: var(--conv-vert); font-weight: 600; }
+.cv-actions { display: inline-flex; gap: 8px; justify-content: flex-end; }
+
+/* ---------- Panneau : croix rouge et en-tête comme les autres fiches ---------- */
+.conv-ilot { position: relative; }
+
+.conv-ilot .conv-fermer {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  color: #fff;
+  background: #d92d20;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(217, 45, 32, 0.35);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.25s, box-shadow 0.2s;
+}
+.conv-ilot .conv-fermer:hover { background: #b42318; transform: rotate(90deg); box-shadow: 0 6px 16px rgba(180, 35, 24, 0.45); }
+.conv-ilot .conv-fermer:focus-visible { outline: 2px solid #d92d20; outline-offset: 2px; }
+
+.conv-ilot-tete {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding-right: 44px;
+  margin-bottom: 16px;
+}
+.conv-ilot-tete h2 { margin: 0; }
+.conv-ilot > .conv-retour { margin: 0 0 14px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .conv-ilot .conv-fermer { transition: none; }
+}

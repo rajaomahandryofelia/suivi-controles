@@ -1,0 +1,247 @@
+/* ---- Création d'un modèle de grille : modèles types et liste de critères ---- */
+
+.crm-section {
+    margin-top: 18px;
+  }
+  
+  .crm-titre {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1f2a24;
+  }
+  
+  .crm-titre small {
+    font-weight: 400;
+    color: #6b766f;
+  }
+  
+  .crm-aide {
+    margin: 0 0 10px;
+    font-size: 0.85rem;
+    color: #6b766f;
+  }
+  
+  /* Puces des modèles types */
+  .crm-puces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .crm-puce {
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+    font: inherit;
+    font-size: 0.85rem;
+    color: #2b3630;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  
+  .crm-puce:hover {
+    background: rgba(0, 122, 61, 0.1);
+    border-color: #007a3d;
+    color: #007a3d;
+    transform: translateY(-1px);
+  }
+  
+  .crm-puce.actif {
+    background: #007a3d;
+    border-color: #007a3d;
+    color: #fff;
+  }
+  
+  /* Liste des critères */
+  .crm-lignes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .crm-ligne {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  
+  .crm-ligne:hover {
+    border-color: rgba(0, 122, 61, 0.45);
+    background: rgba(0, 122, 61, 0.04);
+  }
+  
+  .crm-numero {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(0, 122, 61, 0.12);
+    color: #007a3d;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .crm-corps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  
+  .crm-corps input[type="text"] {
+    width: 100%;
+  }
+  
+  .crm-reglages {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .crm-poids {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #4a554e;
+  }
+  
+  .crm-poids input {
+    width: 72px;
+  }
+  
+  .crm-obligatoire {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    font-size: 0.8rem;
+    color: #4a554e;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  
+  .crm-obligatoire:hover,
+  .crm-obligatoire.oui {
+    background: rgba(237, 28, 36, 0.08);
+    border-color: #ed1c24;
+    color: #b3121a;
+  }
+  
+  .crm-actions {
+    display: inline-flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  
+  .crm-actions button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    background: transparent;
+    font: inherit;
+    line-height: 1;
+    color: #4a554e;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+  }
+  
+  .crm-actions button:hover:not(:disabled) {
+    background: rgba(0, 122, 61, 0.1);
+    border-color: #007a3d;
+    color: #007a3d;
+  }
+  
+  .crm-actions button.retirer:hover:not(:disabled) {
+    background: rgba(237, 28, 36, 0.1);
+    border-color: #ed1c24;
+    color: #ed1c24;
+  }
+  
+  .crm-actions button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+  
+  .crm-ajout {
+    align-self: flex-start;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border: 1px dashed #007a3d;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    font-size: 0.9rem;
+    color: #007a3d;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  
+  .crm-ajout:hover {
+    background: rgba(0, 122, 61, 0.1);
+  }
+  
+  @media (max-width: 560px) {
+    .crm-actions {
+      margin-left: 0;
+    }
+  }
+
+  /* Invitation à créer le type de site conseillé */
+.crm-type-propose {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1px dashed #007a3d;
+  border-radius: 12px;
+  background: rgba(0, 122, 61, 0.05);
+  font-size: 0.85rem;
+  color: #2b3630;
+}
+
+.crm-type-bouton {
+  margin-left: auto;
+  padding: 6px 14px;
+  border: 1px solid #007a3d;
+  border-radius: 999px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.85rem;
+  color: #007a3d;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.crm-type-bouton:hover:not(:disabled) {
+  background: #007a3d;
+  color: #fff;
+}
+
+.crm-type-bouton:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

@@ -1,0 +1,539 @@
+/* Page Missions : préfixe « mis- » */
+
+.mis-message {
+  margin-bottom: 18px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+
+.mis-message.erreur {
+  color: #8f1218;
+  background: #fef2f2;
+  border: 1px solid #fbd0d2;
+  border-left: 3px solid var(--rouge);
+}
+
+/* ---------- Pilule : verre transparent, animée ---------- */
+
+.mis-ilot-zone {
+  position: sticky;
+  top: 14px;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  pointer-events: none;
+}
+
+.mis-ilot {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  padding: 5px;
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(0, 122, 61, 0.22);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 122, 61, 0.14), 0 2px 8px rgba(16, 24, 40, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  pointer-events: auto;
+  scrollbar-width: none;
+  animation: mis-ilot-entree 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.mis-ilot::-webkit-scrollbar {
+  display: none;
+}
+
+.mis-segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--texte-doux);
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Le segment sous le curseur se colore en vert */
+.mis-segment:hover {
+  color: var(--vert);
+  background: rgba(0, 122, 61, 0.12);
+  transform: translateY(-1px);
+}
+
+.mis-segment:active {
+  transform: scale(0.95);
+}
+
+.mis-segment:focus-visible {
+  outline: 2px solid var(--vert);
+  outline-offset: -2px;
+}
+
+/* Le segment choisi : plein, avec un petit rebond */
+.mis-segment.actif {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00a152, #007a3d);
+  box-shadow: 0 4px 14px rgba(0, 122, 61, 0.38);
+  animation: mis-segment-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mis-segment.actif:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00a152, #006232);
+}
+
+/* « En retard » (4e segment) : rouge */
+.mis-segment:nth-child(4):hover {
+  color: var(--rouge);
+  background: rgba(237, 28, 36, 0.1);
+}
+
+.mis-segment:nth-child(4).actif {
+  color: #ffffff;
+  background: linear-gradient(135deg, #f0434a, #ed1c24);
+  box-shadow: 0 4px 14px rgba(237, 28, 36, 0.38);
+}
+
+.mis-segment:nth-child(4).actif:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, #f0434a, #d4141b);
+}
+
+/* Petit point rouge : il y a des missions en retard */
+.mis-point {
+  width: 8px;
+  height: 8px;
+  background: var(--rouge);
+  border-radius: 50%;
+  animation: mis-point-pulse 1.8s ease-in-out infinite;
+}
+
+.mis-segment.actif .mis-point {
+  background: #ffffff;
+  animation: none;
+}
+
+/* Bouton d'ajout, au bout de la pilule */
+.mis-separateur {
+  flex-shrink: 0;
+  width: 1px;
+  height: 22px;
+  margin: 0 6px;
+  background: rgba(0, 122, 61, 0.25);
+}
+
+.mis-ajout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 12px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--vert);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 122, 61, 0.45);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mis-ajout svg {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mis-ajout:hover {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00a152, #007a3d);
+  box-shadow: 0 6px 18px rgba(0, 122, 61, 0.38);
+  transform: translateY(-1px);
+}
+
+.mis-ajout:hover svg {
+  transform: rotate(90deg);
+}
+
+.mis-ajout:active {
+  transform: scale(0.95);
+}
+
+.mis-ajout:focus-visible {
+  outline: 2px solid var(--vert);
+  outline-offset: 2px;
+}
+
+@keyframes mis-ilot-entree {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes mis-segment-pop {
+  0% {
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mis-point-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(237, 28, 36, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(237, 28, 36, 0);
+  }
+}
+
+/* ---------- Liste ---------- */
+
+.mis-tableau-cadre {
+  overflow-x: auto;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.mis-tableau {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.mis-tableau th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+  background: #fafcfb;
+  border-bottom: 1px solid var(--bordure);
+  white-space: nowrap;
+}
+
+.mis-tableau td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  border-top: 1px solid var(--bordure);
+}
+
+.mis-tableau tbody tr {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mis-tableau tbody tr:first-child td {
+  border-top: none;
+}
+
+.mis-tableau tbody tr:hover {
+  background: #f1f9f4;
+}
+
+.mis-tableau tbody tr:focus-visible {
+  outline: 2px solid var(--vert);
+  outline-offset: -2px;
+}
+
+/* Mission d'aujourd'hui */
+.mis-tableau tbody tr.aujourdhui {
+  background: #f3faf6;
+}
+
+.mis-tableau tbody tr.aujourdhui td:first-child {
+  box-shadow: inset 3px 0 0 var(--vert);
+}
+
+/* Mission en retard */
+.mis-tableau tbody tr.retard {
+  background: #fffafa;
+}
+
+.mis-tableau tbody tr.retard:hover {
+  background: #fff1f1;
+}
+
+.mis-tableau tbody tr.retard td:first-child {
+  box-shadow: inset 3px 0 0 var(--rouge);
+}
+
+.mis-tableau tbody tr.retard .mis-date-texte {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.mis-chevron {
+  width: 32px;
+  font-size: 1.5rem;
+  line-height: 1;
+  text-align: right;
+  color: #9ca3af;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.mis-tableau tbody tr:hover .mis-chevron {
+  color: var(--vert);
+  transform: translateX(2px);
+}
+
+.mis-site strong {
+  display: block;
+  color: var(--texte);
+}
+
+.mis-site span {
+  font-size: 0.82rem;
+  color: var(--texte-doux);
+}
+
+.mis-date {
+  white-space: nowrap;
+}
+
+.mis-date-texte {
+  display: block;
+  text-transform: capitalize;
+}
+
+.mis-echeance {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 2px 9px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.mis-badges .mis-echeance {
+  margin-top: 0;
+}
+
+.mis-echeance.retard {
+  color: #b91c1c;
+  background: #fef2f2;
+  border-color: #fbd0d2;
+}
+
+.mis-echeance.aujourdhui {
+  color: #006232;
+  background: #eaf6ef;
+  border-color: #b9dfc9;
+}
+
+.mis-statut {
+  display: inline-block;
+  padding: 3px 11px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.mis-statut.PLANIFIEE {
+  color: #8a6d00;
+  background: #fff8db;
+  border-color: #f1dc8a;
+}
+
+.mis-statut.EN_COURS {
+  color: #b45309;
+  background: #fff0e1;
+  border-color: #f8cf9f;
+}
+
+.mis-statut.CLOTUREE {
+  color: #006232;
+  background: #eaf6ef;
+  border-color: #b9dfc9;
+}
+
+.mis-vide {
+  margin: 0;
+  padding: 28px 16px;
+  text-align: center;
+  color: var(--texte-doux);
+}
+
+.mis-chargement {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+  color: var(--texte-doux);
+}
+
+.mis-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(0, 122, 61, 0.25);
+  border-top-color: var(--vert);
+  border-radius: 50%;
+  animation: mis-tourne 0.7s linear infinite;
+}
+
+@keyframes mis-tourne {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- Contenu du panneau : consulter ---------- */
+
+.mis-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.mis-infos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0 0 22px;
+}
+
+.mis-info {
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+}
+
+.mis-info.large {
+  grid-column: 1 / -1;
+}
+
+.mis-info dt {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.mis-info dd {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-size: 0.97rem;
+  color: var(--texte);
+}
+
+.mis-info dd strong {
+  font-size: 1.05rem;
+}
+
+.mis-info dd span {
+  font-size: 0.85rem;
+  color: var(--texte-doux);
+}
+
+.mis-position a {
+  font-weight: 600;
+  color: var(--vert);
+  text-decoration: none;
+}
+
+.mis-position a:hover {
+  text-decoration: underline;
+}
+
+.mis-note {
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  color: var(--texte-doux);
+  background: #f6f8f7;
+  border-radius: 12px;
+}
+
+.application .bouton.mis-bouton-suppression {
+  color: var(--rouge);
+  border-color: #fbd0d2;
+}
+
+.application .bouton.mis-bouton-suppression:hover:not(:disabled) {
+  background: #fef2f2;
+}
+
+/* ---------- Contenu du panneau : formulaire ---------- */
+
+.mis-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 18px;
+}
+
+.mis-aide {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  color: var(--texte-doux);
+}
+
+.mis-aide.alerte {
+  color: #b45309;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mis-ilot,
+  .mis-segment.actif,
+  .mis-point,
+  .mis-spinner {
+    animation: none;
+  }
+  .mis-segment,
+  .mis-segment:hover,
+  .mis-segment:active,
+  .mis-ajout,
+  .mis-ajout:hover,
+  .mis-ajout svg,
+  .mis-chevron {
+    transition: none;
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .mis-grille,
+  .mis-infos {
+    grid-template-columns: 1fr;
+  }
+  .mis-ilot-zone {
+    justify-content: flex-start;
+  }
+}

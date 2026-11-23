@@ -1,0 +1,44 @@
+/* Photo obligatoire sur un critère non conforme (fiche de contrôle du contrôleur) */
+
+.gri-carte.sans-photo {
+    border-color: #f0b4ae;
+    box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.12);
+  }
+  
+  .gri-badge-photo {
+    flex: 0 0 auto;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: #ed1c24;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  
+  .gri-photo-alerte {
+    margin: 8px 0 4px;
+    padding: 8px 12px;
+    font-size: 0.84rem;
+    color: #8f1218;
+    background: #fef2f2;
+    border-left: 3px solid #ed1c24;
+    border-radius: 8px;
+  }
+  
+  /* Le bouton photo attire l'œil tant que la photo manque */
+  .gri-carte.sans-photo .gri-ajout-photo {
+    color: #ffffff;
+    background: linear-gradient(135deg, #f0434a, #ed1c24);
+    border-color: transparent;
+    animation: gri-photo-pulse 1.8s ease-out infinite;
+  }
+  
+  @keyframes gri-photo-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(237, 28, 36, 0.45); }
+    100% { box-shadow: 0 0 0 10px rgba(237, 28, 36, 0); }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .gri-carte.sans-photo .gri-ajout-photo { animation: none; }
+  }

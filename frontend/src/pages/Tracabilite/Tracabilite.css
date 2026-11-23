@@ -1,0 +1,332 @@
+/* Page Traçabilité : préfixe « tra- » (même esprit que la page Tournées).
+   L'alerte et l'apparition des lignes sont dans ./PageTracabilite.css */
+
+   .tra-page {
+    padding-bottom: 96px; /* la bulle Maki ne cache plus les boutons */
+  }
+  
+  .tra-intro {
+    max-width: 78ch;
+    margin: -6px 0 20px;
+    font-size: 0.92rem;
+    color: var(--texte-doux);
+  }
+  
+  /* ---------- Pilule : verre transparent, animée ---------- */
+  
+  .tra-ilot-zone {
+    position: sticky;
+    top: 14px;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    pointer-events: none;
+  }
+  
+  .tra-ilot {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    max-width: 100%;
+    padding: 5px;
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid rgba(0, 122, 61, 0.22);
+    border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(0, 122, 61, 0.14), 0 2px 8px rgba(16, 24, 40, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    pointer-events: auto;
+    scrollbar-width: none;
+    animation: tra-ilot-entree 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .tra-ilot::-webkit-scrollbar { display: none; }
+  
+  .tra-segment {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--texte-doux);
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .tra-segment:hover {
+    color: var(--vert);
+    background: rgba(0, 122, 61, 0.12);
+    transform: translateY(-1px);
+  }
+  .tra-segment:active { transform: scale(0.95); }
+  .tra-segment:focus-visible { outline: 2px solid var(--vert); outline-offset: -2px; }
+  .tra-segment.actif {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00a152, #007a3d);
+    box-shadow: 0 4px 14px rgba(0, 122, 61, 0.38);
+    animation: tra-segment-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .tra-segment.actif:hover {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00a152, #006232);
+  }
+  
+  .tra-separateur {
+    flex-shrink: 0;
+    width: 1px;
+    height: 22px;
+    margin: 0 6px;
+    background: rgba(0, 122, 61, 0.25);
+  }
+  
+  /* Bouton d'export, au bout de la pilule */
+  .tra-ajout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px 8px 12px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--vert);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 122, 61, 0.45);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+      transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .tra-ajout svg { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .tra-ajout:hover:not(:disabled) {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00a152, #007a3d);
+    box-shadow: 0 6px 18px rgba(0, 122, 61, 0.38);
+    transform: translateY(-1px);
+  }
+  .tra-ajout:hover:not(:disabled) svg { transform: translateY(2px); }
+  .tra-ajout:active:not(:disabled) { transform: scale(0.95); }
+  .tra-ajout:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+  .tra-ajout:disabled { cursor: not-allowed; opacity: 0.55; }
+  
+  @keyframes tra-ilot-entree {
+    from { opacity: 0; transform: translateY(-14px) scale(0.94); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes tra-segment-pop {
+    0% { transform: scale(0.9); }
+    60% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+  
+  /* ---------- Filtres ---------- */
+  
+  .tra-filtres {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px 14px;
+    margin-bottom: 18px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--bordure);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  }
+  .tra-champ {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    font-size: 0.78rem;
+  }
+  .tra-champ label {
+    font-weight: 600;
+    color: var(--texte-doux);
+  }
+  .tra-filtres input,
+  .tra-filtres select {
+    min-height: 38px;
+    padding: 0 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--texte);
+    background: #ffffff;
+    border: 1px solid var(--bordure);
+    border-radius: 10px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tra-filtres input:hover,
+  .tra-filtres select:hover { border-color: rgba(0, 122, 61, 0.45); }
+  .tra-filtres input:focus-visible,
+  .tra-filtres select:focus-visible {
+    outline: none;
+    border-color: var(--vert);
+    box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.2);
+  }
+  
+  /* ---------- Synthèse de la période ---------- */
+  
+  .tra-synthese {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin: 0 0 18px;
+    padding: 12px 16px;
+    list-style: none;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid var(--bordure);
+    border-radius: 16px;
+  }
+  .tra-synthese li { display: grid; }
+  .tra-synthese li strong { font-size: 1.02rem; color: var(--vert); }
+  .tra-synthese li span { font-size: 0.78rem; color: var(--texte-doux); }
+  .tra-synthese li.alerte strong { color: #8a6d00; }
+  
+  /* ---------- Statut ---------- */
+  
+  .tra-statut {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 11px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--texte-doux);
+    background: #f3f5f4;
+    border: 1px solid var(--bordure);
+    border-radius: 999px;
+  }
+  .tra-statut::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .tra-statut.EN_COURS { color: #8a6d00; background: #fff8db; border-color: #f1dc8a; }
+  .tra-statut.CLOTUREE { color: #006232; background: #eaf6ef; border-color: #b9dfc9; }
+  
+  /* ---------- Liste ---------- */
+  
+  .tra-cadre {
+    overflow-x: auto;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--bordure);
+    border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+    transition: opacity 0.2s ease;
+  }
+  .tra-cadre[aria-busy="true"] { opacity: 0.6; }
+  
+  .tra-tableau {
+    width: 100%;
+    min-width: 980px;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  .tra-tableau th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+    background: #fafcfb;
+    border-bottom: 1px solid var(--bordure);
+    white-space: nowrap;
+  }
+  .tra-tableau td {
+    padding: 14px 16px;
+    vertical-align: top;
+    border-top: 1px solid var(--bordure);
+  }
+  .tra-tableau tbody tr:first-child td { border-top: none; }
+  .tra-tableau tbody tr:hover { background: #f1f9f4; }
+  .tra-tableau tbody tr:hover td:first-child { box-shadow: inset 3px 0 0 var(--vert); }
+  
+  .tra-date strong,
+  .tra-site strong,
+  .tra-moment strong {
+    display: block;
+  }
+  .tra-date span,
+  .tra-site span,
+  .tra-controle span,
+  .tra-moment span,
+  .tra-moment a {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+  }
+  .tra-date { white-space: nowrap; }
+  
+  .tra-moment a {
+    font-weight: 600;
+    color: var(--vert);
+    text-decoration: none;
+  }
+  .tra-moment a:hover { text-decoration: underline; }
+  .tra-moment a:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; border-radius: 4px; }
+  
+  .tra-vide { font-size: 0.8rem; color: var(--texte-doux); }
+  .tra-moment .tra-pres { color: #006232; }
+  .tra-moment .tra-loin { color: var(--rouge); font-weight: 700; }
+  
+  .tra-vide-page {
+    margin: 0;
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--texte-doux);
+  }
+  
+  .tra-chargement {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    color: var(--texte-doux);
+  }
+  .tra-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 122, 61, 0.25);
+    border-top-color: var(--vert);
+    border-radius: 50%;
+    animation: tra-rotation 0.7s linear infinite;
+  }
+  @keyframes tra-rotation { to { transform: rotate(360deg); } }
+  
+  /* ---------- Responsive ---------- */
+  @media (max-width: 640px) {
+    .tra-ilot-zone { justify-content: flex-start; }
+    .tra-filtres { flex-direction: column; align-items: stretch; }
+  }
+  
+  /* ---------- Mouvement réduit ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .tra-ilot,
+    .tra-segment.actif,
+    .tra-spinner {
+      animation: none;
+    }
+    .tra-segment,
+    .tra-segment:hover,
+    .tra-segment:active,
+    .tra-ajout,
+    .tra-ajout:hover,
+    .tra-ajout svg {
+      transition: none;
+      transform: none;
+    }
+  }

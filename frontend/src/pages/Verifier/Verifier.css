@@ -1,0 +1,195 @@
+.ver-page {
+    --ver-vert: #14532d;
+    --ver-vert-clair: #e8f3ec;
+    --ver-rouge: #b42318;
+    --ver-rouge-clair: #fdecea;
+    --ver-orange: #92400e;
+    --ver-orange-clair: #fef3e2;
+    --ver-anthracite: #1f2933;
+    --ver-gris: #52606d;
+    --ver-fond: #f6f8f9;
+    --ver-bordure: #d9e0e4;
+  
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--ver-fond);
+    color: var(--ver-anthracite);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  .ver-entete {
+    background: #fff;
+    border-bottom: 4px solid var(--ver-vert);
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  
+  .ver-republique {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  
+  .ver-devise {
+    margin: 0.15rem 0 0.75rem;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--ver-gris);
+  }
+  
+  .ver-institution {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ver-vert);
+  }
+  
+  .ver-sous-titre {
+    margin: 0.4rem 0 0;
+    font-size: 0.9rem;
+    color: var(--ver-gris);
+  }
+  
+  .ver-contenu {
+    flex: 1;
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem;
+    box-sizing: border-box;
+  }
+  
+  .ver-carte {
+    background: #fff;
+    border: 1px solid var(--ver-bordure);
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 1.25rem;
+    text-align: center;
+    animation: ver-apparition 0.3s ease-out;
+  }
+  
+  .ver-carte--ok,
+  .ver-carte--ko,
+  .ver-carte--alerte {
+    padding: 0;
+    text-align: left;
+  }
+  
+  .ver-bandeau {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.25rem 1.25rem;
+  }
+  
+  .ver-bandeau h2 {
+    margin: 0;
+    font-size: 1.35rem;
+  }
+  
+  .ver-bandeau--ok {
+    background: var(--ver-vert);
+    color: #fff;
+  }
+  
+  .ver-bandeau--ko {
+    background: var(--ver-rouge);
+    color: #fff;
+  }
+  
+  .ver-bandeau--alerte {
+    background: var(--ver-orange-clair);
+    color: var(--ver-orange);
+  }
+  
+  .ver-details {
+    margin: 0;
+    padding: 0.5rem 1.25rem 1rem;
+  }
+  
+  .ver-details > div {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--ver-bordure);
+  }
+  
+  .ver-details > div:last-child {
+    border-bottom: 0;
+  }
+  
+  .ver-details dt {
+    font-size: 0.8rem;
+    color: var(--ver-gris);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  
+  .ver-details dd {
+    margin: 0.2rem 0 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+  
+  .ver-explication {
+    margin: 0;
+    padding: 1.25rem;
+    line-height: 1.55;
+  }
+  
+  .ver-bouton {
+    margin: 0 1.25rem 1.25rem;
+    padding: 0.65rem 1.25rem;
+    border: 0;
+    border-radius: 8px;
+    background: var(--ver-vert);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .ver-bouton:hover {
+    background: #0f3f22;
+  }
+  
+  .ver-bouton:focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 2px;
+  }
+  
+  .ver-spinner {
+    width: 36px;
+    height: 36px;
+    margin: 0.5rem auto 1rem;
+    border: 4px solid var(--ver-vert-clair);
+    border-top-color: var(--ver-vert);
+    border-radius: 50%;
+    animation: ver-rotation 0.9s linear infinite;
+  }
+  
+  .ver-pied {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--ver-gris);
+  }
+  
+  @keyframes ver-rotation {
+    to { transform: rotate(360deg); }
+  }
+  
+  @keyframes ver-apparition {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .ver-carte { animation: none; }
+    .ver-spinner { animation-duration: 3s; }
+  }
+  
+  @media (max-width: 480px) {
+    .ver-bandeau h2 { font-size: 1.15rem; }
+  }

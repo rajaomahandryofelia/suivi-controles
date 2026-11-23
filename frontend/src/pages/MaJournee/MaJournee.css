@@ -1,0 +1,168 @@
+/* Accueil du contrôleur : préfixe « mj- » (pensé pour le téléphone : gros boutons, une chose à la fois)
+   Style aligné sur la page Missions : verre sobre, vert/rouge/gris, lignes cliquables avec chevron */
+
+   .mj-page { max-width: 720px; margin: 0 auto; padding-bottom: 96px; }
+
+   .mj-entete h1 { margin: 0; font-size: 1.5rem; color: var(--texte); }
+   .mj-entete p { margin: 4px 0 18px; text-transform: capitalize; color: var(--texte-doux); }
+   
+   .mj-message {
+     margin: 0 0 14px;
+     padding: 12px 14px;
+     font-size: 0.92rem;
+     border-radius: 12px;
+     background: rgba(255, 255, 255, 0.7);
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+   }
+   .mj-message.erreur { color: #8f1218; border: 1px solid #fbd0d2; border-left: 3px solid var(--rouge); }
+   .mj-message.ok { color: #14532d; border: 1px solid #b9dfc9; border-left: 3px solid var(--vert); }
+   .mj-vide { color: var(--texte-doux); }
+   
+   /* ---------- La visite à faire ---------- */
+   
+   .mj-hero {
+     display: grid;
+     gap: 6px;
+     margin-bottom: 22px;
+     padding: 18px;
+     background: rgba(255, 255, 255, 0.7);
+     backdrop-filter: blur(14px) saturate(140%);
+     -webkit-backdrop-filter: blur(14px) saturate(140%);
+     border: 1px solid var(--bordure);
+     border-radius: 18px;
+     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+     animation: mj-entree 0.35s ease both;
+   }
+   .mj-hero h2 { margin: 6px 0 0; font-size: 1.35rem; line-height: 1.2; color: var(--texte); }
+   .mj-hero.repos { text-align: center; box-shadow: none; }
+   .mj-hero.repos h2 { font-size: 1.15rem; }
+   .mj-lieu { margin: 0; color: var(--texte-doux); }
+   .mj-creneau { margin: 2px 0 10px; font-weight: 700; color: var(--texte); }
+   
+   .mj-etiquette {
+     justify-self: start;
+     padding: 3px 12px;
+     font-size: 0.75rem;
+     font-weight: 700;
+     color: #ffffff;
+     background: #94a3b8;
+     border-radius: 999px;
+   }
+   .mj-etiquette.attente { background: #343434; }
+   .mj-etiquette.place,
+   .mj-etiquette.fini { background: var(--vert); }
+   
+   /* Le gros bouton : facile à toucher avec un doigt, même en marchant */
+   .mj-gros {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     min-height: 56px;
+     padding: 0 20px;
+     font-family: inherit;
+     font-size: 1.05rem;
+     font-weight: 700;
+     text-decoration: none;
+     color: #ffffff;
+     background: var(--vert);
+     border: none;
+     border-radius: 14px;
+     box-shadow: 0 6px 16px rgba(0, 122, 61, 0.25);
+     cursor: pointer;
+     transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+   }
+   .mj-gros:hover:not(:disabled) { filter: brightness(1.06); box-shadow: 0 8px 20px rgba(0, 122, 61, 0.32); }
+   .mj-gros:active:not(:disabled) { transform: scale(0.98); }
+   .mj-gros:disabled { opacity: 0.65; cursor: wait; }
+   .mj-gros:focus-visible { outline: 3px solid var(--vert); outline-offset: 3px; }
+   
+   .mj-attente {
+     margin: 0;
+     padding: 14px 16px;
+     text-align: center;
+     font-weight: 600;
+     color: var(--texte);
+     background: rgba(255, 255, 255, 0.6);
+     border: 1px solid var(--bordure);
+     border-radius: 14px;
+   }
+   .mj-lien { justify-self: center; margin-top: 4px; font-size: 0.9rem; font-weight: 600; color: var(--vert); }
+   
+   /* ---------- Listes (lignes cliquables avec chevron, comme Missions) ---------- */
+   
+   .mj-bloc { margin-bottom: 20px; }
+   .mj-bloc h2 {
+     margin: 0 0 8px;
+     font-size: 0.74rem;
+     font-weight: 700;
+     letter-spacing: 0.07em;
+     text-transform: uppercase;
+     color: var(--texte-doux);
+   }
+   .mj-liste { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+   .mj-liste a {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     min-height: 56px;
+     padding: 10px 14px;
+     text-decoration: none;
+     color: inherit;
+     background: rgba(255, 255, 255, 0.7);
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     border: 1px solid var(--bordure);
+     border-radius: 14px;
+     transition: border-color 0.2s ease, background 0.2s ease;
+   }
+   .mj-liste a:hover { background: rgba(0, 122, 61, 0.06); border-color: rgba(0, 122, 61, 0.4); }
+   .mj-liste a:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+   .mj-liste-texte { display: grid; flex: 1; min-width: 0; }
+   .mj-liste-texte strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--texte); }
+   .mj-liste-texte span { font-size: 0.82rem; color: var(--texte-doux); }
+   .mj-liste-etat { font-size: 0.76rem; font-weight: 700; color: var(--texte-doux); }
+   
+   .mj-chevron {
+     flex: 0 0 auto;
+     width: 8px;
+     height: 8px;
+     border-top: 2px solid var(--texte-doux);
+     border-right: 2px solid var(--texte-doux);
+     opacity: 0.6;
+     transform: rotate(45deg);
+   }
+   
+   .mj-puce { flex: 0 0 auto; width: 10px; height: 10px; background: #94a3b8; border-radius: 50%; }
+   .mj-puce.attente { background: #343434; }
+   .mj-puce.place,
+   .mj-puce.fini { background: var(--vert); }
+   
+   /* ---------- Raccourcis : pilules en verre ---------- */
+   
+   .mj-raccourcis { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+   .mj-raccourcis a {
+     display: inline-flex;
+     align-items: center;
+     min-height: 44px;
+     padding: 0 18px;
+     font-size: 0.88rem;
+     font-weight: 600;
+     text-decoration: none;
+     color: var(--vert);
+     background: rgba(255, 255, 255, 0.6);
+     backdrop-filter: blur(12px);
+     -webkit-backdrop-filter: blur(12px);
+     border: 1px solid var(--bordure);
+     border-radius: 999px;
+     transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+   }
+   .mj-raccourcis a:hover { color: #ffffff; background: var(--vert); border-color: var(--vert); }
+   .mj-raccourcis a:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+   
+   @keyframes mj-entree { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+   
+   @media (prefers-reduced-motion: reduce) {
+     .mj-hero { animation: none; }
+     .mj-gros { transition: none; }
+   }

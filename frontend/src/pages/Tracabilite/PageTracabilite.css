@@ -1,0 +1,604 @@
+/* Page Traçabilité : préfixe « trp- »
+   Cartes de visite groupées par jour, verre sobre, palette blanc / vert / rouge / gris. */
+
+   .trp-page {
+    padding-bottom: 96px; /* la bulle Maki ne cache plus les boutons */
+  }
+  
+  /* ---------- Grand titre ---------- */
+  
+  .trp-entete { margin-bottom: 22px; }
+  .trp-entete h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--texte);
+  }
+  .trp-intro {
+    max-width: 62ch;
+    margin: 8px 0 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--texte-doux);
+  }
+  
+  /* ---------- Messages ---------- */
+  
+  .trp-message {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+    font-size: 0.9rem;
+    border-radius: 12px;
+  }
+  .trp-message.erreur {
+    color: #8f1218;
+    background: #fef2f2;
+    border: 1px solid #fbd0d2;
+    border-left: 3px solid var(--rouge);
+  }
+  
+  /* ---------- Alerte « Dynamic Island » (verre, centrée) ---------- */
+  
+  .trp-ile-zone { display: flex; justify-content: center; margin: 0 0 18px; }
+  
+  .trp-ile {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    min-height: 46px;
+    margin: 0;
+    padding: 0 22px 0 16px;
+    overflow: hidden;
+    color: var(--texte);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--bordure);
+    border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(16, 24, 40, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    backdrop-filter: blur(16px) saturate(170%);
+    animation: trp-ile-ouvre 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .trp-ile-point {
+    position: relative;
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--rouge);
+    border-radius: 50%;
+  }
+  .trp-ile-point::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--rouge);
+    border-radius: 50%;
+    animation: trp-onde 2s ease-out infinite;
+  }
+  .trp-ile-texte {
+    overflow: hidden;
+    font-size: 0.86rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    animation: trp-ile-texte 0.45s ease 0.4s both;
+  }
+  
+  /* ---------- Période : contrôle segmenté + export ---------- */
+  
+  .trp-barre {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  
+  .trp-segments {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    min-width: min(100%, 340px);
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    backdrop-filter: blur(14px) saturate(160%);
+    border: 1px solid var(--bordure);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Le curseur vert qui glisse sous le choix actif */
+  .trp-curseur {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc((100% - 8px) / 4);
+    background: var(--vert);
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(0, 122, 61, 0.35);
+    transform: translateX(calc(var(--i) * 100%));
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .trp-segment {
+    position: relative;
+    z-index: 1;
+    min-height: 40px;
+    padding: 0 12px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--texte-doux);
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+  .trp-segment:hover { color: var(--vert); }
+  .trp-segment.actif,
+  .trp-segment.actif:hover { color: #ffffff; }
+  .trp-segment:focus-visible { outline: 2px solid var(--vert); outline-offset: -2px; }
+  
+  .trp-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  
+  .trp-ajout {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 18px 0 14px;
+    font-family: inherit;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--vert);
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--bordure);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .trp-ajout:hover:not(:disabled) { color: #ffffff; background: var(--vert); border-color: var(--vert); }
+  .trp-ajout:active:not(:disabled) { transform: scale(0.97); }
+  .trp-ajout:disabled { cursor: not-allowed; opacity: 0.55; }
+  .trp-ajout:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+  
+  /* ---------- Filtres : repliés, façon feuille iOS ---------- */
+  
+  .trp-filtres {
+    margin-bottom: 18px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.7);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid var(--bordure);
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.05);
+  }
+  .trp-filtres > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 0 16px;
+    list-style: none;
+    cursor: pointer;
+    color: var(--texte);
+    transition: background 0.2s ease;
+  }
+  .trp-filtres > summary::-webkit-details-marker { display: none; }
+  .trp-filtres > summary:hover { background: rgba(0, 122, 61, 0.04); }
+  .trp-filtres > summary:focus-visible { outline: 2px solid var(--vert); outline-offset: -2px; }
+  .trp-filtres > summary svg { flex: 0 0 auto; color: var(--texte-doux); }
+  
+  .trp-filtres-titre { font-size: 0.9rem; font-weight: 700; }
+  .trp-filtres-actif { width: 8px; height: 8px; background: var(--vert); border-radius: 50%; }
+  .trp-filtres-resume {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 0.8rem;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--texte-doux);
+  }
+  
+  .trp-chevron {
+    flex: 0 0 auto;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid var(--texte-doux);
+    border-right: 2px solid var(--texte-doux);
+    transform: rotate(135deg);
+    transition: transform 0.2s ease;
+  }
+  .trp-filtres[open] > summary .trp-chevron { transform: rotate(-45deg); }
+  
+  .trp-filtres-corps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 14px;
+    padding: 16px;
+    border-top: 1px solid var(--bordure);
+    animation: trp-entree 0.25s ease both;
+  }
+  .trp-champ { display: grid; gap: 6px; min-width: 0; font-size: 0.8rem; }
+  .trp-champ label { font-weight: 600; color: var(--texte-doux); }
+  
+  .trp-filtres-corps input,
+  .trp-filtres-corps select {
+    min-height: 44px;
+    padding: 0 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--texte);
+    background: #ffffff;
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .trp-filtres-corps input:hover,
+  .trp-filtres-corps select:hover { border-color: rgba(0, 122, 61, 0.45); }
+  .trp-filtres-corps input:focus-visible,
+  .trp-filtres-corps select:focus-visible {
+    outline: none;
+    border-color: var(--vert);
+    box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.18);
+  }
+  
+  /* ---------- Synthèse : un grand chiffre, trois petits ---------- */
+  
+  .trp-bande {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 28px;
+    margin-bottom: 26px;
+    padding: 16px 22px;
+    background: rgba(255, 255, 255, 0.72);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid var(--bordure);
+    border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.06);
+    animation: trp-entree 0.4s ease both;
+  }
+  .trp-bande-principal { display: flex; align-items: baseline; gap: 10px; }
+  .trp-bande-principal strong {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--texte);
+  }
+  .trp-bande-principal span { font-size: 0.86rem; color: var(--texte-doux); }
+  
+  .trp-bande-liste {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    list-style: none;
+    font-size: 0.84rem;
+    color: var(--texte-doux);
+  }
+  .trp-bande-liste strong { font-variant-numeric: tabular-nums; color: var(--texte); }
+  
+  /* ---------- Visites groupées par jour ---------- */
+  
+  .trp-contenu { transition: opacity 0.2s ease; }
+  .trp-contenu[aria-busy="true"] { opacity: 0.6; }
+  
+  .trp-groupe { margin-bottom: 28px; }
+  
+  .trp-jour {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0 0 12px 4px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+  }
+  .trp-jour span { font-weight: 600; letter-spacing: 0; text-transform: none; opacity: 0.85; }
+  
+  .trp-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+    gap: 16px;
+    align-items: start;
+  }
+  
+  /* ---------- Carte de visite ---------- */
+  
+  .trp-carte {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    padding: 18px 20px 22px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.75);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    border: 1px solid var(--bordure);
+    border-radius: 20px;
+    box-shadow: 0 8px 28px rgba(16, 24, 40, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: trp-entree 0.45s ease both;
+  }
+  .trp-carte:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(16, 24, 40, 0.1); }
+  
+  /* Éloignée ou sans GPS : un fin liseré rouge, sans autre bruit */
+  .trp-carte.alerte { box-shadow: inset 3px 0 0 var(--rouge), 0 8px 28px rgba(16, 24, 40, 0.06); }
+  .trp-carte.alerte:hover { box-shadow: inset 3px 0 0 var(--rouge), 0 14px 34px rgba(16, 24, 40, 0.1); }
+  
+  .trp-carte-tete { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+  .trp-carte-site { min-width: 0; }
+  .trp-carte-site h3 {
+    margin: 0;
+    overflow: hidden;
+    font-size: 1.02rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--texte);
+  }
+  .trp-carte-site p {
+    margin: 3px 0 0;
+    overflow: hidden;
+    font-size: 0.82rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--texte-doux);
+  }
+  
+  /* Contrôleur et créneau prévu */
+  .trp-qui {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: -4px 0 0;
+    font-size: 0.82rem;
+    color: var(--texte);
+  }
+  .trp-qui-nom { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font-weight: 600; }
+  .trp-avatar {
+    display: inline-grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--vert);
+    background: rgba(0, 122, 61, 0.1);
+    border-radius: 50%;
+  }
+  .trp-creneau { font-size: 0.78rem; color: var(--texte-doux); white-space: nowrap; }
+  
+  /* ---------- Chronologie : début, durée, fin ---------- */
+  
+  .trp-chrono {
+    display: grid;
+    grid-template-columns: auto minmax(40px, 1fr) auto;
+    align-items: start;
+    gap: 10px;
+  }
+  .trp-chrono > .trp-moment:last-child { justify-items: end; text-align: right; }
+  
+  .trp-moment { display: grid; gap: 7px; justify-items: start; min-width: 0; }
+  .trp-moment strong {
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    color: var(--texte);
+  }
+  .trp-moment strong small { margin-left: 6px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0; color: var(--texte-doux); }
+  .trp-vide { font-size: 0.86rem; font-weight: 600; color: var(--texte-doux); }
+  
+  /* Pastilles GPS */
+  .trp-gps {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    padding: 3px 9px;
+    overflow: hidden;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    border-radius: 999px;
+  }
+  .trp-gps svg { flex: 0 0 auto; }
+  .trp-gps.pres { color: #1f6b43; background: rgba(0, 122, 61, 0.1); }
+  .trp-gps.loin { color: #8f1218; background: #fef2f2; border-color: #fbd0d2; }
+  .trp-gps.auto { color: var(--texte-doux); background: #f1f3f5; border-color: var(--bordure); }
+  .trp-gps.neutre { color: var(--vert); border-color: rgba(0, 122, 61, 0.35); }
+  a.trp-gps { transition: filter 0.2s ease; }
+  a.trp-gps:hover { filter: brightness(0.95); }
+  a.trp-gps:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+  
+  .trp-fil { display: flex; align-items: center; gap: 8px; min-width: 0; margin-top: 5px; }
+  .trp-fil-trait { flex: 1; height: 2px; min-width: 6px; background: rgba(0, 122, 61, 0.3); border-radius: 2px; }
+  .trp-fil.sans .trp-fil-trait {
+    background: repeating-linear-gradient(90deg, #cbd5e1 0 4px, transparent 4px 8px);
+  }
+  .trp-duree {
+    flex: 0 0 auto;
+    padding: 2px 9px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--texte);
+    background: #f1f3f5;
+    border: 1px solid var(--bordure);
+    border-radius: 999px;
+  }
+  
+  /* ---------- Ligne de contrôle + avancement ---------- */
+  
+  .trp-controle {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    margin: 0;
+    padding-top: 14px;
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+    border-top: 1px solid var(--bordure);
+  }
+  .trp-controle > span + span::before { content: "·"; margin-right: 8px; }
+  
+  .trp-avance { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; background: #eef0f2; }
+  .trp-avance span {
+    display: block;
+    height: 100%;
+    background: var(--vert);
+    animation: trp-grandit 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  
+  /* ---------- Statut ---------- */
+  
+  .trp-statut {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 11px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--texte-doux);
+    background: #f3f5f4;
+    border: 1px solid var(--bordure);
+    border-radius: 999px;
+  }
+  .trp-statut-point { width: 7px; height: 7px; background: currentColor; border-radius: 50%; }
+  .trp-statut-EN_COURS { color: var(--vert); background: rgba(0, 122, 61, 0.06); border-color: rgba(0, 122, 61, 0.4); }
+  .trp-statut-EN_COURS .trp-statut-point { animation: trp-pouls 1.8s ease-out infinite; }
+  .trp-statut-CLOTUREE { color: #006232; background: #eaf6ef; border-color: #b9dfc9; }
+  
+  /* ---------- États : vide, chargement, erreur ---------- */
+  
+  .trp-vide-page {
+    margin: 0;
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--texte-doux);
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px dashed var(--bordure);
+    border-radius: 18px;
+  }
+  .trp-chargement {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 24px;
+    color: var(--texte-doux);
+  }
+  .trp-spinner-vert {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(0, 122, 61, 0.25);
+    border-top-color: var(--vert);
+    border-radius: 50%;
+    animation: trp-rotation 0.7s linear infinite;
+  }
+  
+  .trp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .trp-btn:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+  .trp-btn:active:not(:disabled) { transform: scale(0.97); }
+  .trp-btn:disabled { cursor: not-allowed; opacity: 0.55; }
+  .trp-btn-secondaire { color: var(--vert); background: rgba(255, 255, 255, 0.8); border-color: rgba(0, 122, 61, 0.45); }
+  .trp-btn-secondaire:hover:not(:disabled) { color: #ffffff; background: var(--vert); border-color: var(--vert); }
+  
+  /* ---------- Animations ---------- */
+  
+  @keyframes trp-entree { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes trp-grandit { from { width: 0; } }
+  @keyframes trp-rotation { to { transform: rotate(360deg); } }
+  @keyframes trp-ile-ouvre {
+    0% { max-width: 46px; padding-right: 0; opacity: 0; transform: translateY(-12px) scale(0.7); }
+    25% { opacity: 1; }
+    100% { max-width: 100%; padding-right: 22px; transform: none; }
+  }
+  @keyframes trp-ile-texte { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } }
+  @keyframes trp-onde {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(3); opacity: 0; }
+  }
+  @keyframes trp-pouls {
+    0% { box-shadow: 0 0 0 0 rgba(0, 122, 61, 0.5); }
+    100% { box-shadow: 0 0 0 7px rgba(0, 122, 61, 0); }
+  }
+  
+  /* ---------- Téléphone ---------- */
+  
+  @media (max-width: 640px) {
+    .trp-entete h1 { font-size: 1.7rem; }
+    .trp-barre { flex-direction: column; align-items: stretch; }
+    .trp-segments { min-width: 0; }
+    .trp-actions { display: grid; grid-template-columns: 1fr 1fr; }
+    .trp-ajout { justify-content: center; }
+    .trp-filtres-corps { flex-direction: column; }
+    .trp-bande-liste { margin-left: 0; }
+    .trp-ile-texte { white-space: normal; }
+    .trp-ile { padding-top: 10px; padding-bottom: 10px; border-radius: 24px; }
+  }
+  
+  /* ---------- Mouvement réduit ---------- */
+  
+  @media (prefers-reduced-motion: reduce) {
+    .trp-ile,
+    .trp-ile-texte,
+    .trp-ile-point::after,
+    .trp-bande,
+    .trp-carte,
+    .trp-avance span,
+    .trp-filtres-corps,
+    .trp-statut-EN_COURS .trp-statut-point,
+    .trp-spinner-vert { animation: none; }
+    .trp-curseur,
+    .trp-segment,
+    .trp-ajout,
+    .trp-btn,
+    .trp-carte,
+    .trp-chevron,
+    .trp-contenu { transition: none; }
+    .trp-carte:hover { transform: none; }
+  }

@@ -1,0 +1,85 @@
+/* Formulaire d'attribution d'une mission à plusieurs sites */
+
+.att-liste {
+    list-style: none;
+    margin: 0 0 0.6rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  
+  .att-etape {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 11rem) auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 0.8rem;
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(46, 125, 79, 0.18);
+    backdrop-filter: blur(6px);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  
+  .att-etape:hover {
+    border-color: rgba(46, 125, 79, 0.45);
+    background: rgba(255, 255, 255, 0.8);
+  }
+  
+  .att-etape-site {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  
+  .att-etape-site strong {
+    font-size: 0.92rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .att-etape-site span {
+    font-size: 0.78rem;
+    opacity: 0.65;
+  }
+  
+  .att-retirer {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: transparent;
+    color: inherit;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  
+  .att-retirer:hover,
+  .att-retirer:focus-visible {
+    background: rgba(200, 40, 40, 0.1);
+    color: #b3261e;
+    border-color: rgba(200, 40, 40, 0.35);
+    outline: none;
+  }
+  
+  .att-case {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 560px) {
+    .att-etape {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .att-etape select {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }

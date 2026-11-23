@@ -1,0 +1,477 @@
+/* Carte en direct : préfixe « cd- » (même style que les pages Tournées et Traçabilité) */
+
+.cd-page { padding-bottom: 96px; }
+
+.cd-intro {
+  max-width: 78ch;
+  margin: -6px 0 18px;
+  font-size: 0.92rem;
+  color: var(--texte-doux);
+}
+
+.cd-message {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+.cd-message.erreur {
+  color: #8f1218;
+  background: #fef2f2;
+  border: 1px solid #fbd0d2;
+  border-left: 3px solid var(--rouge);
+}
+.cd-lien {
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--vert);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.cd-lien:hover { text-decoration: underline; }
+
+/* ---------- Annonce en verre (un site vient de changer d'état) ---------- */
+
+.cd-ile-zone {
+  position: sticky;
+  top: 14px;
+  z-index: 1200;
+  display: flex;
+  justify-content: center;
+  margin: 0 0 14px;
+  pointer-events: none;
+}
+.cd-ile {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  height: 46px;
+  padding: 0 22px 0 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 122, 61, 0.25);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0, 122, 61, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  animation: cd-ile-ouvre 0.7s cubic-bezier(0.2, 1.1, 0.3, 1) both;
+}
+.cd-ile-point {
+  position: relative;
+  flex-shrink: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--vert);
+  border-radius: 50%;
+}
+.cd-ile-point::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--vert);
+  animation: cd-onde 1.6s ease-out infinite;
+}
+.cd-ile-texte {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@keyframes cd-ile-ouvre {
+  0% { max-width: 46px; padding-right: 0; opacity: 0; transform: translateY(-14px) scale(0.6); }
+  30% { opacity: 1; }
+  100% { max-width: 100%; padding-right: 22px; transform: none; }
+}
+
+/* ---------- Barre ---------- */
+
+.cd-barre {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 12px;
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--bordure);
+  border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+.cd-champ { display: grid; gap: 5px; font-size: 0.8rem; }
+.cd-champ label { color: var(--texte-doux); font-weight: 600; }
+.cd-champ input {
+  min-height: 38px;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  background: #ffffff;
+  border: 1px solid var(--bordure);
+  border-radius: 10px;
+}
+.cd-champ input:focus-visible { outline: none; border-color: var(--vert); box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.2); }
+
+.cd-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 0 16px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--vert);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 122, 61, 0.45);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.cd-btn:hover:not(:disabled) {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00a152, #007a3d);
+  box-shadow: 0 6px 18px rgba(0, 122, 61, 0.35);
+  transform: translateY(-1px);
+}
+.cd-btn:disabled { cursor: not-allowed; opacity: 0.55; }
+.cd-btn:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+.cd-btn-plein {
+  color: #ffffff;
+  background: linear-gradient(135deg, #00a152, #007a3d);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(0, 122, 61, 0.3);
+}
+
+.cd-direct {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  font-size: 0.82rem;
+  color: var(--texte-doux);
+}
+.cd-direct-point {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  background: var(--rouge);
+  border-radius: 50%;
+}
+.cd-direct-point::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--rouge);
+  animation: cd-onde 1.6s ease-out infinite;
+}
+
+/* ---------- Légende ---------- */
+
+.cd-legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.84rem;
+  color: var(--texte-doux);
+}
+.cd-legende li { display: inline-flex; align-items: center; gap: 7px; }
+.cd-legende strong { color: var(--texte); }
+
+/* Pastille de couleur (légende, liste, statut) */
+.cd-puce {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #94a3b8;
+}
+.cd-puce.cd-retard { background: #ed1c24; }
+.cd-puce.cd-sur_place { background: #1d6fd1; }
+.cd-puce.cd-demarree { background: #d98c00; }
+.cd-puce.cd-prevue { background: #94a3b8; }
+.cd-puce.cd-cloturee { background: #00a152; }
+.cd-puce.cd-validee { background: #006232; }
+.cd-puce.cd-site { background: #ffffff; border: 2px solid #007a3d; width: 11px; height: 11px; box-sizing: border-box; }
+
+/* ---------- Carte + panneau ---------- */
+
+.cd-zone {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+  align-items: start;
+}
+.cd-carte-cadre {
+  position: relative;
+  isolation: isolate; /* la carte reste sous le menu et les fenêtres */
+  overflow: hidden;
+  height: min(78vh, 760px);
+  min-height: 560px;
+  background: #eef3f0;
+  border: 1px solid var(--bordure);
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(16, 24, 40, 0.08);
+}
+.cd-carte { position: absolute; inset: 0; z-index: 0; }
+.cd-carte-voile {
+  position: absolute;
+  inset: auto 0 18px 0;
+  z-index: 500;
+  width: max-content;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 8px 18px;
+  font-size: 0.86rem;
+  color: var(--texte-doux);
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* ---------- Les épingles sur la carte ---------- */
+
+.cd-pin-conteneur { background: none; border: none; }
+.cd-pin {
+  position: relative;
+  width: 36px;
+  height: 46px;
+  cursor: pointer;
+  --couleur: #94a3b8;
+  --symbole: #ffffff;
+  transform-origin: 50% 96%;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.cd-pin:hover { transform: scale(1.12); }
+.cd-pin-corps {
+  position: relative;
+  z-index: 2;
+  display: block;
+  filter: drop-shadow(0 3px 4px rgba(16, 24, 40, 0.35));
+}
+.cd-pin-forme { fill: var(--couleur); stroke: #ffffff; stroke-width: 2; }
+.cd-pin-symbole { stroke: var(--symbole); }
+
+/* L'onde au pied de l'épingle, sur le lieu exact */
+.cd-pin-onde {
+  position: absolute;
+  left: 9px;
+  bottom: -1px;
+  z-index: 1;
+  width: 18px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--couleur);
+  opacity: 0;
+}
+
+.cd-pin.cd-prevue { --couleur: #94a3b8; }
+.cd-pin.cd-demarree { --couleur: #d98c00; }
+.cd-pin.cd-sur_place { --couleur: #1d6fd1; }
+.cd-pin.cd-retard { --couleur: #ed1c24; }
+.cd-pin.cd-cloturee { --couleur: #00a152; }
+.cd-pin.cd-validee { --couleur: #006232; }
+/* Site enregistré, sans mission ce jour-là : épingle blanche, pylône vert */
+.cd-pin.cd-site { --couleur: #ffffff; --symbole: #007a3d; }
+.cd-pin.cd-site .cd-pin-forme { stroke: #007a3d; stroke-width: 2.5; }
+
+.cd-pin.cd-sur_place .cd-pin-onde { animation: cd-onde-sol 1.8s ease-out infinite; }
+.cd-pin.cd-demarree .cd-pin-onde { animation: cd-onde-sol 2.6s ease-out infinite; }
+.cd-pin.cd-retard .cd-pin-onde { animation: cd-onde-sol 0.9s ease-out infinite; }
+.cd-pin.cd-retard .cd-pin-corps { animation: cd-clignote 0.9s ease-in-out infinite; }
+.cd-pin.cd-validee .cd-pin-forme { stroke: #b9dfc9; stroke-width: 3; }
+
+/* Vient de changer d'état : l'épingle rebondit et une grande onde part du site */
+.cd-pin.cd-flash .cd-pin-corps { animation: cd-rebond 0.7s ease-in-out 6; }
+.cd-pin.cd-flash .cd-pin-onde { animation: cd-grande-onde-sol 1.2s ease-out infinite; }
+
+.cd-pin.cd-choisi { transform: scale(1.25); }
+.cd-pin.cd-choisi .cd-pin-forme { stroke: #14532d; stroke-width: 3; }
+
+@keyframes cd-onde {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@keyframes cd-onde-sol {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+@keyframes cd-grande-onde-sol {
+  0% { transform: scale(0.6); opacity: 0.85; }
+  100% { transform: scale(5); opacity: 0; }
+}
+@keyframes cd-clignote {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@keyframes cd-rebond {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-14px); }
+}
+
+/* ---------- Point GPS d'un contrôleur (bleu, comme sur un GPS) ---------- */
+
+.cd-gps { position: relative; width: 28px; height: 28px; cursor: pointer; }
+.cd-gps-point {
+  position: absolute;
+  inset: 6px;
+  z-index: 2;
+  background: #1a73e8;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(16, 24, 40, 0.45);
+}
+.cd-gps-halo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(26, 115, 232, 0.35);
+  border-radius: 50%;
+  animation: cd-onde 2s ease-out infinite;
+}
+.cd-etiquette {
+  padding: 3px 9px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #174ea6;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(16, 24, 40, 0.25);
+}
+.cd-etiquette::before { display: none; }
+
+/* Sélecteur de fond de carte (Plan / Satellite) */
+.cd-carte .leaflet-control-layers {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(16, 24, 40, 0.2);
+}
+
+/* ---------- Panneau ---------- */
+
+.cd-panneau { display: grid; gap: 14px; min-width: 0; }
+.cd-aide { margin: 0; font-size: 0.86rem; color: var(--texte-doux); }
+
+.cd-detail {
+  position: relative;
+  padding: 16px 16px 14px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--bordure);
+  border-left-width: 4px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(16, 24, 40, 0.08);
+  animation: cd-ile-ouvre-simple 0.3s ease both;
+}
+@keyframes cd-ile-ouvre-simple { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.cd-bord-retard { border-left-color: #ed1c24; }
+.cd-bord-sur_place { border-left-color: #1d6fd1; }
+.cd-bord-demarree { border-left-color: #d98c00; }
+.cd-bord-prevue { border-left-color: #94a3b8; }
+.cd-bord-cloturee { border-left-color: #00a152; }
+.cd-bord-validee { border-left-color: #006232; }
+
+.cd-fermer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  color: var(--texte-doux);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.cd-fermer:hover { background: #f1f5f3; color: var(--texte); }
+
+.cd-statut {
+  display: inline-block;
+  padding: 3px 11px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #ffffff;
+  border-radius: 999px;
+  background: #94a3b8;
+}
+.cd-statut.cd-retard { background: #ed1c24; }
+.cd-statut.cd-sur_place { background: #1d6fd1; }
+.cd-statut.cd-demarree { background: #d98c00; }
+.cd-statut.cd-cloturee { background: #00a152; }
+.cd-statut.cd-validee { background: #006232; }
+
+.cd-detail h2 { margin: 10px 0 2px; font-size: 1.1rem; }
+.cd-lieu { margin: 0 0 12px; font-size: 0.86rem; color: var(--texte-doux); }
+
+.cd-infos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin: 0 0 14px; }
+.cd-infos dt { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--texte-doux); }
+.cd-infos dd { margin: 2px 0 0; font-size: 0.92rem; font-weight: 600; }
+.cd-infos small { display: block; font-size: 0.76rem; font-weight: 500; color: var(--texte-doux); }
+.cd-infos small.cd-loin { color: #b91c1c; font-weight: 700; }
+
+.cd-historique { margin: 0 0 12px; padding-top: 10px; border-top: 1px dashed var(--bordure); }
+.cd-historique h3 { margin: 0 0 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--texte-doux); }
+.cd-historique p { display: grid; margin: 0 0 4px; font-size: 0.9rem; }
+.cd-historique span { font-size: 0.8rem; color: var(--texte-doux); }
+.cd-rapport { font-weight: 600; }
+.cd-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.cd-liste {
+  display: grid;
+  gap: 6px;
+  max-height: 340px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+.cd-ligne {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  font-family: inherit;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--bordure);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.cd-ligne:hover { background: #f1f9f4; border-color: rgba(0, 122, 61, 0.4); }
+.cd-ligne.actif { border-color: var(--vert); box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.15); }
+.cd-ligne:focus-visible { outline: 2px solid var(--vert); outline-offset: 2px; }
+.cd-ligne-texte { display: grid; flex: 1; min-width: 0; }
+.cd-ligne-texte strong { font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cd-ligne-texte span { font-size: 0.78rem; color: var(--texte-doux); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cd-ligne-etat { flex: 0 0 auto; font-size: 0.72rem; font-weight: 700; color: var(--texte-doux); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1000px) {
+  .cd-zone { grid-template-columns: 1fr; }
+  .cd-carte-cadre { min-height: 420px; }
+  .cd-direct { margin-left: 0; }
+}
+
+/* ---------- Mouvement réduit ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cd-pin-onde,
+  .cd-pin-corps,
+  .cd-gps-halo,
+  .cd-ile,
+  .cd-ile-point::after,
+  .cd-direct-point::after,
+  .cd-detail { animation: none !important; }
+}

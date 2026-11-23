@@ -1,0 +1,147 @@
+/* Tableau de bord du directeur : indicateurs clés puis deux colonnes */
+
+/* ---------- Indicateurs clés ---------- */
+
+.ind-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+  
+  .ind-kpi {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    min-width: 0;
+    padding: 16px 18px;
+    font-family: inherit;
+    text-align: left;
+    color: var(--texte);
+    background: var(--verre-fond);
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
+    backdrop-filter: blur(18px) saturate(170%);
+    border: 1px solid var(--verre-bord);
+    border-radius: 24px;
+    box-shadow: var(--verre-ombre), var(--verre-reflet);
+    transition: transform 0.45s var(--ressort), box-shadow 0.35s ease;
+  }
+  
+  button.ind-kpi {
+    cursor: pointer;
+  }
+  
+  button.ind-kpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(16, 24, 40, 0.05), 0 16px 38px rgba(16, 24, 40, 0.12),
+      var(--verre-reflet);
+  }
+  
+  button.ind-kpi:active {
+    transform: scale(0.985);
+  }
+  
+  button.ind-kpi:focus-visible {
+    outline: 2px solid var(--vert);
+    outline-offset: 2px;
+  }
+  
+  .ind-kpi-libelle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+  }
+  
+  .ind-kpi-point {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #cbd5e1;
+  }
+  
+  .ind-kpi.danger .ind-kpi-point {
+    background: var(--rouge, #ed1c24);
+    box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.16);
+  }
+  
+  .ind-kpi.attention .ind-kpi-point {
+    background: #d9a400;
+    box-shadow: 0 0 0 3px rgba(217, 164, 0, 0.18);
+  }
+  
+  .ind-kpi.succes .ind-kpi-point {
+    background: var(--vert, #007a3d);
+    box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.16);
+  }
+  
+  .ind-kpi-valeur {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    color: var(--texte);
+  }
+  
+  .ind-kpi-pied {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--texte-doux);
+  }
+  
+  .ind-kpi-pied.hausse {
+    color: #006232;
+  }
+  
+  .ind-kpi-pied.baisse {
+    color: #b91c1c;
+  }
+  
+  /* ---------- Deux colonnes ---------- */
+  
+  .ind-principal {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 16px;
+  }
+  
+  .ind-colonne {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+  
+  /* Dans la colonne de droite, « À traiter » prend toute la largeur */
+  .ind-colonne .ind-panneau.ind-afaire-note {
+    width: 100%;
+  }
+  
+  /* ---------- Écrans moyens et petits ---------- */
+  
+  @media (max-width: 1000px) {
+    .ind-kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  
+  @media (max-width: 860px) {
+    .ind-principal {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    /* « À traiter » passe avant les graphiques */
+    .ind-colonne--droite {
+      order: -1;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .ind-kpis {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
