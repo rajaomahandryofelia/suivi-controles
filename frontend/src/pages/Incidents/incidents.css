@@ -1,0 +1,345 @@
+/* Page Incidents : préfixe « inc- ». Le tableau, la pilule de filtres et l'alerte
+   viennent de ../Missions/Missions.css et PageMissions.css ; ce fichier ajoute les
+   pastilles (statut, gravité, récurrence), le formulaire et la fiche d'un incident. */
+
+/* ---------- Pastilles ---------- */
+
+.inc-statut,
+.inc-gravite,
+.inc-recurrent {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+  border-radius: 999px;
+}
+
+.inc-statut.EN_COURS {
+  color: #b42318;
+  background: rgba(237, 28, 36, 0.1);
+}
+.inc-statut.RETABLI {
+  color: #005c2e;
+  background: rgba(0, 122, 61, 0.12);
+}
+
+.inc-gravite.MINEURE {
+  color: #475467;
+  background: #eef0f3;
+}
+.inc-gravite.MAJEURE {
+  color: #b54708;
+  background: rgba(247, 144, 9, 0.15);
+}
+.inc-gravite.CRITIQUE {
+  color: #b42318;
+  background: rgba(237, 28, 36, 0.12);
+}
+
+.inc-recurrent {
+  margin-top: 2px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  color: #7a2e0e;
+  background: rgba(247, 144, 9, 0.16);
+}
+
+/* Dans le tableau, « .mis-site span » (Missions.css) grisait la pastille : on reprend la main */
+.mis-tableau .mis-site .inc-recurrent {
+  display: inline-flex;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  color: #7a2e0e;
+}
+
+/* ---------- Formulaire de déclaration ---------- */
+
+.inc-formulaire,
+.inc-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inc-ligne {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.inc-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.inc-champ > span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--texte, #1b2430);
+}
+.inc-champ input[type="text"],
+.inc-champ input[type="datetime-local"],
+.inc-champ select,
+.inc-champ textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--texte, #1b2430);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--bordure, #e5e7eb);
+  border-radius: 10px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.inc-champ textarea {
+  resize: vertical;
+}
+.inc-champ input:focus,
+.inc-champ select:focus,
+.inc-champ textarea:focus {
+  outline: none;
+  border-color: var(--vert, #007a3d);
+  box-shadow: 0 0 0 3px rgba(0, 122, 61, 0.15);
+}
+
+.inc-aide {
+  font-size: 0.8rem;
+  color: #667085;
+}
+
+.inc-erreur {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  color: #b42318;
+  background: rgba(237, 28, 36, 0.08);
+  border-radius: 10px;
+}
+
+/* Choix de la gravité : trois boutons */
+.inc-choix {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.inc-choix-bouton {
+  padding: 9px 10px;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #475467;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--bordure, #e5e7eb);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.inc-choix-bouton:hover {
+  border-color: #c5cad3;
+}
+.inc-choix-bouton.actif.MINEURE {
+  color: #344054;
+  background: #eef0f3;
+  border-color: #98a2b3;
+}
+.inc-choix-bouton.actif.MAJEURE {
+  color: #b54708;
+  background: rgba(247, 144, 9, 0.14);
+  border-color: #f79009;
+}
+.inc-choix-bouton.actif.CRITIQUE {
+  color: #b42318;
+  background: rgba(237, 28, 36, 0.1);
+  border-color: var(--rouge, #ed1c24);
+}
+
+/* ---------- Boutons ---------- */
+
+.inc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.inc-secondaire,
+.inc-danger {
+  padding: 9px 16px;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.inc-secondaire {
+  color: #344054;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--bordure, #e5e7eb);
+}
+.inc-secondaire:hover:not(:disabled) {
+  background: #f4f5f7;
+}
+.inc-danger {
+  color: #fff;
+  background: var(--rouge, #ed1c24);
+  border: 1px solid var(--rouge, #ed1c24);
+}
+.inc-danger:hover:not(:disabled) {
+  background: #c9151c;
+}
+.inc-secondaire:disabled,
+.inc-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.inc-lien-danger {
+  padding: 0;
+  font: inherit;
+  font-size: 0.84rem;
+  color: #b42318;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Fiche d'un incident ---------- */
+
+.inc-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.inc-badges .inc-recurrent {
+  margin-top: 0;
+}
+
+.inc-infos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 18px;
+  margin: 0;
+}
+.inc-infos > div {
+  min-width: 0;
+}
+.inc-infos dt {
+  margin-bottom: 2px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #667085;
+}
+.inc-infos dd {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--texte, #1b2430);
+  overflow-wrap: anywhere;
+}
+
+.inc-bloc {
+  padding-top: 14px;
+  border-top: 1px solid var(--bordure, #e5e7eb);
+}
+.inc-bloc h3 {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  color: var(--texte, #1b2430);
+}
+.inc-texte {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: var(--texte, #1b2430);
+}
+
+.inc-retablissement {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.inc-zone-danger {
+  display: flex;
+  justify-content: flex-end;
+}
+.inc-zone-danger .inc-actions {
+  justify-content: flex-end;
+}
+
+/* Preuves : vignettes */
+.inc-preuves {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 10px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.inc-preuves a {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--bordure, #e5e7eb);
+  border-radius: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.inc-preuves a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 24, 40, 0.14);
+}
+.inc-preuves img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.inc-preuve-pdf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #b42318;
+  background: rgba(237, 28, 36, 0.08);
+}
+
+.inc-ajout-preuves {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.inc-ajout-preuves input[type="file"] {
+  max-width: 100%;
+  font-size: 0.84rem;
+}
+
+@media (max-width: 640px) {
+  .inc-ligne,
+  .inc-infos {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inc-preuves a,
+  .inc-choix-bouton,
+  .inc-champ input,
+  .inc-champ select,
+  .inc-champ textarea {
+    transition: none;
+  }
+}

@@ -7,6 +7,7 @@ import Inscription from "./pages/Authentification/Inscription";
 import Conventions from "./pages/Conventions/Conventions";
 import ListeControleurs from "./pages/Controleurs/ListeControleurs";
 import Grilles from "./pages/Grilles/Grilles";
+import Incidents from "./pages/Incidents/Incidents";
 import MaJournee from "./pages/MaJournee/MaJournee";
 import Missions from "./pages/Missions/Missions";
 import NonConformites from "./pages/NonConformites/NonConformites";
@@ -75,6 +76,8 @@ export default function App() {
         {/* Les deux rôles : le Directeur voit tout, le contrôleur ses propres rapports */}
         <Route path="rapports" element={<Rapports />} />
         <Route path="non-conformites" element={<NonConformites />} />
+        {/* Incidents de diffusion : les deux rôles (le contrôleur déclare, le Directeur rétablit) */}
+        <Route path="incidents" element={<Incidents />} />
         {/* Trajets : le Directeur voit tous les contrôleurs, un contrôleur les siens */}
         <Route path="trajets" element={<Trajets />} />
         <Route

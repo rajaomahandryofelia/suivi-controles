@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "controles",
     "suivi",
     "conventions",
+    "incidents",
 ]
 
 MIDDLEWARE = [

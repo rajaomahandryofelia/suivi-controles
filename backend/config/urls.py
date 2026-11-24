@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/controles/", include("controles.urls")),
     path("api/suivi/", include("suivi.urls")),
     path("api/conventions/", include("conventions.urls")),
+    path("api/incidents/", include("incidents.urls")),
 ]
 
 # En développement, servir les fichiers envoyés (photos, rapports PDF)

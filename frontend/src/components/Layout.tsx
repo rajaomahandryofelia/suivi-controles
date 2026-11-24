@@ -41,6 +41,7 @@ const SECTIONS_DIRECTEUR: Section[] = [
     liens: [
       { vers: "/rapports", texte: "Rapports" },
       { vers: "/non-conformites", texte: "Non-conformités" },
+      { vers: "/incidents", texte: "Incidents" },
       { vers: "/conventions", texte: "Conventions" },
       { vers: "/tracabilite", texte: "Traçabilité" },
       { vers: "/tracabilite/carte", texte: "Carte en direct" },
@@ -65,6 +66,7 @@ const SECTIONS_CONTROLEUR: Section[] = [
       { vers: "/", texte: "Accueil" },
       { vers: "/missions", texte: "Mes missions" },
       { vers: "/rapports", texte: "Mes rapports" },
+      { vers: "/incidents", texte: "Incidents" },
       { vers: "/tracabilite", texte: "Mon journal" },
     ],
   },
@@ -138,6 +140,18 @@ const ICONES: Record<string, ReactNode> = {
       <path d="M12 3 2 20h20z" />
       <path d="M12 10v4" />
       <path d="M12 17h.01" />
+    </Svg>
+  ),
+  // Antenne qui émet : les incidents de diffusion
+  "/incidents": (
+    <Svg>
+      <circle cx="12" cy="11" r="1.6" />
+      <path d="M12 12.6V21" />
+      <path d="M8.5 21h7" />
+      <path d="M8.6 7.6a4.9 4.9 0 0 0 0 6.8" />
+      <path d="M15.4 7.6a4.9 4.9 0 0 1 0 6.8" />
+      <path d="M5.8 4.8a8.8 8.8 0 0 0 0 12.4" />
+      <path d="M18.2 4.8a8.8 8.8 0 0 1 0 12.4" />
     </Svg>
   ),
   "/tracabilite": (
