@@ -19,6 +19,9 @@ export interface Site {
   latitude: string;
   longitude: string;
   est_actif: boolean;
+  // Radio, Télévision ou les deux : RADIO, TELEVISION ou RADIO_TELEVISION
+  service: string;
+  service_libelle: string;
   type_site: number;
   type_site_libelle: string;
   partenaire: number | null;
@@ -39,6 +42,7 @@ export interface DonneesSite {
   localisation: string;
   type_site: number;
   partenaire: number | null;
+  service: string;
   latitude: string;
   longitude: string;
   est_actif: boolean;

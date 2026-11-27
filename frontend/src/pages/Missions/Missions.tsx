@@ -7,6 +7,7 @@ import BoutonRetour from "../../components/BoutonRetour";
 import Notification from "../../components/Notification";
 import PanneauVerre from "../../components/PanneauVerre";
 import type { Origine } from "../../components/PanneauIle";
+import ServiceBadge from "../../components/ServiceBadge";
 import type { Utilisateur } from "../../types";
 import ClotureMission from "./ClotureMission";
 import DetailMission from "./DetailMission";
@@ -62,6 +63,16 @@ interface Ligne {
 
 type MissionRangee = Mission & { ordre_dans_tournee?: number | null };
 
+// Le service d'une mission à plusieurs sites : radio, télévision, ou les deux
+function serviceDe(membres: Mission[]): string | undefined {
+  const services = membres.map((m) => m.site_service).filter(Boolean);
+  if (services.length === 0) return undefined;
+  const radio = services.some((s) => s === "RADIO" || s === "RADIO_TELEVISION");
+  const television = services.some((s) => s === "TELEVISION" || s === "RADIO_TELEVISION");
+  if (radio && television) return "RADIO_TELEVISION";
+  return radio ? "RADIO" : "TELEVISION";
+}
+
 // Réunit les sites d'une même mission : une seule ligne au lieu d'une par site
 function regrouper(missions: Mission[]): Ligne[] {
   const parMission = new Map<number, MissionRangee[]>();
@@ -102,6 +113,7 @@ function regrouper(missions: Mission[]): Ligne[] {
         statut_libelle: libelle,
         site_nom: membres.length > 1 ? `${membres.length} sites` : premier.site_nom,
         site_localisation: membres.map((m) => m.site_nom).join(" · "),
+        site_service: serviceDe(membres),
       },
     });
   });
@@ -460,6 +472,7 @@ export default function Missions() {
                       <td className="mis-site">
                         <strong>{m.site_nom}</strong>
                         <span>{m.site_localisation}</span>
+                        <ServiceBadge service={m.site_service} />
                       </td>
                       {estDirecteur && <td>{m.controleur_nom}</td>}
                       <td>{l.membres.length > 1 ? "Selon le site" : m.modele_grille_nom}</td>
