@@ -45,6 +45,8 @@ class SiteSerializer(serializers.ModelSerializer):
     partenaire_nom = serializers.CharField(
         source="partenaire.nom", read_only=True, allow_null=True
     )
+    # Radio, Télévision ou Radio et télévision (en toutes lettres)
+    service_libelle = serializers.CharField(source="get_service_display", read_only=True)
     elements = ElementInventaireSerializer(many=True, read_only=True)
 
     # Calculés par SiteViewSet (annotations) : présents dans la liste et la fiche,
@@ -62,6 +64,8 @@ class SiteSerializer(serializers.ModelSerializer):
             "latitude",
             "longitude",
             "est_actif",
+            "service",
+            "service_libelle",
             "type_site",
             "type_site_libelle",
             "partenaire",

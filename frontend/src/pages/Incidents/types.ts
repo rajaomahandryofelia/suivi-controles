@@ -13,6 +13,8 @@ export interface Incident {
   id: number;
   site: number;
   site_nom: string;
+  site_service: string;
+  site_service_libelle: string;
   element: number | null;
   element_description: string | null;
   mission: number | null;
@@ -43,6 +45,8 @@ export interface SiteChoix {
   nom: string;
   localisation: string;
   est_actif: boolean;
+  // RADIO, TELEVISION ou RADIO_TELEVISION
+  service: string;
 }
 
 // Les données envoyées pour déclarer un incident

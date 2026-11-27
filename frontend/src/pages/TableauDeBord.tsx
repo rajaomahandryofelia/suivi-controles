@@ -8,7 +8,7 @@ import { useDemandesInscription } from "./tableau-de-bord/hooks/useDemandesInscr
 import { useStatistiques } from "./tableau-de-bord/hooks/useStatistiques";
 import IleDynamique from "./tableau-de-bord/ile/IleDynamique";
 import IndicateursControleur from "./tableau-de-bord/indicateurs/IndicateursControleur";
-import IndicateursDirecteur from "./tableau-de-bord/indicateurs/IndicateursDirecteur";
+import SupervisionIncidents from "./tableau-de-bord/incidents/SupervisionIncidents";
 import { nomAffiche } from "./tableau-de-bord/outils";
 import "./tableau-de-bord/indicateurs/Indicateurs.css";
 
@@ -61,20 +61,22 @@ export default function TableauDeBord() {
       {erreur && <div className="tdb-erreur" role="alert">{erreur}</div>}
       {succes && <div className="tdb-succes" role="status">{succes}</div>}
 
-      {chargement && (
+      {/* Directeur : les demandes d'inscription à traiter, puis la supervision des incidents */}
+      {estDirecteur && (
+        <>
+          {blocDemandes}
+          <SupervisionIncidents />
+        </>
+      )}
+
+      {/* Contrôleur : ses indicateurs habituels */}
+      {!estDirecteur && chargement && (
         <div className="tdb-chargement">
           <span className="tdb-spinner" aria-hidden="true" />
           Chargement…
         </div>
       )}
-
-      {stats?.role === "DIRECTEUR" && (
-        <IndicateursDirecteur stats={stats} nbDemandes={demandes.length} demandes={blocDemandes} />
-      )}
       {stats?.role === "CONTROLEUR" && <IndicateursControleur stats={stats} />}
-
-      {/* Si les chiffres n'ont pas pu être chargés, les demandes restent accessibles */}
-      {estDirecteur && stats?.role !== "DIRECTEUR" && blocDemandes}
 
       {demandeConsultee && (
         <FicheDemande

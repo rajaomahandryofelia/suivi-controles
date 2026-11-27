@@ -1,4 +1,5 @@
 from collections import Counter
+from datetime import date
 
 from django.utils import timezone
 from rest_framework import status
@@ -8,6 +9,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from suivi.notifications import notifier_incident_declare, notifier_incident_retabli
+
 from .models import Incident, ids_incidents_recurrents
 from .permissions import EstDirecteur
 from .serializers import (
@@ -15,6 +18,7 @@ from .serializers import (
     PieceJointeIncidentSerializer,
     RetablissementSerializer,
 )
+from .tableau_de_bord import construire_tableau_de_bord
 
 
 class IncidentViewSet(ModelViewSet):
@@ -62,7 +66,9 @@ class IncidentViewSet(ModelViewSet):
         return [IsAuthenticated()]
 
     def perform_create(self, serializer):
-        serializer.save(declare_par=self.request.user)
+        incident = serializer.save(declare_par=self.request.user)
+        # Les Directeurs (sauf l'auteur) sont prévenus dans la cloche
+        notifier_incident_declare(incident)
 
     @action(detail=True, methods=["post"], url_path="retablir")
     def retablir(self, request, pk=None):
@@ -87,6 +93,8 @@ class IncidentViewSet(ModelViewSet):
         if "observations" in entree.validated_data:
             incident.observations = entree.validated_data["observations"]
         incident.save()
+        # Celui qui avait déclaré l'incident apprend qu'il est rétabli
+        notifier_incident_retabli(incident)
 
         return Response(self.get_serializer(incident).data)
 
@@ -150,3 +158,18 @@ class IncidentViewSet(ModelViewSet):
                 "sites_les_plus_touches": plus_touches,
             }
         )
+
+    @action(detail=False, methods=["get"], url_path="tableau-de-bord")
+    def tableau_de_bord(self, request):
+        """Toutes les données du tableau de bord de supervision, pour un mois
+        (paramètre `mois` au format AAAA-MM ; par défaut, le mois en cours)."""
+        maintenant = timezone.localtime()
+        try:
+            annee, numero = (
+                int(partie)
+                for partie in request.query_params.get("mois", "").split("-")
+            )
+            date(annee, numero, 1)  # lève ValueError si le mois est invalide
+        except ValueError:
+            annee, numero = maintenant.year, maintenant.month
+        return Response(construire_tableau_de_bord(annee, numero))

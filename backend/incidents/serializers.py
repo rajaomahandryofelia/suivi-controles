@@ -3,6 +3,8 @@ from datetime import timedelta
 from django.utils import timezone
 from rest_framework import serializers
 
+from referentiels.models import Site
+
 from .models import Incident, PieceJointeIncident, ids_incidents_recurrents
 
 # Taille maximale d'une pièce jointe : 10 Mo
@@ -49,6 +51,10 @@ class IncidentSerializer(serializers.ModelSerializer):
     """
 
     site_nom = serializers.CharField(source="site.nom", read_only=True)
+    site_service = serializers.CharField(source="site.service", read_only=True)
+    site_service_libelle = serializers.CharField(
+        source="site.get_service_display", read_only=True
+    )
     element_description = serializers.SerializerMethodField()
     service_libelle = serializers.CharField(source="get_service_display", read_only=True)
     type_libelle = serializers.CharField(source="get_type_display", read_only=True)
@@ -66,6 +72,8 @@ class IncidentSerializer(serializers.ModelSerializer):
             "id",
             "site",
             "site_nom",
+            "site_service",
+            "site_service_libelle",
             "element",
             "element_description",
             "mission",
@@ -124,6 +132,17 @@ class IncidentSerializer(serializers.ModelSerializer):
         site = donnees.get("site", getattr(instance, "site", None))
         element = donnees.get("element", getattr(instance, "element", None))
         mission = donnees.get("mission", getattr(instance, "mission", None))
+
+        # Un site « Radio » ne diffuse pas de télévision, et inversement
+        service = donnees.get("service", getattr(instance, "service", None))
+        if site.service != Site.Service.RADIO_TELEVISION and service != site.service:
+            raise serializers.ValidationError(
+                {
+                    "service": (
+                        f"Ce site diffuse seulement : {site.get_service_display().lower()}."
+                    )
+                }
+            )
 
         if element is not None and element.site_id != site.id:
             raise serializers.ValidationError(

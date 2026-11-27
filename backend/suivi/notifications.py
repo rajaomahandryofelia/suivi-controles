@@ -34,6 +34,18 @@ def _nom(utilisateur):
     return utilisateur.get_full_name() or utilisateur.get_username()
 
 
+def _duree(minutes):
+    """45 → « 45 min » ; 135 → « 2 h 15 » ; 1700 → « 1 j 4 h »."""
+    if minutes < 60:
+        return f"{minutes} min"
+    heures = minutes // 60
+    if heures < 24:
+        reste = minutes % 60
+        return f"{heures} h {reste:02d}" if reste else f"{heures} h"
+    jours, heures_restantes = divmod(heures, 24)
+    return f"{jours} j {heures_restantes} h" if heures_restantes else f"{jours} j"
+
+
 def notifier(destinataire, message):
     """Crée une notification. Un échec ne doit jamais bloquer l'action principale
     (clôturer une mission, valider un rapport...) : on l'écrit dans le journal."""
@@ -137,4 +149,44 @@ def notifier_non_conformites_rouvertes(site, nombre):
     notifier_directeurs(
         f"Non-conformité toujours présente sur « {site.nom} » : {nombre} correction(s) "
         "annoncée(s) n'ont pas été confirmée(s) lors du dernier contrôle."
+    )
+
+
+# ---- Incidents de diffusion ----
+# Ces messages commencent toujours par « Incident ». Ils ne contiennent volontairement
+# ni « rapport » ni « mission » (pas même dans « émission ») : la cloche s'en sert pour
+# ouvrir la page des rapports ou des missions.
+
+def notifier_incident_declare(incident):
+    """Un incident vient d'être déclaré : les Directeurs sont prévenus,
+    sauf celui qui l'a lui-même déclaré."""
+    auteur = incident.declare_par
+    message = (
+        f"Incident {incident.get_gravite_display().lower()} déclaré sur "
+        f"« {incident.site.nom} » : {incident.get_type_display().lower()} "
+        f"({incident.get_service_display().lower()})"
+    )
+    if auteur is not None:
+        message += f", signalé par {_nom(auteur)}"
+    message += "."
+
+    directeurs = Utilisateur.objects.filter(
+        role=Utilisateur.Role.DIRECTEUR, is_active=True
+    )
+    if auteur is not None:
+        directeurs = directeurs.exclude(pk=auteur.pk)
+    for directeur in directeurs:
+        notifier(directeur, message)
+
+
+def notifier_incident_retabli(incident):
+    """Le Directeur a rétabli l'incident : celui qui l'avait déclaré est prévenu
+    (inutile s'il l'a rétabli lui-même)."""
+    declarant = incident.declare_par
+    if declarant is None or declarant.pk == incident.retabli_par_id:
+        return
+    notifier(
+        declarant,
+        f"Incident rétabli sur « {incident.site.nom} » : "
+        f"{incident.get_type_display().lower()}, après {_duree(incident.duree_minutes)}.",
     )

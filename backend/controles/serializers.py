@@ -43,6 +43,12 @@ class MissionSerializer(serializers.ModelSerializer):
 
     site_nom = serializers.CharField(source="site.nom", read_only=True)
     site_localisation = serializers.CharField(source="site.localisation", read_only=True)
+    # Radio, Télévision ou Radio et télévision : le contrôleur sait tout de suite
+    # quel service il va contrôler
+    site_service = serializers.CharField(source="site.service", read_only=True)
+    site_service_libelle = serializers.CharField(
+        source="site.get_service_display", read_only=True
+    )
     controleur_nom = serializers.CharField(
         source="controleur.get_full_name", read_only=True
     )
@@ -69,6 +75,8 @@ class MissionSerializer(serializers.ModelSerializer):
             "site",
             "site_nom",
             "site_localisation",
+            "site_service",
+            "site_service_libelle",
             "controleur",
             "controleur_nom",
             "directeur",
