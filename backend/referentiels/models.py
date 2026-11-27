@@ -32,6 +32,11 @@ class Site(models.Model):
         MINISTERE = "MINISTERE", "Ministère"
         HORS_MINISTERE = "HORS_MINISTERE", "Hors ministère"
 
+    class Service(models.TextChoices):
+        RADIO = "RADIO", "Radio"
+        TELEVISION = "TELEVISION", "Télévision"
+        RADIO_TELEVISION = "RADIO_TELEVISION", "Radio et télévision"
+
     nom = models.CharField(max_length=100)
     localisation = models.CharField(max_length=255)
     latitude = models.DecimalField(
@@ -51,6 +56,15 @@ class Site(models.Model):
         max_length=20,
         choices=Appartenance.choices,
         default=Appartenance.MINISTERE,
+    )
+
+    # Service diffusé par le site : le contrôleur voit tout de suite s'il s'agit de
+    # radio, de télévision ou des deux. Les sites déjà existants passent en
+    # « Radio et télévision » : le Directeur corrige site par site.
+    service = models.CharField(
+        max_length=20,
+        choices=Service.choices,
+        default=Service.RADIO_TELEVISION,
     )
 
     # Un type de site a 0..* sites ; un site a exactement 1 type

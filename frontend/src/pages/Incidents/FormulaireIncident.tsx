@@ -4,6 +4,7 @@ import {
   GRAVITES,
   SERVICES,
   TYPES,
+  libelleService,
   localVersIso,
   maintenantLocal,
   messageErreur,
@@ -28,6 +29,20 @@ export default function FormulaireIncident({ sites, onEnvoyer, onAnnuler }: Prop
   const [fichiers, setFichiers] = useState<File[]>([]);
   const [erreur, setErreur] = useState("");
   const [envoi, setEnvoi] = useState(false);
+
+  // Les services proposés dépendent du site : un site « Radio » ne diffuse pas de télévision
+  const siteChoisi = sites.find((s) => String(s.id) === site);
+  const servicesPermis =
+    siteChoisi && siteChoisi.service !== "RADIO_TELEVISION"
+      ? SERVICES.filter((s) => s.valeur === siteChoisi.service)
+      : SERVICES;
+
+  function choisirSite(valeur: string) {
+    setSite(valeur);
+    const choisi = sites.find((s) => String(s.id) === valeur);
+    // Un site qui ne diffuse qu'un service : on le sélectionne d'office
+    if (choisi && choisi.service !== "RADIO_TELEVISION") setService(choisi.service);
+  }
 
   async function valider(e: FormEvent) {
     e.preventDefault();
@@ -64,11 +79,11 @@ export default function FormulaireIncident({ sites, onEnvoyer, onAnnuler }: Prop
     <form className="inc-formulaire" onSubmit={valider}>
       <label className="inc-champ">
         <span>Site concerné</span>
-        <select value={site} onChange={(e) => setSite(e.target.value)} required>
+        <select value={site} onChange={(e) => choisirSite(e.target.value)} required>
           <option value="">Choisir un site…</option>
           {sites.map((s) => (
             <option key={s.id} value={s.id}>
-              {s.nom} — {s.localisation}
+              {s.nom} — {s.localisation} ({libelleService(s.service)})
             </option>
           ))}
         </select>
@@ -77,8 +92,12 @@ export default function FormulaireIncident({ sites, onEnvoyer, onAnnuler }: Prop
       <div className="inc-ligne">
         <label className="inc-champ">
           <span>Service affecté</span>
-          <select value={service} onChange={(e) => setService(e.target.value)}>
-            {SERVICES.map((s) => (
+          <select
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            disabled={servicesPermis.length === 1}
+          >
+            {servicesPermis.map((s) => (
               <option key={s.valeur} value={s.valeur}>
                 {s.libelle}
               </option>

@@ -1,0 +1,133 @@
+/* Indicateurs des incidents sur le tableau de bord : préfixe « tdi- ».
+   La carte, son en-tête et le message vide viennent de TableauDeBord.css (« tdb- »). */
+
+   .tdi-lien {
+    margin-left: auto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--vert);
+    text-decoration: none;
+  }
+  .tdi-lien:hover {
+    text-decoration: underline;
+  }
+  
+  /* ---------- Les cinq chiffres ---------- */
+  
+  .tdi-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  
+  .tdi-tuile {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    background: #fafcfb;
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .tdi-tuile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 24, 40, 0.08);
+  }
+  
+  .tdi-valeur {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--texte);
+  }
+  
+  .tdi-etiquette {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--texte-doux);
+  }
+  
+  /* Des incidents encore en cours : rouge */
+  .tdi-tuile.alerte {
+    background: #fffafa;
+    border-color: #fbd0d2;
+    box-shadow: inset 3px 0 0 var(--rouge);
+  }
+  .tdi-tuile.alerte .tdi-valeur {
+    color: #b42318;
+  }
+  
+  /* Des incidents qui se répètent : orange */
+  .tdi-tuile.attention {
+    background: #fffbf5;
+    border-color: #f8cf9f;
+    box-shadow: inset 3px 0 0 #f79009;
+  }
+  .tdi-tuile.attention .tdi-valeur {
+    color: #b54708;
+  }
+  
+  /* ---------- Sites les plus touchés ---------- */
+  
+  .tdi-sous-titre {
+    margin: 0 0 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--texte);
+  }
+  
+  .tdi-sites {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .tdi-site-ligne {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 12px;
+    margin-bottom: 6px;
+  }
+  .tdi-site-ligne strong {
+    font-size: 0.92rem;
+    color: var(--texte);
+  }
+  .tdi-site-ligne span {
+    font-size: 0.82rem;
+    color: var(--texte-doux);
+  }
+  
+  .tdi-barre {
+    height: 6px;
+    overflow: hidden;
+    background: #eef2ef;
+    border-radius: 999px;
+  }
+  .tdi-barre span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #00a152, #007a3d);
+    border-radius: 999px;
+    transition: width 0.5s ease;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .tdi-tuile,
+    .tdi-barre span {
+      transition: none;
+    }
+    .tdi-tuile:hover {
+      transform: none;
+    }
+  }
