@@ -1,0 +1,36 @@
+/* Pastille « Radio » / « Télévision » d'un site.
+   Les sélecteurs sont volontairement précis : sans cela, des règles comme
+   « .mis-site span » (liste des missions) en changeraient la couleur et la taille. */
+
+   .svc-groupe {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  
+  .svc-groupe .svc {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 9px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    line-height: 1.4;
+    white-space: nowrap;
+    border-radius: 999px;
+  }
+  
+  .svc-groupe .svc svg {
+    flex-shrink: 0;
+  }
+  
+  .svc-groupe .svc.radio {
+    color: #1d4fa8;
+    background: #e9f1fb;
+  }
+  
+  .svc-groupe .svc.television {
+    color: #0b6b3a;
+    background: #e6f6ed;
+  }

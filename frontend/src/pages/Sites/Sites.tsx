@@ -5,6 +5,7 @@ import BoutonRetour from "../../components/BoutonRetour";
 import Notification from "../../components/Notification";
 import PanneauVerre from "../../components/PanneauVerre";
 import type { Origine } from "../../components/PanneauIle";
+import ServiceBadge from "../../components/ServiceBadge";
 import { extraireListe, formaterDate, origineDe } from "../outilsListe";
 import DetailSite from "./DetailSite";
 import FormulaireSite from "./FormulaireSite";
@@ -40,6 +41,11 @@ function correspond(s: Site, segment: Segment): boolean {
   return true;
 }
 
+// Le filtre « Radio » garde aussi les sites « Radio et télévision » (et de même pour la télévision)
+function diffuse(service: string | undefined, filtre: string): boolean {
+  return service === filtre || service === "RADIO_TELEVISION";
+}
+
 export default function Sites() {
   const [sites, setSites] = useState<Site[]>([]);
   const [types, setTypes] = useState<Option[]>([]);
@@ -49,6 +55,7 @@ export default function Sites() {
   const [segment, setSegment] = useState<Segment>("actifs");
   const [recherche, setRecherche] = useState("");
   const [filtreType, setFiltreType] = useState("");
+  const [filtreService, setFiltreService] = useState("");
   const [panneau, setPanneau] = useState<EtatPanneau | null>(null);
   const [notification, setNotification] = useState<EtatNotification | null>(null);
 
@@ -167,6 +174,7 @@ export default function Sites() {
   const visibles = sites.filter((s) => {
     if (!correspond(s, segment)) return false;
     if (filtreType && String(s.type_site) !== filtreType) return false;
+    if (filtreService && !diffuse(s.service, filtreService)) return false;
     if (!terme) return true;
     return [s.nom, s.localisation, s.type_site_libelle, s.partenaire_nom ?? ""]
       .join(" ")
@@ -260,6 +268,17 @@ export default function Sites() {
 
         <select
           className="lst-select"
+          value={filtreService}
+          onChange={(e) => setFiltreService(e.target.value)}
+          aria-label="Filtrer par service"
+        >
+          <option value="">Tous les services</option>
+          <option value="RADIO">Radio</option>
+          <option value="TELEVISION">Télévision</option>
+        </select>
+
+        <select
+          className="lst-select"
           value={filtreType}
           onChange={(e) => setFiltreType(e.target.value)}
           aria-label="Filtrer par type de site"
@@ -291,6 +310,7 @@ export default function Sites() {
               <thead>
                 <tr>
                   <th>Site</th>
+                  <th>Service</th>
                   <th>Type</th>
                   <th>Partenaire</th>
                   <th>Dernier contrôle</th>
@@ -314,6 +334,9 @@ export default function Sites() {
                       <td className="lst-nom">
                         <strong>{s.nom}</strong>
                         <span>{s.localisation}</span>
+                      </td>
+                      <td>
+                        <ServiceBadge service={s.service} />
                       </td>
                       <td>{s.type_site_libelle}</td>
                       <td>{s.partenaire_nom || <span className="lst-absent">Non renseigné</span>}</td>

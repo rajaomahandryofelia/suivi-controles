@@ -23,6 +23,9 @@ export interface Mission {
   site: number;
   site_nom: string;
   site_localisation: string;
+  // Radio, Télévision ou les deux (RADIO, TELEVISION, RADIO_TELEVISION)
+  site_service?: string;
+  site_service_libelle?: string;
   controleur: number;
   controleur_nom: string;
   modele_grille: number;
@@ -45,6 +48,8 @@ export interface Site {
   nom: string;
   localisation: string;
   est_actif: boolean;
+  // Radio, Télévision ou les deux (RADIO, TELEVISION, RADIO_TELEVISION)
+  service?: string;
   type_site: number;
   type_site_libelle: string;
 }

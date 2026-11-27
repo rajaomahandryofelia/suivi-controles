@@ -36,9 +36,11 @@ function ilYA(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR");
 }
 
-// La page à ouvrir selon le sujet du message : un message qui COMMENCE par « Non-conformité »
-// ouvre les non-conformités ; sinon le mot « rapport » passe avant « mission »
+// La page à ouvrir selon le sujet du message : un message qui COMMENCE par « Incident »
+// ouvre les incidents, un message qui COMMENCE par « Non-conformité » ouvre les
+// non-conformités ; sinon le mot « rapport » passe avant « mission »
 function pageDe(message: string): string | null {
+  if (/^incident/i.test(message)) return "/incidents";
   if (/^non-conformit/i.test(message)) return "/non-conformites";
   if (/rapport/i.test(message)) return "/rapports";
   if (/mission/i.test(message)) return "/missions";

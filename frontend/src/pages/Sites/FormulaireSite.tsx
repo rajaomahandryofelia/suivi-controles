@@ -12,10 +12,19 @@ interface Props {
   onAnnuler: () => void;
 }
 
+// Les services qu'un site peut diffuser (mêmes valeurs que le backend)
+const SERVICES = [
+  { valeur: "RADIO", libelle: "Radio" },
+  { valeur: "TELEVISION", libelle: "Télévision" },
+  { valeur: "RADIO_TELEVISION", libelle: "Radio et télévision" },
+];
+
 export default function FormulaireSite({ site, types, partenaires, onEnvoyer, onAnnuler }: Props) {
   const [nom, setNom] = useState(site?.nom ?? "");
   const [typeId, setTypeId] = useState(site ? String(site.type_site) : "");
   const [partenaireId, setPartenaireId] = useState(site?.partenaire ? String(site.partenaire) : "");
+  // À la création, il faut choisir : le contrôleur voit ce service sur ses missions
+  const [service, setService] = useState(site?.service ?? "");
   const [localisation, setLocalisation] = useState(site?.localisation ?? "");
   const [latitude, setLatitude] = useState(site?.latitude ?? "");
   const [longitude, setLongitude] = useState(site?.longitude ?? "");
@@ -31,6 +40,7 @@ export default function FormulaireSite({ site, types, partenaires, onEnvoyer, on
     nom.trim() !== site.nom ||
     typeId !== String(site.type_site) ||
     partenaireId !== (site.partenaire ? String(site.partenaire) : "") ||
+    service !== site.service ||
     localisation.trim() !== site.localisation ||
     Number(latitude) !== Number(site.latitude) ||
     Number(longitude) !== Number(site.longitude) ||
@@ -94,6 +104,10 @@ export default function FormulaireSite({ site, types, partenaires, onEnvoyer, on
       setErreur("La longitude doit être comprise entre -180 et 180.");
       return;
     }
+    if (!service) {
+      setErreur("Indiquez si le site diffuse de la radio, de la télévision ou les deux.");
+      return;
+    }
 
     setEnvoi(true);
     try {
@@ -102,6 +116,7 @@ export default function FormulaireSite({ site, types, partenaires, onEnvoyer, on
         localisation: localisation.trim(),
         type_site: Number(typeId),
         partenaire: partenaireId ? Number(partenaireId) : null,
+        service,
         latitude: lat.toFixed(6),
         longitude: lon.toFixed(6),
         est_actif: estActif,
@@ -157,6 +172,23 @@ export default function FormulaireSite({ site, types, partenaires, onEnvoyer, on
         </div>
 
         <div className="champ">
+          <label htmlFor="sit-service">Service diffusé</label>
+          <select
+            id="sit-service"
+            value={service}
+            onChange={(e) => setService(e.target.value)}
+            required
+          >
+            <option value="">— Choisir un service —</option>
+            {SERVICES.map((s) => (
+              <option key={s.valeur} value={s.valeur}>
+                {s.libelle}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="champ sit-champ-large">
           <label htmlFor="sit-partenaire">Partenaire (facultatif)</label>
           <select
             id="sit-partenaire"
